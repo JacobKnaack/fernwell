@@ -278,3 +278,116 @@ pre {
   white-space: pre-wrap;
   word-break: break-word;
 }
+/* ---- on-page navigation: a tree built from this page's own headings ----
+   Built at runtime (see the inline <script>) — .fw-menu-list is empty in the
+   markup. Below 1600px it's an off-canvas drawer: closed by default, slid in
+   with .is-open (toggled by the chevron button via the shared `nav` enhancer
+   — data-fw-nav-toggle / aria-controls="kit-toc" — which also wires outside-
+   click and Escape to close it). At 1600px+ there's room beside .kit-wrap, so
+   it's pinned open and the toggle hides. */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+.kit-toc {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 260px;
+  height: 100vh;
+  padding: var(--fw-sp-7) var(--fw-sp-5);
+  background: var(--fw-surface);
+  border-right: var(--fw-border-w) solid var(--fw-bg-dim);
+  box-shadow: var(--fw-shadow-lg);
+  overflow-y: auto;
+  z-index: 40;
+  transform: translateX(-100%);
+  transition: transform var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.kit-toc.is-open {
+  transform: translateX(0);
+}
+
+.kit-toc .fw-eyebrow {
+  margin-bottom: var(--fw-sp-3);
+}
+
+.kit-toc .fw-menu-link,
+.kit-toc .fw-menu-summary {
+  font-size: 13px;
+}
+
+/* Chevron toggle, vertically centered on the left edge. */
+.kit-toc-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 28px;
+  height: 56px;
+  padding: 0;
+  transform: translateY(-50%);
+  background: var(--fw-surface);
+  color: var(--fw-text-soft);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  border-left: none;
+  border-radius: 0 var(--fw-r-md) var(--fw-r-md) 0;
+  box-shadow: var(--fw-shadow-sm);
+  cursor: pointer;
+  z-index: 41;
+}
+
+@media (hover: hover) {
+  .kit-toc-toggle:hover {
+    color: var(--fw-secondary);
+  }
+}
+
+.kit-toc-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.kit-toc-toggle::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M6 4l4 4-4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M6 4l4 4-4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.kit-toc-toggle[aria-expanded="true"]::before {
+  transform: rotate(180deg);
+}
+
+@media (min-width: 1600px) {
+  .kit-toc-toggle {
+    display: none;
+  }
+
+  .kit-toc {
+    transform: none;
+    background: none;
+    border-right: none;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kit-toc,
+  .kit-toc-toggle::before {
+    transition: none;
+  }
+}

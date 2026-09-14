@@ -182,6 +182,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Disclosure | `details.fw-disclosure`, `-chevron`, `-count`, `-body` |
 | Pagination | `.fw-pagination`, `.fw-pag-info`, `.fw-pag-controls`, `.fw-pag-label`, `.fw-btn-page` |
 | Table | `.fw-table-wrap` (`.fw-table-sticky` + `--fw-table-max-height`) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
+| Collapsible menu | `.fw-menu` (`-accordion`) > `.fw-menu-list` > `.fw-menu-item` (`.fw-menu-split`) > `.fw-menu-link` or `details.fw-menu-group` > `.fw-menu-summary` (`-icon`, `.is-current`) + nested `.fw-menu-list` or `.fw-menu-panel`; `[aria-current="page"]` marks the current link; `--fw-menu-indent`, `--fw-menu-row-h` |
 | Layout | `.fw-wrap`, `.fw-row`, `.fw-grid-2`, `.fw-sr-only` |
 
 ## JavaScript
@@ -197,11 +198,12 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 | `[data-fw-nav-toggle][aria-controls]` | dropdown open/close, outside-click and Escape |
 | `form[data-fw-loading]` | submit button gets a spinner + `data-fw-loading-text` label on submit |
 | `table[data-fw-table]` with `th[data-fw-sort]`, `input[data-fw-select-all]` / `[data-fw-select-row]` | client-side column sort (cycles `aria-sort`, honours `td[data-fw-sort-value]`), row selection with select-all + indeterminate, `.is-selected` / `aria-selected` on rows |
+| `.fw-menu[data-fw-menu]` (+ `data-fw-menu-exclusive`) | nestable `<details>` menu: opens the ancestors of `[aria-current]` on init, `.is-current` on a collapsed branch holding it, ↑ ↓ → ← Home End between rows, exclusive mode closes sibling groups |
 
 Programmatic API:
 
 ```js
-import { theme, combobox, modal, nav, loading, toast, table } from 'fernwell';
+import { theme, combobox, modal, nav, loading, toast, table, menu } from 'fernwell';
 
 theme.get();
 theme.set('dark');
@@ -224,9 +226,12 @@ toast.show('That card was declined', { variant: 'error', duration: 6000 });
 table.sort(tableEl, 2, 'descending');   // column index, 'ascending' | 'descending'
 table.getSelected(tableEl);             // HTMLTableRowElement[]
 table.selectAll(tableEl, false);
+menu.open(groupEl); menu.close(groupEl); menu.toggle(groupEl);   // groupEl = details.fw-menu-group
+menu.reveal(linkEl);                    // open every ancestor group of an element
+menu.expandAll(menuEl); menu.collapseAll(menuEl);
 ```
 
-Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table.
+Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
 
 ## Principles
 

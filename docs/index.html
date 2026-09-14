@@ -13,6 +13,12 @@
 <link rel="stylesheet" href="styles/index.css">
 </head>
 <body class="fw-root">
+<div class="kit-toc-wrap">
+  <button type="button" class="kit-toc-toggle" data-fw-nav-toggle aria-controls="kit-toc" aria-expanded="false" aria-label="Toggle page navigation"></button>
+  <nav class="fw-menu kit-toc" aria-label="On this page" data-fw-menu id="kit-toc">
+    <p class="fw-eyebrow">On this page</p>
+  </nav>
+</div>
 <div class="kit-wrap">
 
   <div class="intro">
@@ -441,6 +447,79 @@ toast.show('Invoice sent');</code></pre>
     </div>
   </section>
 
+  <!-- COLLAPSIBLE MENU -->
+  <section>
+    <div class="kit-sec-head"><h2>Collapsible menu</h2><span class="num">07e</span></div>
+    <p class="sec-note">One nestable primitive, extensible to fit many use cases. Built on native <code>&lt;details&gt;</code>, so it expands without JS; the enhancer adds arrow-key navigation, auto-reveals the current page, and (with <code>data-fw-menu-exclusive</code>) keeps one group open at a time. Try ↑ ↓ → ← Home End from any row.</p>
+    <div class="fw-grid-2">
+      <div class="fw-card">
+        <p class="fw-eyebrow" style="margin:0 0 var(--fw-sp-3)">Nav tree</p>
+        <nav class="fw-menu" aria-label="Docs" data-fw-menu id="menu-tree">
+          <ul class="fw-menu-list">
+            <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Overview</a></li>
+            <li class="fw-menu-item">
+              <details class="fw-menu-group">
+                <summary class="fw-menu-summary">Getting started</summary>
+                <ul class="fw-menu-list">
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Install</a></li>
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Theming</a></li>
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Dark mode</a></li>
+                </ul>
+              </details>
+            </li>
+            <li class="fw-menu-item">
+              <details class="fw-menu-group">
+                <summary class="fw-menu-summary">Billing</summary>
+                <ul class="fw-menu-list">
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Invoices</a></li>
+                  <li class="fw-menu-item fw-menu-split">
+                    <a class="fw-menu-link" href="#menu-tree">Plans</a>
+                    <details class="fw-menu-group">
+                      <summary class="fw-menu-summary fw-menu-summary-icon"><span class="fw-sr-only">Toggle Plans</span></summary>
+                      <ul class="fw-menu-list">
+                        <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Starter</a></li>
+                        <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree" aria-current="page">Studio</a></li>
+                        <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Agency</a></li>
+                      </ul>
+                    </details>
+                  </li>
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Payouts</a></li>
+                </ul>
+              </details>
+            </li>
+            <li class="fw-menu-item">
+              <details class="fw-menu-group">
+                <summary class="fw-menu-summary">Clients</summary>
+                <ul class="fw-menu-list">
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Directory</a></li>
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Onboarding</a></li>
+                </ul>
+              </details>
+            </li>
+            <li class="fw-menu-item"><a class="fw-menu-link" href="#menu-tree">Settings</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="fw-card">
+        <p class="fw-eyebrow" style="margin:0 0 var(--fw-sp-3)">Accordion</p>
+        <div class="fw-menu fw-menu-accordion" data-fw-menu data-fw-menu-exclusive id="menu-faq">
+          <details class="fw-menu-group" open>
+            <summary class="fw-menu-summary">How do I export invoices?</summary>
+            <div class="fw-menu-panel"><p>Open any invoice and choose <strong>Export → PDF</strong>. Bulk exports are on the Invoices page under the actions menu, and land in your inbox within a minute.</p></div>
+          </details>
+          <details class="fw-menu-group">
+            <summary class="fw-menu-summary">Can I change plans mid-cycle?</summary>
+            <div class="fw-menu-panel"><p>Yes — upgrades apply immediately and are prorated; downgrades take effect at the next renewal so you keep what you paid for.</p></div>
+          </details>
+          <details class="fw-menu-group">
+            <summary class="fw-menu-summary">What happens when a client misses a payment?</summary>
+            <div class="fw-menu-panel"><p>Fernwell sends three gentle reminders over ten days, then flags the invoice as overdue and lets you know. Nothing goes out without your say-so.</p></div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ASSEMBLED -->
   <section>
     <div class="kit-sec-head"><h2>Assembled example</h2><span class="num">08</span></div>
@@ -572,6 +651,11 @@ toast.show('Invoice sent');</code></pre>
   });
   inv.addEventListener('fw:sort', (e) => Fernwell.toast.show(`Sorted by ${e.detail.th.textContent.trim()}, ${e.detail.direction}`));
 
+  // menu demo: every open/close bubbles up as fw:toggle
+  document.getElementById('menu-faq').addEventListener('fw:toggle', (e) => {
+    if (e.detail.open) Fernwell.toast.show(`Opened: ${e.detail.group.querySelector('summary').textContent.trim()}`);
+  });
+
   // theming: live palette editor — one <input type=color> per seed role
   (() => {
     const ROLES = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
@@ -633,6 +717,59 @@ toast.show('Invoice sent');</code></pre>
     const v = b.dataset.toast;
     Fernwell.toast.show({ success: 'Invoice sent', error: 'That card was declined', info: 'Reminder scheduled for Monday' }[v], { variant: v });
   }));
+
+  // on-page navigation: an fw-menu built from this page's own h2 sections,
+  // nesting any bare (unstyled) h3 as children — the only ones are the three
+  // "Install" methods; every other h3/h4 on the page belongs to a component
+  // demo, not the page outline, and carries a class so it's excluded here.
+  (() => {
+    const toc = document.getElementById('kit-toc');
+    if (!toc) return;
+    const slugify = (text) => text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slugTaken = new Set();
+    const uniqueSlug = (text) => {
+      let slug = slugify(text), n = 2;
+      while (slugTaken.has(slug)) slug = `${slugify(text)}-${n++}`;
+      slugTaken.add(slug);
+      return slug;
+    };
+    const linkTo = (target, text) => `<a class="fw-menu-link" href="#${target.id}">${text}</a>`;
+
+    const list = document.createElement('ul');
+    list.className = 'fw-menu-list';
+    document.querySelectorAll('.kit-wrap > section').forEach((section) => {
+      const h2 = section.querySelector(':scope > .kit-sec-head > h2');
+      if (!h2) return;
+      if (!section.id) section.id = uniqueSlug(h2.textContent);
+      const subheadings = Array.from(section.querySelectorAll('h3:not([class])'));
+
+      const item = document.createElement('li');
+      item.className = 'fw-menu-item';
+      if (subheadings.length) {
+        const group = document.createElement('details');
+        group.className = 'fw-menu-group';
+        const summary = document.createElement('summary');
+        summary.className = 'fw-menu-summary';
+        summary.textContent = h2.textContent;
+        const subList = document.createElement('ul');
+        subList.className = 'fw-menu-list';
+        subheadings.forEach((h3) => {
+          if (!h3.id) h3.id = uniqueSlug(h3.textContent);
+          const subItem = document.createElement('li');
+          subItem.className = 'fw-menu-item';
+          subItem.innerHTML = linkTo(h3, h3.textContent);
+          subList.appendChild(subItem);
+        });
+        group.append(summary, subList);
+        item.appendChild(group);
+      } else {
+        item.innerHTML = linkTo(section, h2.textContent);
+      }
+      list.appendChild(item);
+    });
+    toc.appendChild(list);
+    Fernwell.menu.init(toc);
+  })();
 </script>
 </body>
 </html>

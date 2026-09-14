@@ -1,0 +1,214 @@
+/* ---- menu: a nestable collapsible menu — a nav tree or an accordion ----
+     Built on native <details>/<summary>, so it works without JS and nests to any depth.
+
+     <nav class="fw-menu" aria-label="Docs" data-fw-menu>
+       <ul class="fw-menu-list">
+         <li class="fw-menu-item"><a class="fw-menu-link" href="/" aria-current="page">Overview</a></li>
+         <li class="fw-menu-item">
+           <details class="fw-menu-group" open>
+             <summary class="fw-menu-summary">Billing</summary>
+             <ul class="fw-menu-list">
+               <li class="fw-menu-item"><a class="fw-menu-link" href="/billing/invoices">Invoices</a></li>
+               <li class="fw-menu-item fw-menu-split">          ← link AND toggle in one row
+                 <a class="fw-menu-link" href="/billing/plans">Plans</a>
+                 <details class="fw-menu-group">
+                   <summary class="fw-menu-summary fw-menu-summary-icon"><span class="fw-sr-only">Toggle Plans</span></summary>
+                   <ul class="fw-menu-list">…</ul>
+                 </details>
+               </li>
+             </ul>
+           </details>
+         </li>
+       </ul>
+     </nav>
+
+     Accordion — same primitives, stacked look, free-form bodies:
+     <div class="fw-menu fw-menu-accordion" data-fw-menu data-fw-menu-exclusive>
+       <details class="fw-menu-group" open>
+         <summary class="fw-menu-summary">How do I export invoices?</summary>
+         <div class="fw-menu-panel">…</div>
+       </details>
+     </div>
+
+     Modifiers: .fw-menu-accordion. States: [open] on the group, [aria-current="page"] on a link,
+     .is-current on a collapsed summary whose branch holds the current page (set by the JS enhancer).
+     Config: --fw-menu-indent (nested rail offset), --fw-menu-row-h (row height). */
+.fw-menu {
+  --fw-menu-indent: var(--fw-sp-4);
+  --fw-menu-row-h: 36px;
+  font-family: var(--fw-font-body);
+  color: var(--fw-text);
+}
+
+.fw-menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Nested lists hang off a rail, same idiom as .fw-sub-list. */
+.fw-menu-group > .fw-menu-list {
+  margin: 2px 0 0 var(--fw-menu-indent);
+  padding-left: var(--fw-sp-3);
+  border-left: var(--fw-border-w) solid var(--fw-bg-dim);
+}
+
+/* ---- rows: links and summaries share one look ---- */
+.fw-menu-link,
+.fw-menu-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  min-height: var(--fw-menu-row-h);
+  padding: 0 var(--fw-sp-3);
+  border-radius: var(--fw-r-sm);
+  color: var(--fw-text);
+  font-family: var(--fw-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-decoration: none;
+  text-align: left;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--fw-motion-fast) var(--fw-motion-ease), color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+@media (hover: hover) {
+  .fw-menu-link:hover,
+  .fw-menu-summary:hover {
+    background: var(--fw-bg);
+    text-decoration: none;
+  }
+}
+
+.fw-menu-link:focus-visible,
+.fw-menu-summary:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-menu-link[aria-current="page"] {
+  background: var(--fw-secondary-bg);
+  color: var(--fw-secondary);
+}
+
+/* A collapsed branch that contains the current page. */
+.fw-menu-summary.is-current {
+  color: var(--fw-secondary);
+}
+
+/* ---- summary: hide the native marker, draw a chevron ---- */
+.fw-menu-summary {
+  list-style: none;
+  user-select: none;
+}
+
+.fw-menu-summary::-webkit-details-marker {
+  display: none;
+}
+
+.fw-menu-summary::after {
+  content: '';
+  flex-shrink: 0;
+  width: 16px;
+  height: 16px;
+  margin-left: auto;
+  background-color: currentColor;
+  opacity: 0.55;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M6 4l4 4-4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M6 4l4 4-4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: transform var(--fw-motion-fast) var(--fw-motion-ease), opacity var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-menu-summary:hover::after,
+.fw-menu-summary.is-current::after {
+  opacity: 1;
+}
+
+.fw-menu-group[open] > .fw-menu-summary::after {
+  transform: rotate(90deg);
+}
+
+/* ---- split row: <a> for the label, icon-only summary lifted into the same row ---- */
+.fw-menu-split {
+  position: relative;
+}
+
+.fw-menu-split > .fw-menu-link {
+  padding-right: 44px;
+}
+
+.fw-menu-summary-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--fw-menu-row-h);
+  height: var(--fw-menu-row-h);
+  min-height: 0;
+  padding: 0;
+  justify-content: center;
+}
+
+.fw-menu-summary-icon::after {
+  margin-left: 0;
+}
+
+/* ---- panel: free-form body (accordion content) ---- */
+.fw-menu-panel {
+  padding: var(--fw-sp-2) var(--fw-sp-3) var(--fw-sp-4);
+  color: var(--fw-text-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.fw-menu-panel > :first-child { margin-top: 0; }
+.fw-menu-panel > :last-child { margin-bottom: 0; }
+
+/* ---- accordion: stacked groups with dividers, display-face headings ---- */
+.fw-menu-accordion > .fw-menu-group + .fw-menu-group {
+  border-top: var(--fw-border-w) solid var(--fw-bg-dim);
+}
+
+.fw-menu-accordion > .fw-menu-group > .fw-menu-summary {
+  min-height: 44px;
+  padding-inline: 0;
+  border-radius: 0;
+  font-family: var(--fw-font-display);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.fw-menu-accordion > .fw-menu-group > .fw-menu-summary::after {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.fw-menu-accordion > .fw-menu-group[open] > .fw-menu-summary::after {
+  transform: rotate(180deg);
+}
+
+@media (hover: hover) {
+  .fw-menu-accordion > .fw-menu-group > .fw-menu-summary:hover {
+    background: none;
+    color: var(--fw-secondary);
+  }
+}
+
+.fw-menu-accordion > .fw-menu-group > .fw-menu-summary:focus-visible {
+  border-radius: 4px;
+}
+
+.fw-menu-accordion > .fw-menu-group > .fw-menu-panel {
+  padding-inline: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-menu-summary::after {
+    transition: none;
+  }
+}

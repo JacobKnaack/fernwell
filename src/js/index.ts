@@ -13,12 +13,14 @@ import * as nav from './nav';
 import * as loading from './loading';
 import * as toast from './toast';
 import * as table from './table';
+import * as menu from './menu';
 
-export { theme, combobox, modal, nav, loading, toast, table };
+export { theme, combobox, modal, nav, loading, toast, table, menu };
 export type { Theme, TokenOverrides, TokenThemeOverrides } from './theme';
 export type { ComboboxOptions, ComboboxInstance } from './combobox';
 export type { ToastVariant, ToastOptions } from './toast';
 export type { SortDirection, SortDetail, SelectDetail } from './table';
+export type { ToggleDetail } from './menu';
 
 export const version = '__FW_VERSION__';
 
@@ -34,7 +36,8 @@ export function init(root: ParentNode = document): void {
   nav.init(root);
   loading.init(root);
   table.init(root);
+  menu.init(root);
 }
 
-const Fernwell = { version, init, theme, combobox, modal, nav, loading, toast, table };
+const Fernwell = { version, init, theme, combobox, modal, nav, loading, toast, table, menu };
 export default Fernwell;
