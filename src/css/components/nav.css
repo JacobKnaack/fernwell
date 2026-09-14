@@ -1,5 +1,5 @@
 /* ---- nav ----
-   Plum grounds the interface; the brand dot / avatar are the only Marigold.
+   Secondary (Plum by default) grounds the interface; the brand dot / avatar are the only Primary (Marigold).
      <nav class="fw-nav">
        <a class="fw-nav-brand" href="/"><span class="fw-nav-dot"></span>Fernwell</a>
        <div class="fw-nav-links"><a class="is-active" href="#">Invoices</a><a href="#">Clients</a></div>
@@ -12,7 +12,7 @@
    Below 600px the inline links hide and the toggle + dropdown take over. */
 .fw-nav {
   position: relative;
-  background: var(--fw-plum);
+  background: var(--fw-secondary);
   border-radius: var(--fw-r-lg);
   padding: var(--fw-sp-4) var(--fw-sp-5);
   display: flex;
@@ -21,7 +21,7 @@
   gap: var(--fw-sp-4);
   box-shadow: var(--fw-shadow-md);
   font-family: var(--fw-font-body);
-  color: var(--fw-on-brand);
+  color: var(--fw-on-secondary);
 }
 
 .fw-nav-sticky {
@@ -31,7 +31,7 @@
 }
 
 .fw-nav-brand {
-  color: var(--fw-on-brand);
+  color: var(--fw-on-secondary);
   font-family: var(--fw-font-display);
   font-weight: 800;
   font-size: 18px;
@@ -45,14 +45,14 @@
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
 }
 
 /* Hexagon variant of the brand mark (the HunnyDo comb cell). */
 .fw-nav-hex {
   width: 16px;
   height: 16px;
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
   clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
 }
 
@@ -63,7 +63,7 @@
 }
 
 .fw-nav-links a {
-  color: var(--fw-on-brand-soft);
+  color: var(--fw-on-secondary-soft);
   font-size: 14px;
   font-weight: 600;
   text-decoration: none;
@@ -71,12 +71,12 @@
 }
 
 .fw-nav-links a:hover {
-  color: var(--fw-on-brand);
+  color: var(--fw-on-secondary);
 }
 
 .fw-nav-links a.is-active {
-  color: var(--fw-on-brand);
-  border-bottom: 2px solid var(--fw-marigold);
+  color: var(--fw-on-secondary);
+  border-bottom: 2px solid var(--fw-primary);
   padding-bottom: 3px;
 }
 
@@ -90,13 +90,13 @@
   width: 34px;
   height: 34px;
   border-radius: var(--fw-r-sm);
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 800;
   font-size: 13px;
-  color: var(--fw-ink-fixed);
+  color: var(--fw-on-primary);
   font-family: var(--fw-font-display);
   border: none;
   padding: 0;
@@ -109,9 +109,9 @@
   width: 38px;
   height: 38px;
   border-radius: var(--fw-r-sm);
-  background: var(--fw-on-brand-fill);
-  border: var(--fw-border-w) solid var(--fw-on-brand-line);
-  color: var(--fw-on-brand);
+  background: var(--fw-on-secondary-fill);
+  border: var(--fw-border-w) solid var(--fw-on-secondary-line);
+  color: var(--fw-on-secondary);
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -123,7 +123,7 @@
 
 .fw-nav-btn:hover,
 .fw-nav-toggle:hover {
-  background: var(--fw-on-brand-line);
+  background: var(--fw-on-secondary-line);
 }
 
 .fw-nav-btn:focus-visible,
@@ -142,7 +142,7 @@
 .fw-nav-toggle span {
   width: 16px;
   height: 2px;
-  background: var(--fw-on-brand);
+  background: var(--fw-on-secondary);
   border-radius: 2px;
   transition: transform var(--fw-motion-base) var(--fw-motion-ease), opacity var(--fw-motion-base) var(--fw-motion-ease);
 }
@@ -160,7 +160,7 @@
   z-index: 20;
   background: var(--fw-surface);
   border-radius: var(--fw-r-lg);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   box-shadow: var(--fw-shadow-lg);
   padding: var(--fw-sp-3);
   display: flex;
@@ -186,7 +186,7 @@
 
 .fw-nav-dropdown a,
 .fw-nav-dropdown button {
-  color: var(--fw-ink);
+  color: var(--fw-text);
   font-family: var(--fw-font-body);
   font-size: 15px;
   font-weight: 600;
@@ -202,12 +202,12 @@
 
 .fw-nav-dropdown a:hover,
 .fw-nav-dropdown button:hover {
-  background: var(--fw-cloud);
+  background: var(--fw-bg);
 }
 
 .fw-nav-dropdown a.is-active {
-  background: var(--fw-marigold);
-  color: var(--fw-ink-fixed);
+  background: var(--fw-primary);
+  color: var(--fw-on-primary);
 }
 
 @media (max-width: 600px) {

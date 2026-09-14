@@ -24,17 +24,17 @@
 .fw-field > label {
   font-size: 13px;
   font-weight: 600;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }
 
 .fw-hint {
   font-size: 12px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }
 
 .fw-error-msg {
   font-size: 12px;
-  color: var(--fw-coral);
+  color: var(--fw-danger);
   font-weight: 600;
 }
 
@@ -42,7 +42,7 @@
    otherwise reserved for errors, but this mark is universally recognised.
    Always pair it with .fw-sr-only "(required)" text. */
 .fw-required {
-  color: var(--fw-coral);
+  color: var(--fw-danger);
   font-weight: 700;
   margin-left: 3px;
 }
@@ -56,9 +56,9 @@
   line-height: 1.4;
   padding: 11px 14px;
   border-radius: var(--fw-r-sm);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   background: var(--fw-surface);
-  color: var(--fw-ink);
+  color: var(--fw-text);
   outline: none;
   width: 100%;
   transition: border-color var(--fw-motion-fast) var(--fw-motion-ease),
@@ -76,7 +76,7 @@ textarea.fw-input,
 .fw-input::placeholder,
 .fw-field input::placeholder,
 .fw-field textarea::placeholder {
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   opacity: 1;
 }
 
@@ -84,7 +84,7 @@ textarea.fw-input,
 .fw-field input:focus,
 .fw-field select:focus,
 .fw-field textarea:focus {
-  border-color: var(--fw-marigold-dk);
+  border-color: var(--fw-primary-hover);
   box-shadow: var(--fw-focus-ring);
 }
 
@@ -95,22 +95,22 @@ textarea.fw-input,
 .fw-field.is-error textarea,
 .fw-field input.is-error,
 .fw-field textarea.is-error {
-  border-color: var(--fw-coral);
+  border-color: var(--fw-danger);
 }
 
-/* Disabled fields mute to the Cloud-dim surface and drop the border contrast —
+/* Disabled fields mute to the bg-dim surface and drop the border contrast —
    "not available" rather than "empty". */
 .fw-input:disabled,
 .fw-field input:disabled,
 .fw-field select:disabled,
 .fw-field textarea:disabled {
-  background: var(--fw-cloud-dim);
-  color: var(--fw-ink-soft);
-  border-color: var(--fw-cloud-dim);
+  background: var(--fw-bg-dim);
+  color: var(--fw-text-soft);
+  border-color: var(--fw-bg-dim);
   cursor: not-allowed;
 }
 
 .fw-field.is-disabled .fw-label,
 .fw-field.is-disabled > label {
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }

@@ -7,7 +7,7 @@
 .fw-stat-label {
   font-family: var(--fw-font-body);
   font-size: 13px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   font-weight: 600;
 }
 
@@ -16,22 +16,22 @@
   font-size: 32px;
   font-weight: 800;
   line-height: 1.1;
-  color: var(--fw-ink);
+  color: var(--fw-text);
   margin-top: 4px;
 }
 
 .fw-stat-value .fw-stat-unit {
   font-size: 18px;
-  color: var(--fw-marigold-dk);
+  color: var(--fw-primary-hover);
 }
 
 .fw-stat-delta {
   font-family: var(--fw-font-mono);
   font-size: 12px;
   font-weight: 600;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   margin-top: 4px;
 }
 
-.fw-stat-delta.is-up { color: var(--fw-meadow); }
-.fw-stat-delta.is-down { color: var(--fw-coral); }
+.fw-stat-delta.is-up { color: var(--fw-success); }
+.fw-stat-delta.is-down { color: var(--fw-danger); }

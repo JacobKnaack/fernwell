@@ -16,42 +16,47 @@
   .kit-wrap section { margin-bottom: var(--fw-sp-9); }
   .intro { margin-bottom: var(--fw-sp-9); }
   .intro h1 { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; max-width: 14ch; margin-top: var(--fw-sp-5); }
-  .intro .lede { font-size: 18px; color: var(--fw-ink-soft); max-width: 56ch; margin-top: var(--fw-sp-4); }
+  .intro .lede { font-size: 18px; color: var(--fw-text-soft); max-width: 56ch; margin-top: var(--fw-sp-4); }
   .kit-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--fw-sp-4); margin-bottom: var(--fw-sp-5); flex-wrap: wrap; }
   .kit-sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
-  .kit-sec-head .num { font-family: var(--fw-font-mono); font-size: 13px; color: var(--fw-ink-soft); }
-  .sec-note { font-size: 15px; color: var(--fw-ink-soft); max-width: 64ch; margin-bottom: var(--fw-sp-5); }
+  .kit-sec-head .num { font-family: var(--fw-font-mono); font-size: 13px; color: var(--fw-text-soft); }
+  .sec-note { font-size: 15px; color: var(--fw-text-soft); max-width: 64ch; margin-bottom: var(--fw-sp-5); }
   .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--fw-sp-4); }
-  .swatch { border-radius: var(--fw-r-lg); overflow: hidden; box-shadow: var(--fw-shadow-sm); background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-cloud-dim); }
+  .swatch { border-radius: var(--fw-r-lg); overflow: hidden; box-shadow: var(--fw-shadow-sm); background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-bg-dim); }
   .swatch .chip { height: 88px; }
   .swatch .meta { padding: var(--fw-sp-3) var(--fw-sp-4); }
   .swatch .name { font-weight: 700; font-size: 14px; }
-  .swatch .hex { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); margin-top: 2px; }
-  .type-row { display: flex; align-items: baseline; gap: var(--fw-sp-5); padding: var(--fw-sp-4) 0; border-bottom: var(--fw-border-w) solid var(--fw-cloud-dim); flex-wrap: wrap; }
+  .swatch .hex { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); margin-top: 2px; }
+  .type-row { display: flex; align-items: baseline; gap: var(--fw-sp-5); padding: var(--fw-sp-4) 0; border-bottom: var(--fw-border-w) solid var(--fw-bg-dim); flex-wrap: wrap; }
   .type-row:last-child { border-bottom: none; }
-  .type-row .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); width: 120px; flex-shrink: 0; }
+  .type-row .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); width: 120px; flex-shrink: 0; }
   .type-display { font-family: var(--fw-font-display); font-weight: 800; }
   .type-mono { font-family: var(--fw-font-mono); font-weight: 600; }
   .shape-row { display: flex; gap: var(--fw-sp-5); flex-wrap: wrap; align-items: flex-end; }
   .shape-demo { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); }
-  .shape-demo .box { width: 88px; height: 88px; background: var(--fw-plum); }
-  .shape-demo .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); }
-  .spinner-caption { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); font-size: 13px; color: var(--fw-ink-soft); font-weight: 600; }
+  .shape-demo .box { width: 88px; height: 88px; background: var(--fw-secondary); }
+  .shape-demo .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); }
+  .spinner-caption { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); font-size: 13px; color: var(--fw-text-soft); font-weight: 600; }
   .kv { display: grid; grid-template-columns: 180px 1fr; gap: var(--fw-sp-2) var(--fw-sp-5); font-size: 14px; margin: 0; }
-  .kv dt { font-family: var(--fw-font-mono); font-weight: 600; color: var(--fw-plum); }
-  .kv dd { margin: 0; color: var(--fw-ink-soft); }
+  .kv dt { font-family: var(--fw-font-mono); font-weight: 600; color: var(--fw-secondary); }
+  .kv dd { margin: 0; color: var(--fw-text-soft); }
   @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } }
-  .kit-note { border-top: var(--fw-border-w) solid var(--fw-cloud-dim); padding-top: var(--fw-sp-5); font-size: 13px; color: var(--fw-ink-soft); }
+  .kit-note { border-top: var(--fw-border-w) solid var(--fw-bg-dim); padding-top: var(--fw-sp-5); font-size: 13px; color: var(--fw-text-soft); }
   .kit-note code, pre code { font-family: var(--fw-font-mono); font-size: 12.5px; }
-  pre { background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-cloud-dim); border-radius: var(--fw-r-md); padding: var(--fw-sp-4); overflow-x: auto; margin: 0 0 var(--fw-sp-4); font-size: 12.5px; line-height: 1.5; }
+  pre { background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-bg-dim); border-radius: var(--fw-r-md); padding: var(--fw-sp-4); overflow-x: auto; margin: 0 0 var(--fw-sp-4); font-size: 12.5px; line-height: 1.5; }
   .stack { display: flex; flex-direction: column; gap: var(--fw-sp-3); }
   .field-h4 { font-size: 18px; margin-bottom: var(--fw-sp-5); }
   .install-grid { display: flex; flex-direction: column; gap: var(--fw-sp-6); }
   .install-block h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: var(--fw-sp-2); }
-  .install-block p { font-size: 14px; color: var(--fw-ink-soft); max-width: 64ch; margin-bottom: var(--fw-sp-3); }
+  .install-block p { font-size: 14px; color: var(--fw-text-soft); max-width: 64ch; margin-bottom: var(--fw-sp-3); }
   .install-block pre { margin-bottom: var(--fw-sp-3); }
   .install-block pre:last-child { margin-bottom: 0; }
-  .install-block p code { font-family: var(--fw-font-mono); font-size: 13px; background: var(--fw-cloud-dim); padding: 1px 5px; border-radius: 4px; }
+  .install-block p code { font-family: var(--fw-font-mono); font-size: 13px; background: var(--fw-bg-dim); padding: 1px 5px; border-radius: 4px; }
+  .theme-editor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--fw-sp-4); }
+  .theme-editor-role { display: flex; align-items: center; gap: var(--fw-sp-3); }
+  .theme-editor-role input[type="color"] { width: 36px; height: 36px; padding: 0; border: var(--fw-border-w) solid var(--fw-bg-dim); border-radius: var(--fw-r-sm); background: none; cursor: pointer; flex-shrink: 0; }
+  .theme-editor-role label { font-size: 13px; font-weight: 600; }
+  #theme-editor-css { white-space: pre-wrap; word-break: break-word; }
 </style>
 </head>
 <body class="fw-root">
@@ -103,20 +108,39 @@ toast.show('Invoice sent');</code></pre>
   <!-- COLOR -->
   <section>
     <div class="kit-sec-head"><h2>Color</h2><span class="num">01</span></div>
-    <p class="sec-note">Marigold carries the energy — used sparingly, only for the action you most want taken. Plum grounds the interface and does the heavy lifting in navigation and headers. Ink and Cloud are doing 90% of the actual work on any given screen.</p>
+    <p class="sec-note">Tokens are named by role, not by hex — Primary carries the energy and is used sparingly, only for the action you most want taken; Secondary grounds the interface and does the heavy lifting in navigation and headers; Text and Background do 90% of the actual work on any given screen. Fernwell's default palette (Marigold, Plum, Meadow…) is just the starting value for each role — retheme any of them, see <a href="#theming">Theming</a> below.</p>
     <div class="swatch-grid">
-      <div class="swatch"><div class="chip" style="background:var(--fw-ink)"></div><div class="meta"><div class="name">Ink</div><div class="hex">--fw-ink</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-cloud); border-bottom:var(--fw-border-w) solid var(--fw-cloud-dim)"></div><div class="meta"><div class="name">Cloud</div><div class="hex">--fw-cloud</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-marigold)"></div><div class="meta"><div class="name">Marigold</div><div class="hex">--fw-marigold</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-plum)"></div><div class="meta"><div class="name">Plum</div><div class="hex">--fw-plum</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-meadow)"></div><div class="meta"><div class="name">Meadow</div><div class="hex">--fw-meadow</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-coral)"></div><div class="meta"><div class="name">Coral</div><div class="hex">--fw-coral</div></div></div>
-      <div class="swatch"><div class="chip" style="background:var(--fw-sky)"></div><div class="meta"><div class="name">Sky</div><div class="hex">--fw-sky</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-text)"></div><div class="meta"><div class="name">Text</div><div class="hex">--fw-text · Ink</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-bg); border-bottom:var(--fw-border-w) solid var(--fw-bg-dim)"></div><div class="meta"><div class="name">Background</div><div class="hex">--fw-bg · Cloud</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-primary)"></div><div class="meta"><div class="name">Primary</div><div class="hex">--fw-primary · Marigold</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-secondary)"></div><div class="meta"><div class="name">Secondary</div><div class="hex">--fw-secondary · Plum</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-success)"></div><div class="meta"><div class="name">Success</div><div class="hex">--fw-success · Meadow</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-warning)"></div><div class="meta"><div class="name">Warning</div><div class="hex">--fw-warning</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-danger)"></div><div class="meta"><div class="name">Danger</div><div class="hex">--fw-danger · Coral</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-info)"></div><div class="meta"><div class="name">Info</div><div class="hex">--fw-info · Sky</div></div></div>
     </div>
     <dl class="kv" style="margin-top:var(--fw-sp-5)">
-      <dt>Dark theme</dt><dd>Not a straight inversion. Marigold stays the same hex in both themes. Neutrals move from warm cream to near-black (never pure black), status colors lift 1–2 steps lighter, and tinted backgrounds become low-opacity washes.</dd>
-      <dt>Ink-Fixed</dt><dd>Anything sitting on Marigold (buttons, avatars) uses <code>--fw-ink-fixed</code> for text, so it never fights the theme toggle.</dd>
-      <dt>Overriding</dt><dd>Redeclare any token after the stylesheet: <code>:root { --fw-marigold: #f0b030; }</code>. Every component reads tokens, none hardcode values.</dd>
+      <dt>Dark theme</dt><dd>Not a straight inversion. Primary stays the same hex in both themes by default. Neutrals move from warm cream to near-black (never pure black), status colors lift 1–2 steps lighter, and tinted backgrounds become low-opacity washes.</dd>
+      <dt>on-primary</dt><dd>Anything sitting on Primary (buttons, avatars) uses <code>--fw-on-primary</code> for text, so it never fights the theme toggle — or a retheme.</dd>
+      <dt>Seeds vs. derived</dt><dd>The eight swatches above (plus Surface and a few translucent neutrals) are <em>seeds</em> — override these. Hovers, tints, the focus ring, and CTA glows are <em>derived</em> from them with <code>color-mix()</code> and follow automatically.</dd>
+    </dl>
+  </section>
+
+  <!-- THEMING -->
+  <section id="theming">
+    <div class="kit-sec-head"><h2>Theming</h2><span class="num">01b</span></div>
+    <p class="sec-note">Every seed token can be overridden — in a stylesheet or at runtime — and every derived token (hovers, tints, the focus ring, CTA glows) follows automatically, in both themes. Try it:</p>
+    <div class="fw-card theme-editor" id="theme-editor">
+      <div class="theme-editor-grid" id="theme-editor-grid"><!-- populated by JS --></div>
+      <div class="fw-row" style="margin-top:var(--fw-sp-4)">
+        <button class="fw-btn fw-btn-ghost" type="button" id="theme-editor-reset">Reset to defaults</button>
+      </div>
+      <pre id="theme-editor-css" style="margin-top:var(--fw-sp-4)"><code>:root { }</code></pre>
+    </div>
+    <dl class="kv" style="margin-top:var(--fw-sp-5)">
+      <dt>CSS — static</dt><dd>Redeclare any seed after the stylesheet — it wins over both themes, no need to repeat it for <code>[data-theme="dark"]</code>: <code>:root { --fw-primary: #2266ff; }</code>. Set <code>[data-theme="dark"] { --fw-primary: #5c9dff; }</code> too if you want a different value in dark.</dd>
+      <dt>JS — runtime</dt><dd><code>Fernwell.theme.setTokens({ primary: '#2266ff' })</code> — same effect, applied on the fly. Pass <code>{ light: {…}, dark: {…} }</code> to split by theme, and <code>{ scope: '.tenant-acme' }</code> to theme one subtree instead of the whole page. <code>Fernwell.theme.resetTokens()</code> clears every runtime override; <code>Fernwell.theme.getToken('primary')</code> reads the live, resolved value.</dd>
+      <dt>Scoped example</dt><dd><code>Fernwell.theme.setTokens({ primary: '#a33' }, { scope: '.tenant-acme' })</code> retints just <code>.tenant-acme</code> — everything outside it keeps the default palette.</dd>
     </dl>
   </section>
 
@@ -128,7 +152,7 @@ toast.show('Invoice sent');</code></pre>
       <div class="type-row"><span class="lbl">Display / 44</span><span class="type-display" style="font-size:40px">Get paid on time</span></div>
       <div class="type-row"><span class="lbl">Display / 28</span><span class="type-display" style="font-size:28px">Invoices sent this week</span></div>
       <div class="type-row"><span class="lbl">Body / 16</span><span style="font-size:16px">Set a due date, add your terms, and we'll remind clients before it's late.</span></div>
-      <div class="type-row"><span class="lbl">Body / 14</span><span style="font-size:14px; color:var(--fw-ink-soft)">Secondary text and helper copy sits here, always Ink-Soft, never pure gray.</span></div>
+      <div class="type-row"><span class="lbl">Body / 14</span><span style="font-size:14px; color:var(--fw-text-soft)">Secondary text and helper copy sits here, always Ink-Soft, never pure gray.</span></div>
       <div class="type-row"><span class="lbl">Mono / 13</span><span class="type-mono" style="font-size:13px">INV-04821 · $1,240.00</span></div>
     </div>
   </section>
@@ -183,9 +207,9 @@ toast.show('Invoice sent');</code></pre>
     <div style="height:var(--fw-sp-5)"></div>
     <div class="fw-card">
       <div class="fw-row" style="justify-content:space-around; text-align:center">
-        <div class="spinner-caption"><div class="fw-spinner fw-spinner-sm" style="color:var(--fw-plum)"></div>sm · inline text</div>
-        <div class="spinner-caption"><div class="fw-spinner fw-spinner-md" style="color:var(--fw-plum)"></div>md · cards, rows</div>
-        <div class="spinner-caption"><div class="fw-spinner fw-spinner-lg" style="color:var(--fw-plum)"></div>lg · panel / page</div>
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-sm" style="color:var(--fw-secondary)"></div>sm · inline text</div>
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-md" style="color:var(--fw-secondary)"></div>md · cards, rows</div>
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-lg" style="color:var(--fw-secondary)"></div>lg · panel / page</div>
         <div class="spinner-caption"><button class="fw-btn fw-btn-primary fw-btn-loading" disabled aria-busy="true"><span class="fw-spinner fw-spinner-sm"></span>Sending…</button>in a button</div>
       </div>
     </div>
@@ -295,7 +319,7 @@ toast.show('Invoice sent');</code></pre>
       <span class="fw-tag fw-tag-pending">Pending</span>
       <span class="fw-tag fw-tag-error">Overdue</span>
       <span class="fw-tag fw-tag-info">Draft</span>
-      <span class="fw-tag fw-tag-plum">Pro</span>
+      <span class="fw-tag fw-tag-secondary">Pro</span>
     </div>
     <div class="fw-row" style="margin-top:var(--fw-sp-4)">
       <span class="fw-tag fw-tag-pill fw-tag-live">Done</span>
@@ -409,14 +433,14 @@ toast.show('Invoice sent');</code></pre>
     </dl>
   </section>
 
-  <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet; never fork the CSS.</p>
+  <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet, or at runtime with <code>Fernwell.theme.setTokens()</code> — see <a href="#theming">Theming</a>. Never fork the CSS.</p>
 </div>
 
 <!-- modal -->
 <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
   <div class="fw-modal">
     <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
-    <p style="font-size:14px; color:var(--fw-ink-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
+    <p style="font-size:14px; color:var(--fw-text-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
     <div class="fw-modal-foot">
       <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
       <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
@@ -468,6 +492,62 @@ toast.show('Invoice sent');</code></pre>
     const btn = e.target.querySelector('[type="submit"]');
     setTimeout(() => { Fernwell.loading.resetButtonLoading(btn); Fernwell.toast.show('Client created'); }, 1200);
   });
+
+  // theming: live palette editor — one <input type=color> per seed role
+  (() => {
+    const ROLES = ['primary', 'secondary', 'success', 'warning', 'danger', 'info'];
+    const grid = document.getElementById('theme-editor-grid');
+    const cssPreview = document.getElementById('theme-editor-css').querySelector('code');
+    const toHex = (v) => (v && v.startsWith('#') ? v : '#000000');
+
+    const inputs = ROLES.map((role) => {
+      const wrap = document.createElement('div');
+      wrap.className = 'theme-editor-role';
+      const id = 'theme-role-' + role;
+      const input = document.createElement('input');
+      input.type = 'color';
+      input.id = id;
+      input.dataset.role = role;
+      input.value = toHex(Fernwell.theme.getToken(role));
+      const label = document.createElement('label');
+      label.htmlFor = id;
+      label.textContent = role.charAt(0).toUpperCase() + role.slice(1);
+      wrap.append(input, label);
+      grid.appendChild(wrap);
+      return input;
+    });
+
+    function updateCssPreview() {
+      const lines = inputs.filter((i) => i.dataset.touched).map((i) => `  --fw-${i.dataset.role}: ${i.value};`);
+      cssPreview.textContent = lines.length ? `:root {\n${lines.join('\n')}\n}` : ':root { }';
+    }
+
+    inputs.forEach((input) => {
+      input.addEventListener('input', () => {
+        input.dataset.touched = '1';
+        Fernwell.theme.setTokens({ [input.dataset.role]: input.value });
+        updateCssPreview();
+      });
+    });
+
+    document.getElementById('theme-editor-reset').addEventListener('click', () => {
+      Fernwell.theme.resetTokens();
+      inputs.forEach((input) => {
+        delete input.dataset.touched;
+        input.value = toHex(Fernwell.theme.getToken(input.dataset.role));
+      });
+      updateCssPreview();
+    });
+
+    // Roles with different light/dark defaults (warning, secondary, success, danger,
+    // info) need their swatch refreshed on toggle — untouched inputs only, since a
+    // touched one already applies to both themes.
+    document.addEventListener('fw:themechange', () => {
+      inputs.forEach((input) => {
+        if (!input.dataset.touched) input.value = toHex(Fernwell.theme.getToken(input.dataset.role));
+      });
+    });
+  })();
 
   // toasts
   document.querySelectorAll('[data-toast]').forEach((b) => b.addEventListener('click', () => {

@@ -10,7 +10,7 @@
   display: block;
   background: var(--fw-surface);
   border-radius: var(--fw-r-lg);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   box-shadow: var(--fw-shadow-sm);
   padding: var(--fw-sp-4) var(--fw-sp-5);
   color: inherit;
@@ -55,19 +55,19 @@
   font-family: var(--fw-font-display);
   font-weight: 700;
   font-size: 16px;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }
 
 .fw-list-row-meta {
   font-size: 13px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }
 
 /* Nested sub-items under a row. */
 .fw-sub-list {
   margin: var(--fw-sp-2) 0 0 var(--fw-sp-5);
   padding-left: var(--fw-sp-4);
-  border-left: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border-left: var(--fw-border-w) solid var(--fw-bg-dim);
 }
 
 .fw-sub-list-row {
@@ -79,11 +79,11 @@
 }
 
 .fw-sub-list-row + .fw-sub-list-row {
-  border-top: 1px solid var(--fw-cloud-dim);
+  border-top: 1px solid var(--fw-bg-dim);
 }
 
 .fw-sub-list-title {
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }

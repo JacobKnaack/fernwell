@@ -5,7 +5,7 @@
      </details> */
 .fw-disclosure > summary {
   cursor: pointer;
-  color: var(--fw-plum);
+  color: var(--fw-secondary);
   font-family: var(--fw-font-body);
   font-weight: 600;
   font-size: 13px;
@@ -44,19 +44,19 @@
   font-family: var(--fw-font-mono);
   font-size: 10.5px;
   font-weight: 700;
-  color: var(--fw-plum);
+  color: var(--fw-secondary);
   background: var(--fw-surface);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   border-radius: var(--fw-r-full);
   padding: 1px 7px;
 }
 
 .fw-disclosure-body {
   margin-top: var(--fw-sp-3);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   border-radius: var(--fw-r-md);
   padding: var(--fw-sp-4);
-  background: var(--fw-cloud);
+  background: var(--fw-bg);
   display: flex;
   flex-direction: column;
   gap: var(--fw-sp-3);

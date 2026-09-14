@@ -12,8 +12,8 @@
   border-radius: var(--fw-r-md);
   align-items: flex-start;
   font-family: var(--fw-font-body);
-  color: var(--fw-ink);
-  background: var(--fw-cloud-dim);
+  color: var(--fw-text);
+  background: var(--fw-bg-dim);
 }
 
 .fw-alert-dot {
@@ -22,7 +22,7 @@
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 2px;
-  background: var(--fw-ink-soft);
+  background: var(--fw-text-soft);
 }
 
 .fw-alert-title {
@@ -32,21 +32,21 @@
 
 .fw-alert-body {
   font-size: 13px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   margin-top: 2px;
 }
 
-.fw-alert-success { background: var(--fw-meadow-bg); }
-.fw-alert-success .fw-alert-dot { background: var(--fw-meadow); }
+.fw-alert-success { background: var(--fw-success-bg); }
+.fw-alert-success .fw-alert-dot { background: var(--fw-success); }
 
-.fw-alert-error { background: var(--fw-coral-bg); }
-.fw-alert-error .fw-alert-dot { background: var(--fw-coral); }
+.fw-alert-error { background: var(--fw-danger-bg); }
+.fw-alert-error .fw-alert-dot { background: var(--fw-danger); }
 
-.fw-alert-pending { background: var(--fw-pending-bg); }
-.fw-alert-pending .fw-alert-dot { background: var(--fw-marigold-dk); }
+.fw-alert-pending { background: var(--fw-warning-bg); }
+.fw-alert-pending .fw-alert-dot { background: var(--fw-warning); }
 
-.fw-alert-info { background: var(--fw-sky-bg); }
-.fw-alert-info .fw-alert-dot { background: var(--fw-sky); }
+.fw-alert-info { background: var(--fw-info-bg); }
+.fw-alert-info .fw-alert-dot { background: var(--fw-info); }
 
 /* Alert with a trailing action button: <div class="fw-alert fw-alert-with-action"><div class="fw-alert-main">…</div><button class="fw-btn fw-btn-ghost">…</button></div> */
 .fw-alert-with-action {

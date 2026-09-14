@@ -1,6 +1,6 @@
 /* ---- progress ----
    Determinate bars for anything with a known length; .is-indeterminate for an
-   unknown duration. .is-success turns the fill Meadow once complete.
+   unknown duration. .is-success turns the fill Success (Meadow by default) once complete.
      <div class="fw-progress-label"><span class="fw-progress-name">Uploading</span><span class="fw-progress-pct">64%</span></div>
      <div class="fw-progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"><div class="fw-progress-fill" style="width:64%"></div></div> */
 .fw-progress-label {
@@ -14,19 +14,19 @@
 
 .fw-progress-name {
   font-weight: 600;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }
 
 .fw-progress-pct {
   font-family: var(--fw-font-mono);
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }
 
 .fw-progress {
   position: relative;
   height: 10px;
   border-radius: var(--fw-r-full);
-  background: var(--fw-cloud-dim);
+  background: var(--fw-bg-dim);
   overflow: hidden;
 }
 
@@ -37,13 +37,13 @@
 .fw-progress-fill {
   height: 100%;
   border-radius: var(--fw-r-full);
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
   transition: width 400ms var(--fw-motion-ease);
 }
 
 .fw-progress.is-success .fw-progress-fill,
 .fw-progress-fill.is-success {
-  background: var(--fw-meadow);
+  background: var(--fw-success);
 }
 
 .fw-progress.is-indeterminate .fw-progress-fill {

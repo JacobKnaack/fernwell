@@ -17,7 +17,7 @@
   right: 0;
   z-index: 30;
   background: var(--fw-surface);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   border-radius: var(--fw-r-md);
   box-shadow: var(--fw-shadow-lg);
   max-height: 220px;
@@ -43,23 +43,23 @@
   font-family: var(--fw-font-body);
   font-size: 14px;
   cursor: pointer;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }
 
 .fw-combobox-option:hover,
 .fw-combobox-option.is-active {
-  background: var(--fw-cloud);
+  background: var(--fw-bg);
 }
 
 .fw-combobox-option b {
-  color: var(--fw-marigold-dk);
+  color: var(--fw-primary-hover);
   font-weight: 700;
 }
 
 .fw-combobox-empty {
   padding: 14px 12px;
   font-size: 13px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   text-align: center;
 }
 

@@ -20,7 +20,7 @@
 .fw-pag-label {
   font-family: var(--fw-font-mono);
   font-size: 12px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }
 
 .fw-pag-controls {
@@ -35,9 +35,9 @@
   height: 34px;
   padding: 0 14px;
   border-radius: var(--fw-r-sm);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   background: var(--fw-surface);
-  color: var(--fw-ink);
+  color: var(--fw-text);
   font-family: var(--fw-font-body);
   font-size: 13px;
   font-weight: 600;
@@ -47,7 +47,7 @@
 }
 
 .fw-btn-page:hover {
-  border-color: var(--fw-ink-soft);
+  border-color: var(--fw-text-soft);
   text-decoration: none;
 }
 

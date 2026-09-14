@@ -8,7 +8,7 @@
   flex-shrink: 0;
   width: 24px;
   height: 24px;
-  border: 3px solid var(--fw-cloud-dim);
+  border: 3px solid var(--fw-bg-dim);
   border-top-color: currentColor;
   animation: fw-spin 800ms linear infinite;
 }
@@ -29,6 +29,6 @@
 @media (prefers-reduced-motion: reduce) {
   .fw-spinner {
     animation: fw-pulse-opacity 1.2s ease-in-out infinite;
-    border-top-color: var(--fw-cloud-dim);
+    border-top-color: var(--fw-bg-dim);
   }
 }

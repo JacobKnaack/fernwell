@@ -1,5 +1,5 @@
 /* ---- buttons ----
-   Primary is Marigold and appears once per view. Secondary (Plum) is the
+   Primary (Marigold by default) appears once per view. Secondary (Plum by default) is the
    next-most-important action. Ghost for anything tertiary. If two things feel
    equally important, neither is Primary. */
 .fw-btn {
@@ -35,37 +35,37 @@
 }
 
 .fw-btn-primary {
-  background: var(--fw-marigold);
-  color: var(--fw-ink-fixed);
-  box-shadow: var(--fw-shadow-marigold);
+  background: var(--fw-primary);
+  color: var(--fw-on-primary);
+  box-shadow: var(--fw-shadow-primary);
 }
 
 .fw-btn-primary:hover {
-  background: var(--fw-marigold-dk);
+  background: var(--fw-primary-hover);
 }
 
 .fw-btn-secondary {
-  background: var(--fw-plum);
-  color: var(--fw-on-brand);
+  background: var(--fw-secondary);
+  color: var(--fw-on-secondary);
 }
 
 .fw-btn-secondary:hover {
-  background: var(--fw-plum-dk);
+  background: var(--fw-secondary-hover);
 }
 
 .fw-btn-ghost {
   background: transparent;
-  color: var(--fw-ink);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  color: var(--fw-text);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
 }
 
 .fw-btn-ghost:hover {
-  border-color: var(--fw-ink-soft);
+  border-color: var(--fw-text-soft);
 }
 
 .fw-btn-danger {
-  background: var(--fw-coral-bg);
-  color: var(--fw-coral);
+  background: var(--fw-danger-bg);
+  color: var(--fw-danger);
 }
 
 /* Marketing-density variant: a little more air for hero / CTA placements. */
@@ -93,13 +93,13 @@
   width: 32px;
   height: 32px;
   border-radius: var(--fw-r-sm);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   background: var(--fw-surface);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   flex-shrink: 0;
   padding: 0;
   text-decoration: none;
@@ -107,8 +107,8 @@
 }
 
 .fw-icon-btn:hover {
-  border-color: var(--fw-plum);
-  color: var(--fw-plum);
+  border-color: var(--fw-secondary);
+  color: var(--fw-secondary);
 }
 
 .fw-icon-btn:focus-visible {

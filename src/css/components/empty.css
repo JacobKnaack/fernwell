@@ -18,7 +18,7 @@
   height: 72px;
   margin: 0 auto var(--fw-sp-4);
   border-radius: 38% 62% 60% 40% / 48% 42% 58% 52%;
-  background: linear-gradient(135deg, var(--fw-marigold), var(--fw-marigold-lt));
+  background: linear-gradient(135deg, var(--fw-primary), var(--fw-primary-soft));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,13 +29,13 @@
   font-family: var(--fw-font-display);
   font-size: 17px;
   font-weight: 700;
-  color: var(--fw-ink);
+  color: var(--fw-text);
   margin: 0 0 6px;
 }
 
 .fw-empty-body {
   font-size: 14px;
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
   max-width: 36ch;
   margin: 0 auto var(--fw-sp-4);
 }

@@ -5,8 +5,8 @@
    font/color — so you can skip it and keep your own resets. Element resets
    use :where() so they have zero specificity and any consumer rule wins. */
 .fw-root {
-  background: var(--fw-cloud);
-  color: var(--fw-ink);
+  background: var(--fw-bg);
+  color: var(--fw-text);
   font-family: var(--fw-font-body);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -22,7 +22,7 @@
 
 .fw-root :where(h1, h2, h3, h4) {
   font-family: var(--fw-font-display);
-  color: var(--fw-ink);
+  color: var(--fw-text);
   margin: 0;
 }
 

@@ -8,9 +8,9 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--fw-plum);
+  color: var(--fw-secondary);
   background: var(--fw-surface);
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   padding: 7px 16px;
   border-radius: var(--fw-r-full);
   box-shadow: var(--fw-shadow-sm);
@@ -21,9 +21,9 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
 }
 
 [data-theme="dark"] .fw-eyebrow {
-  color: var(--fw-plum-dk);
+  color: var(--fw-secondary-hover);
 }

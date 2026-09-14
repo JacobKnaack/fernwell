@@ -52,7 +52,7 @@ Fernwell doesn't bundle fonts. Add the three faces (or self-host them) — the t
 
 ### Page defaults (optional)
 
-Components never depend on global styles. If you *want* the system's page defaults — Cloud background, Ink text, Inter body, display-font headings with zero margins — add `fw-root` to `<body>`:
+Components never depend on global styles. If you *want* the system's page defaults — Background colour, Text colour, Inter body, display-font headings with zero margins — add `fw-root` to `<body>`:
 
 ```html
 <body class="fw-root">
@@ -62,7 +62,7 @@ The resets inside `.fw-root` use `:where()`, so any rule of yours wins.
 
 ## Dark theme
 
-Set `data-theme="dark"` on `<html>` (or any ancestor) and every token flips. To remember the choice and honour the OS preference, drop a toggle anywhere:
+Set `data-theme="dark"` on `<html>` (or any ancestor) and every token flips. A `data-theme="light"` ancestor re-asserts light inside a dark page (a light card in a dark app, say). To remember the choice and honour the OS preference, drop a toggle anywhere:
 
 ```html
 <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle
@@ -75,41 +75,86 @@ To avoid a flash of the wrong theme, inline this in `<head>` before the styleshe
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
 ```
 
-Dark mode is not a straight inversion: Marigold stays the same hex in both themes, neutrals go to a near-black that keeps a trace of Plum (never pure black), status colours lift a step lighter, and tinted backgrounds become low-opacity washes.
+Dark mode is not a straight inversion: Primary stays the same hex in both themes by default, neutrals go to a near-black that keeps a trace of Secondary (never pure black), status colours lift a step lighter, and tinted backgrounds become low-opacity washes.
 
 ## Tokens
 
-Every value in the system is a `--fw-*` custom property declared on `:root`. Override any of them after the stylesheet — never fork the CSS:
+Every value in the system is a `--fw-*` custom property, named by **role** (`primary`, `success`, `text`…), not by the default palette (Marigold, Meadow, Ink…) — so retheming never means renaming. The machine-readable source is `fernwell/tokens.json`; a value can reference another token in the same group with `{name}`, resolved to `var(--fw-name)` when the CSS is generated.
+
+### Seeds — override these
+
+Declared literally per theme (or once, for the handful that don't flip). Overriding a seed reflows every derived token below it, in both themes:
 
 ```css
-:root { --fw-marigold: #f0b030; --fw-r-lg: 20px; }
+:root { --fw-primary: #2266ff; --fw-r-lg: 20px; }
 ```
-
-The machine-readable source is `fernwell/tokens.json`.
 
 | Token | Light | Dark | Role |
 | --- | --- | --- | --- |
-| `--fw-ink` | `#1F2430` | `#F2F1EA` | primary text |
-| `--fw-ink-soft` | `#565D6E` | `#9CA1B0` | secondary text — never pure gray |
-| `--fw-ink-fixed` | `#1F2430` | `#1F2430` | text on Marigold; never flips |
-| `--fw-cloud` | `#F5F6F1` | `#14161C` | page background |
-| `--fw-cloud-dim` | `#EAEBE4` | `#2B2F3B` | dividers, input borders |
+| `--fw-text` | `#1F2430` | `#F2F1EA` | primary text |
+| `--fw-text-soft` | `#565D6E` | `#9CA1B0` | secondary text — never pure gray |
+| `--fw-bg` | `#F5F6F1` | `#14161C` | page background |
+| `--fw-bg-dim` | `#EAEBE4` | `#2B2F3B` | dividers, input borders |
 | `--fw-surface` | `#FFFFFF` | `#1D2029` | cards, panels |
-| `--fw-marigold` / `-dk` / `-lt` | `#FFC145` / `#E8A521` / `#FFD988` | `#FFC145` / `#FFD166` / `#FFD988` | primary brand / CTA |
-| `--fw-plum` / `-dk` / `-bg` | `#4C3A73` / `#392C58` / `#EEEAF6` | `#6B54A3` / `#7E68B5` / wash | secondary brand, nav |
-| `--fw-meadow` / `-bg` | `#3FA672` / `#E6F5EC` | `#55D194` / wash | success |
-| `--fw-coral` / `-bg` | `#E85B4F` / `#FCEAE8` | `#FF8478` / wash | error / danger |
-| `--fw-sky` / `-bg` | `#3E8FD0` / `#E8F2FA` | `#6BB3E8` / wash | info |
-| `--fw-pending-bg` | `#FFF3DC` | wash | pending / waiting |
-| `--fw-on-brand` / `-soft` / `-fill` / `-line` | white + alphas | same | text and controls on Plum |
-| `--fw-overlay` / `--fw-overlay-soft` | ink alphas | black alphas | modal / drawer backdrops |
-| `--fw-focus-ring` | `0 0 0 4px rgba(255,193,69,.25)` | same | box-shadow focus ring |
+| `--fw-primary` | `#FFC145` (Marigold) | same | primary brand / CTA |
+| `--fw-secondary` | `#4C3A73` (Plum) | `#6B54A3` | secondary brand, nav |
+| `--fw-success` | `#3FA672` (Meadow) | `#55D194` | success |
+| `--fw-warning` | `#E8A521` | `#FFD166` | pending / waiting — independent of Primary |
+| `--fw-danger` | `#E85B4F` (Coral) | `#FF8478` | error / danger |
+| `--fw-info` | `#3E8FD0` (Sky) | `#6BB3E8` | info |
+| `--fw-on-primary` | `#1F2430` | same | text on Primary surfaces; never flips |
+| `--fw-on-secondary` | `#FFFFFF` | same | text on Secondary / brand surfaces (nav, footer, banners) |
+| `--fw-overlay` / `--fw-overlay-soft` | text-tinted alphas | black alphas | modal / drawer backdrops |
+| `--fw-shadow-sm` / `-md` / `-lg` | text-tinted | black | elevation |
 | `--fw-font-display` / `-body` / `-mono` | Plus Jakarta Sans / Inter / IBM Plex Mono | | headlines / UI / numbers |
 | `--fw-sp-1` … `--fw-sp-9` | `4 8 12 16 24 32 48 64 96` px | | 8pt spacing scale |
 | `--fw-r-sm` / `-md` / `-lg` / `-xl` / `-full` | `10 16 24 32 999` px | | inputs / buttons / cards / modals / pills |
-| `--fw-shadow-sm` / `-md` / `-lg` / `-marigold` / `-meadow` | ink-tinted | black | elevation |
 | `--fw-border-w` | `1.5px` | | the one border weight |
 | `--fw-motion-fast` / `-base` / `-ease` | `120ms` / `180ms` / `ease` | | controls / panels |
+
+### Derived — follow automatically
+
+Computed from the seeds above with `color-mix()`. Never override these directly — override the seed they're built from instead:
+
+| Token | Formula | Role |
+| --- | --- | --- |
+| `--fw-primary-hover` | mix of Primary + Text | button hover / active — darkens in light, brightens in dark |
+| `--fw-primary-soft` | mix of Primary + white | highlight (empty-state blob gradient) |
+| `--fw-secondary-hover` | mix of Secondary + Text | secondary button hover |
+| `--fw-secondary-bg` / `-success-bg` / `-warning-bg` / `-danger-bg` / `-info-bg` | mix of the role colour + Surface (light) / transparent (dark) | tag / alert / toast tints — opaque pastel in light, low-opacity wash in dark |
+| `--fw-on-secondary-soft` / `-fill` / `-line` | Secondary-text alphas | secondary text / control fill / border on Secondary surfaces |
+| `--fw-focus-ring` | `0 0 0 4px` mix of Primary + transparent | box-shadow focus ring |
+| `--fw-shadow-primary` / `-success` | mix of the role colour + transparent | CTA / success glow |
+
+## Theming
+
+Override any **seed** token and every derived token follows automatically, in both themes — no need to fork the CSS or hand-tune the tokens it feeds.
+
+**CSS — static.** Redeclare a seed after the stylesheet; it wins over `[data-theme="dark"]` too, so you don't need to repeat it per theme:
+
+```css
+:root { --fw-primary: #2266ff; }
+/* only if you want a *different* value in dark: */
+[data-theme="dark"] { --fw-primary: #5c9dff; }
+```
+
+This works because Fernwell's own token declarations live in `@layer fw-tokens` — an unlayered rule (yours, unless you also use `@layer`) always beats a layered one, regardless of selector specificity or source order. If your app declares its own CSS layers, list them (e.g. `@layer reset, base, components;`) before importing Fernwell's CSS so `fw-tokens` isn't implicitly nested inside one of them.
+
+**JS — runtime.** For per-tenant branding, a user-picked accent, or a live preview:
+
+```js
+import { theme } from 'fernwell';
+
+theme.setTokens({ primary: '#2266ff' });                                    // both themes
+theme.setTokens({ light: { primary: '#2266ff' }, dark: { primary: '#5c9dff' } }); // per theme
+theme.setTokens({ secondary: '#a33' }, { scope: '.tenant-acme' });           // one subtree
+theme.getToken('primary');                                                  // live resolved value, e.g. '#2266ff'
+theme.resetTokens();                                                        // clear every runtime override
+```
+
+Runtime overrides render into one `<style data-fw-tokens>` appended to `<head>` and win over both the `@layer fw-tokens` defaults and any static override, so `setTokens` always has the last word.
+
+**Browser support.** `color-mix()` and `@layer` need Chrome 111+, Safari 16.2+, Firefox 113+. There's no polyfill shipped — on an older browser the seed tokens still apply, but derived tokens fall back to whatever the browser does with an unsupported `color-mix()` value (typically the property's initial value), so hovers/tints/focus rings may go missing rather than mis-colour.
 
 ## Components
 
@@ -119,7 +164,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | --- | --- |
 | Button | `.fw-btn` + `.fw-btn-primary` `-secondary` `-ghost` `-danger` `-lg`; `.fw-btn-loading`; `.fw-icon-btn` |
 | Card | `.fw-card` |
-| Tag | `.fw-tag` + `-live` `-pending` `-error` `-info` `-plum`; `.fw-tag-pill` (compact, untilted) |
+| Tag | `.fw-tag` + `-live` `-pending` `-error` `-info` `-secondary`; `.fw-tag-pill` (compact, untilted) |
 | Eyebrow | `.fw-eyebrow` |
 | Field | `.fw-field` (`.fw-field-full`), `.fw-label`, `.fw-input`, `.fw-hint`, `.fw-error-msg`, `.fw-required`; `.is-error`, `.is-disabled` |
 | Selection | `.fw-checkbox` / `.fw-radio` (`<input>` + `.fw-box`), `.fw-toggle` (`<input>` + `.fw-track > .fw-thumb`), `.fw-option-group` (`-inline`) |
@@ -156,10 +201,23 @@ Programmatic API:
 ```js
 import { theme, combobox, modal, nav, loading, toast } from 'fernwell';
 
-theme.get(); theme.set('dark'); theme.toggle();
-const cb = combobox(inputEl, { options: ['Seattle', 'Portland'], onSelect(v) {} }); cb.setOptions([...]); cb.destroy();
-modal.open('confirm'); modal.close('confirm');           // works for drawers too
-loading.setButtonLoading(btn, 'Sending…'); loading.resetButtonLoading(btn);
+theme.get();
+theme.set('dark');
+theme.toggle();
+theme.setTokens({ primary: '#2266ff' }); theme.resetTokens(); theme.getToken('primary'); // see Theming
+
+const cb = combobox(inputEl,
+  {
+    options: ['Seattle', 'Portland'],
+    onSelect(v) {} 
+  }
+);
+cb.setOptions([...]);
+cb.destroy();
+modal.open('confirm');
+modal.close('confirm'); // works for drawers too
+loading.setButtonLoading(btn, 'Sending…');
+loading.resetButtonLoading(btn);
 toast.show('That card was declined', { variant: 'error', duration: 6000 });
 ```
 
@@ -167,7 +225,7 @@ Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` /
 
 ## Principles
 
-**Colour.** Marigold carries the energy — one primary action per view, never decoration. Plum grounds navigation and headers. Ink and Cloud do 90% of the work. Status colours (Meadow, Coral, Sky) each pair a saturated foreground with a soft tint so status is never confusable with a CTA.
+**Colour.** Primary (Marigold by default) carries the energy — one action per view, never decoration. Secondary (Plum) grounds navigation and headers. Text and Background do 90% of the work. Status colours (Success/Meadow, Warning, Danger/Coral, Info/Sky) each pair a saturated foreground with a soft tint so status is never confusable with a CTA. All of it is retheme-able — see [Theming](#theming).
 
 **Type.** Plus Jakarta Sans for anything that should feel like a voice; Inter for anything read quickly and often; Plex Mono for numbers and IDs.
 

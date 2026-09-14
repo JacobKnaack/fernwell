@@ -14,7 +14,7 @@ import * as loading from './loading';
 import * as toast from './toast';
 
 export { theme, combobox, modal, nav, loading, toast };
-export type { Theme } from './theme';
+export type { Theme, TokenOverrides, TokenThemeOverrides } from './theme';
 export type { ComboboxOptions, ComboboxInstance } from './combobox';
 export type { ToastVariant, ToastOptions } from './toast';
 

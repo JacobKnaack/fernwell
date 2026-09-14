@@ -1,7 +1,7 @@
 /* ---- selection controls (checkbox, radio, toggle) ----
    Native inputs are visually hidden but stay in the DOM and fully keyboard /
    screen-reader operable — the styled box is a sibling driven purely by CSS,
-   never a replacement control. Marigold marks the "on" state everywhere.
+   never a replacement control. Primary (Marigold by default) marks the "on" state everywhere.
 
    Markup:
      <label class="fw-checkbox"><input type="checkbox"><span class="fw-box"></span><span>Label</span></label>
@@ -18,7 +18,7 @@
   font-family: var(--fw-font-body);
   font-size: 14px;
   font-weight: 600;
-  color: var(--fw-ink);
+  color: var(--fw-text);
 }
 
 .fw-checkbox input,
@@ -40,7 +40,7 @@
 .fw-checkbox input:disabled ~ span,
 .fw-radio input:disabled ~ span,
 .fw-toggle input:disabled ~ span {
-  color: var(--fw-ink-soft);
+  color: var(--fw-text-soft);
 }
 
 .fw-option-group {
@@ -60,7 +60,7 @@
   width: 20px;
   height: 20px;
   border-radius: 6px;
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   background: var(--fw-surface);
   display: flex;
   align-items: center;
@@ -70,21 +70,21 @@
 }
 
 /* The checkmark is the same path used on the HunnyDo logomark, drawn in
-   Ink-Fixed so it stays legible on Marigold in both themes. */
+   on-primary so it stays legible on Primary (Marigold) in both themes. */
 .fw-checkbox .fw-box::after {
   content: '';
   width: 12px;
   height: 12px;
   opacity: 0;
-  background-color: var(--fw-ink-fixed);
+  background-color: var(--fw-on-primary);
   -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5L6.2 11.5L13 4.5' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5L6.2 11.5L13 4.5' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
   transition: opacity 100ms var(--fw-motion-ease);
 }
 
 .fw-checkbox input:checked + .fw-box {
-  background: var(--fw-marigold);
-  border-color: var(--fw-marigold);
+  background: var(--fw-primary);
+  border-color: var(--fw-primary);
 }
 
 .fw-checkbox input:checked + .fw-box::after {
@@ -96,8 +96,8 @@
 }
 
 .fw-checkbox input:disabled + .fw-box {
-  background: var(--fw-cloud-dim);
-  border-color: var(--fw-cloud-dim);
+  background: var(--fw-bg-dim);
+  border-color: var(--fw-bg-dim);
 }
 
 /* ---- radio ---- */
@@ -105,7 +105,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
   background: var(--fw-surface);
   display: flex;
   align-items: center;
@@ -124,11 +124,11 @@
 }
 
 .fw-radio input:checked + .fw-box {
-  border-color: var(--fw-marigold);
+  border-color: var(--fw-primary);
 }
 
 .fw-radio input:checked + .fw-box::after {
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
 }
 
 .fw-radio input:focus-visible + .fw-box {
@@ -136,8 +136,8 @@
 }
 
 .fw-radio input:disabled + .fw-box {
-  background: var(--fw-cloud-dim);
-  border-color: var(--fw-cloud-dim);
+  background: var(--fw-bg-dim);
+  border-color: var(--fw-bg-dim);
 }
 
 /* ---- toggle ---- */
@@ -145,7 +145,7 @@
   width: 42px;
   height: 24px;
   border-radius: var(--fw-r-full);
-  background: var(--fw-cloud-dim);
+  background: var(--fw-bg-dim);
   position: relative;
   flex-shrink: 0;
   transition: background 160ms var(--fw-motion-ease);
@@ -164,7 +164,7 @@
 }
 
 .fw-toggle input:checked + .fw-track {
-  background: var(--fw-marigold);
+  background: var(--fw-primary);
 }
 
 .fw-toggle input:checked + .fw-track .fw-thumb {

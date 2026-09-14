@@ -13,8 +13,8 @@
   padding: 5px 12px;
   border-radius: var(--fw-r-md);
   transform: rotate(-2deg);
-  background: var(--fw-cloud-dim);
-  color: var(--fw-ink-soft);
+  background: var(--fw-bg-dim);
+  color: var(--fw-text-soft);
   white-space: nowrap;
 }
 
@@ -35,8 +35,8 @@
 }
 
 .fw-tag-live {
-  background: var(--fw-meadow-bg);
-  color: var(--fw-meadow);
+  background: var(--fw-success-bg);
+  color: var(--fw-success);
 }
 
 .fw-tag-live::before {
@@ -44,27 +44,27 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--fw-meadow);
+  background: var(--fw-success);
 }
 
 .fw-tag-pending {
-  background: var(--fw-pending-bg);
-  color: var(--fw-marigold-dk);
+  background: var(--fw-warning-bg);
+  color: var(--fw-warning);
 }
 
 .fw-tag-error {
-  background: var(--fw-coral-bg);
-  color: var(--fw-coral);
+  background: var(--fw-danger-bg);
+  color: var(--fw-danger);
 }
 
 .fw-tag-info {
-  background: var(--fw-sky-bg);
-  color: var(--fw-sky);
+  background: var(--fw-info-bg);
+  color: var(--fw-info);
 }
 
-.fw-tag-plum {
-  background: var(--fw-plum-bg);
-  color: var(--fw-plum);
+.fw-tag-secondary {
+  background: var(--fw-secondary-bg);
+  color: var(--fw-secondary);
 }
 
 @media (prefers-reduced-motion: no-preference) {

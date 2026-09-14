@@ -25,10 +25,16 @@ const PX_ALLOW = new Set([
   96, 200, 220, 320, 360, 440, 460, 560, 600, 640, 1100,
 ]);
 
+// Names retired by the semantic-roles rename — catches drift back to the old
+// palette-named tokens/classes (marigold, plum, ink, cloud, …).
+const RETIRED = /--fw-(ink(?:-fixed|-soft)?|cloud(?:-dim)?|marigold(?:-dk|-lt)?|plum(?:-dk|-bg)?|meadow(?:-bg)?|coral(?:-bg)?|sky(?:-bg)?|on-brand(?:-soft|-fill|-line)?|pending-bg|shadow-(?:marigold|meadow))\b/;
+
 const rules = [
   { name: 'raw hex color', re: /#[0-9a-f]{3,8}\b/gi, skipInMask: true },
   { name: 'raw rgb/hsl color', re: /\b(rgba?|hsla?)\(/g },
   { name: 'unprefixed custom property', re: /var\(--(?!fw-)[\w-]+/g },
+  { name: 'retired token name (pre-rename palette token)', re: RETIRED },
+  { name: 'retired class name (fw-tag-plum → fw-tag-secondary)', re: /\bfw-tag-plum\b/ },
 ];
 
 let errors = 0;
