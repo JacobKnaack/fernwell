@@ -1,6 +1,6 @@
 // Builds dist/: JS in three formats + CSS bundle, minified copy, tokens-only CSS.
 import { build } from 'esbuild';
-import { mkdirSync, rmSync, copyFileSync, readFileSync } from 'node:fs';
+import { mkdirSync, rmSync, copyFileSync, cpSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -48,4 +48,9 @@ await Promise.all([
 ]);
 
 copyFileSync(join(root, 'src/tokens/tokens.json'), join(dist, 'tokens.json'));
+
+// docs/ is served (and deployed) standalone, so it carries its own copy of dist/.
+const docsDist = join(root, 'docs/dist');
+rmSync(docsDist, { recursive: true, force: true });
+cpSync(dist, docsDist, { recursive: true });
 console.log('build complete');

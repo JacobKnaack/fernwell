@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "fernwell-docs",
-      "runtimeExecutable": "npx",
-      "runtimeArgs": ["-y", "serve", "-l", "4400", "."],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "docs", "--", "-l", "4400"],
       "port": 4400
     }
   ]

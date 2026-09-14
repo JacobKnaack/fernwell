@@ -185,7 +185,7 @@ Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` /
 npm install
 npm run build     # tokens.json → tokens.css, lint, esbuild → dist/, tsc → .d.ts
 npm run lint      # fails on raw hex / rgb / unprefixed vars / off-scale px in component CSS
-npm run docs      # serve the repo; open /docs/
+npm run docs      # serve docs/ (self-contained: build copies dist/ into docs/dist/)
 ```
 
 `src/tokens/tokens.json` is the only place a value is defined; `src/css/tokens.css` is generated from it.
