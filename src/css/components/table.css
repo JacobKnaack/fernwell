@@ -1,0 +1,268 @@
+/* ---- table: a native <table> inside a scrolling card ----
+     <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-cap">
+       <table class="fw-table fw-table-striped" data-fw-table>
+         <caption id="inv-cap">Invoices</caption>
+         <thead><tr>
+           <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+           <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+           <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+           <th scope="col">Status</th>
+           <th scope="col" class="fw-table-actions"><span class="fw-sr-only">Actions</span></th>
+         </tr></thead>
+         <tbody>
+           <tr>
+             <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
+             <td>Bright Path</td>
+             <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
+             <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+             <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit">…</button></td>
+           </tr>
+           <tr class="fw-table-empty"><td colspan="5">No invoices yet.</td></tr>
+         </tbody>
+       </table>
+     </div>
+
+   Modifiers: .fw-table-striped / .fw-table-compact on <table>; .fw-table-sticky on
+   .fw-table-wrap (bounded height via --fw-table-max-height). Loading: aria-busy="true"
+   on <table>. Sort indicators are driven purely by aria-sort on the <th>; the
+   `table` JS enhancer flips them (see src/js/table.ts). */
+.fw-table-wrap {
+  overflow-x: auto;
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  border-radius: var(--fw-r-lg);
+  box-shadow: var(--fw-shadow-sm);
+  font-family: var(--fw-font-body);
+  color: var(--fw-text);
+}
+
+.fw-table-wrap:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+/* Sticky header needs a bounded scroll container to pin against. */
+.fw-table-wrap.fw-table-sticky {
+  max-height: var(--fw-table-max-height, 460px);
+  overflow: auto;
+}
+
+.fw-table-sticky .fw-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Separate borders (not collapse) so sticky header lines survive scrolling. */
+.fw-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--fw-font-body);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--fw-text);
+  text-align: left;
+}
+
+.fw-table caption {
+  caption-side: top;
+  text-align: left;
+  font-family: var(--fw-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--fw-text);
+  padding: var(--fw-sp-4) var(--fw-sp-5) var(--fw-sp-2);
+}
+
+.fw-table th,
+.fw-table td {
+  padding: var(--fw-sp-3) var(--fw-sp-4);
+  vertical-align: middle;
+}
+
+.fw-table th:first-child,
+.fw-table td:first-child {
+  padding-left: var(--fw-sp-5);
+}
+
+.fw-table th:last-child,
+.fw-table td:last-child {
+  padding-right: var(--fw-sp-5);
+}
+
+.fw-table thead th {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--fw-text-soft);
+  background: var(--fw-surface);
+  border-bottom: var(--fw-border-w) solid var(--fw-bg-dim);
+  white-space: nowrap;
+}
+
+.fw-table tbody tr + tr > td {
+  border-top: var(--fw-border-w) solid var(--fw-bg-dim);
+}
+
+.fw-table tbody td {
+  transition: background-color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+/* ---- striped ---- */
+.fw-table-striped tbody tr:nth-child(even) > td {
+  background: var(--fw-bg);
+}
+
+/* ---- hover (pointer devices only) ---- */
+@media (hover: hover) {
+  .fw-table tbody tr:hover > td {
+    background: var(--fw-secondary-bg);
+  }
+}
+
+/* ---- selected: tint + an inset bar so selection isn't colour-only ---- */
+.fw-table tbody tr.is-selected > td,
+.fw-table tbody tr[aria-selected="true"] > td {
+  background: var(--fw-secondary-bg);
+}
+
+.fw-table tbody tr.is-selected > td:first-child,
+.fw-table tbody tr[aria-selected="true"] > td:first-child {
+  box-shadow: inset 3px 0 0 var(--fw-secondary);
+}
+
+/* ---- compact density ---- */
+.fw-table-compact th,
+.fw-table-compact td {
+  padding: var(--fw-sp-2) var(--fw-sp-3);
+  font-size: 13px;
+}
+
+.fw-table-compact th:first-child,
+.fw-table-compact td:first-child {
+  padding-left: var(--fw-sp-4);
+}
+
+.fw-table-compact th:last-child,
+.fw-table-compact td:last-child {
+  padding-right: var(--fw-sp-4);
+}
+
+/* ---- cell kinds ---- */
+.fw-table-num {
+  font-family: var(--fw-font-mono);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.fw-table-num .fw-table-sort {
+  flex-direction: row-reverse;
+}
+
+.fw-table-select {
+  width: 1%;
+  padding-right: 0;
+}
+
+.fw-table-select .fw-checkbox {
+  gap: 0;
+  vertical-align: middle;
+}
+
+.fw-table-actions {
+  width: 1%;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.fw-table-actions .fw-icon-btn {
+  vertical-align: middle;
+}
+
+.fw-table-actions > * + * {
+  margin-left: var(--fw-sp-1);
+}
+
+/* ---- empty / loading rows ---- */
+.fw-table-empty > td {
+  text-align: center;
+  padding: var(--fw-sp-7) var(--fw-sp-5);
+  color: var(--fw-text-soft);
+  font-family: var(--fw-font-display);
+}
+
+.fw-table-empty:hover > td {
+  background: transparent;
+}
+
+.fw-table-loading > td {
+  text-align: center;
+  padding: var(--fw-sp-6) var(--fw-sp-5);
+}
+
+.fw-table[aria-busy="true"] tbody,
+.fw-table.is-loading tbody {
+  opacity: 0.5;
+  pointer-events: none;
+  transition: opacity var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+/* ---- sortable headers ----
+   The label is a real <button> (Enter/Space/focus for free); aria-sort lives on
+   the <th>. The arrow is a masked SVG painted in currentColor, so it re-tints
+   with the theme and never needs a hex value. */
+th[data-fw-sort] {
+  cursor: pointer;
+}
+
+.fw-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fw-sp-1);
+  padding: 2px 4px;
+  margin: -2px -4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+th[data-fw-sort]:hover .fw-table-sort,
+th[aria-sort="ascending"] .fw-table-sort,
+th[aria-sort="descending"] .fw-table-sort {
+  color: var(--fw-text);
+}
+
+.fw-table-sort:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-table-sort::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  opacity: 0.35;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M5 6.5l3-3 3 3M5 9.5l3 3 3-3' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M5 6.5l3-3 3 3M5 9.5l3 3 3-3' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+th[aria-sort="ascending"] .fw-table-sort::after {
+  opacity: 1;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 10l4-4 4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 10l4-4 4 4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+th[aria-sort="descending"] .fw-table-sort::after {
+  opacity: 1;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}

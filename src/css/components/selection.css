@@ -91,6 +91,18 @@
   opacity: 1;
 }
 
+/* Indeterminate (a select-all with some rows ticked): a dash instead of a check. */
+.fw-checkbox input:indeterminate + .fw-box {
+  background: var(--fw-primary);
+  border-color: var(--fw-primary);
+}
+
+.fw-checkbox input:indeterminate + .fw-box::after {
+  opacity: 1;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8h9' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3.5 8h9' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
 .fw-checkbox input:focus-visible + .fw-box {
   box-shadow: var(--fw-focus-ring);
 }

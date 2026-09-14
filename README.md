@@ -167,7 +167,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Tag | `.fw-tag` + `-live` `-pending` `-error` `-info` `-secondary`; `.fw-tag-pill` (compact, untilted) |
 | Eyebrow | `.fw-eyebrow` |
 | Field | `.fw-field` (`.fw-field-full`), `.fw-label`, `.fw-input`, `.fw-hint`, `.fw-error-msg`, `.fw-required`; `.is-error`, `.is-disabled` |
-| Selection | `.fw-checkbox` / `.fw-radio` (`<input>` + `.fw-box`), `.fw-toggle` (`<input>` + `.fw-track > .fw-thumb`), `.fw-option-group` (`-inline`) |
+| Selection | `.fw-checkbox` / `.fw-radio` (`<input>` + `.fw-box`; checkbox styles `:indeterminate`), `.fw-toggle` (`<input>` + `.fw-track > .fw-thumb`), `.fw-option-group` (`-inline`) |
 | Combobox | `.fw-combobox` wrapper, `input[data-fw-combobox][list]` + `<datalist>` |
 | Alert | `.fw-alert` + `-success` `-error` `-pending` `-info` `-with-action`; `.fw-alert-dot` `-title` `-body` |
 | Progress | `.fw-progress` (`-sm`, `.is-indeterminate`, `.is-success`) > `.fw-progress-fill`; `.fw-progress-label` |
@@ -181,6 +181,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | List row | `.fw-list-row` (`.is-locked`), `-main`, `-title`, `-meta`; `.fw-sub-list` |
 | Disclosure | `details.fw-disclosure`, `-chevron`, `-count`, `-body` |
 | Pagination | `.fw-pagination`, `.fw-pag-info`, `.fw-pag-controls`, `.fw-pag-label`, `.fw-btn-page` |
+| Table | `.fw-table-wrap` (`.fw-table-sticky` + `--fw-table-max-height`) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
 | Layout | `.fw-wrap`, `.fw-row`, `.fw-grid-2`, `.fw-sr-only` |
 
 ## JavaScript
@@ -195,11 +196,12 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 | `[data-fw-open-drawer="id"]` / `[data-fw-close-drawer]` / `[data-fw-drawer-overlay="id"]` | same for drawers |
 | `[data-fw-nav-toggle][aria-controls]` | dropdown open/close, outside-click and Escape |
 | `form[data-fw-loading]` | submit button gets a spinner + `data-fw-loading-text` label on submit |
+| `table[data-fw-table]` with `th[data-fw-sort]`, `input[data-fw-select-all]` / `[data-fw-select-row]` | client-side column sort (cycles `aria-sort`, honours `td[data-fw-sort-value]`), row selection with select-all + indeterminate, `.is-selected` / `aria-selected` on rows |
 
 Programmatic API:
 
 ```js
-import { theme, combobox, modal, nav, loading, toast } from 'fernwell';
+import { theme, combobox, modal, nav, loading, toast, table } from 'fernwell';
 
 theme.get();
 theme.set('dark');
@@ -219,9 +221,12 @@ modal.close('confirm'); // works for drawers too
 loading.setButtonLoading(btn, 'Sending…');
 loading.resetButtonLoading(btn);
 toast.show('That card was declined', { variant: 'error', duration: 6000 });
+table.sort(tableEl, 2, 'descending');   // column index, 'ascending' | 'descending'
+table.getSelected(tableEl);             // HTMLTableRowElement[]
+table.selectAll(tableEl, false);
 ```
 
-Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer.
+Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table.
 
 ## Principles
 

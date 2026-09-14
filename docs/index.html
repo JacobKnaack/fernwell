@@ -10,54 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="dist/fernwell.css">
-<style>
-  /* ---- docs-only chrome: not part of the package ---- */
-  .kit-wrap { max-width: 1080px; margin: 0 auto; padding: var(--fw-sp-8) var(--fw-sp-5) var(--fw-sp-9); }
-  .kit-wrap section { margin-bottom: var(--fw-sp-9); }
-  .intro { margin-bottom: var(--fw-sp-9); }
-  .intro h1 { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; max-width: 14ch; margin-top: var(--fw-sp-5); }
-  .intro .lede { font-size: 18px; color: var(--fw-text-soft); max-width: 56ch; margin-top: var(--fw-sp-4); }
-  .kit-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--fw-sp-4); margin-bottom: var(--fw-sp-5); flex-wrap: wrap; }
-  .kit-sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
-  .kit-sec-head .num { font-family: var(--fw-font-mono); font-size: 13px; color: var(--fw-text-soft); }
-  .sec-note { font-size: 15px; color: var(--fw-text-soft); max-width: 64ch; margin-bottom: var(--fw-sp-5); }
-  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--fw-sp-4); }
-  .swatch { border-radius: var(--fw-r-lg); overflow: hidden; box-shadow: var(--fw-shadow-sm); background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-bg-dim); }
-  .swatch .chip { height: 88px; }
-  .swatch .meta { padding: var(--fw-sp-3) var(--fw-sp-4); }
-  .swatch .name { font-weight: 700; font-size: 14px; }
-  .swatch .hex { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); margin-top: 2px; }
-  .type-row { display: flex; align-items: baseline; gap: var(--fw-sp-5); padding: var(--fw-sp-4) 0; border-bottom: var(--fw-border-w) solid var(--fw-bg-dim); flex-wrap: wrap; }
-  .type-row:last-child { border-bottom: none; }
-  .type-row .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); width: 120px; flex-shrink: 0; }
-  .type-display { font-family: var(--fw-font-display); font-weight: 800; }
-  .type-mono { font-family: var(--fw-font-mono); font-weight: 600; }
-  .shape-row { display: flex; gap: var(--fw-sp-5); flex-wrap: wrap; align-items: flex-end; }
-  .shape-demo { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); }
-  .shape-demo .box { width: 88px; height: 88px; background: var(--fw-secondary); }
-  .shape-demo .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-text-soft); }
-  .spinner-caption { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); font-size: 13px; color: var(--fw-text-soft); font-weight: 600; }
-  .kv { display: grid; grid-template-columns: 180px 1fr; gap: var(--fw-sp-2) var(--fw-sp-5); font-size: 14px; margin: 0; }
-  .kv dt { font-family: var(--fw-font-mono); font-weight: 600; color: var(--fw-secondary); }
-  .kv dd { margin: 0; color: var(--fw-text-soft); }
-  @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } }
-  .kit-note { border-top: var(--fw-border-w) solid var(--fw-bg-dim); padding-top: var(--fw-sp-5); font-size: 13px; color: var(--fw-text-soft); }
-  .kit-note code, pre code { font-family: var(--fw-font-mono); font-size: 12.5px; }
-  pre { background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-bg-dim); border-radius: var(--fw-r-md); padding: var(--fw-sp-4); overflow-x: auto; margin: 0 0 var(--fw-sp-4); font-size: 12.5px; line-height: 1.5; }
-  .stack { display: flex; flex-direction: column; gap: var(--fw-sp-3); }
-  .field-h4 { font-size: 18px; margin-bottom: var(--fw-sp-5); }
-  .install-grid { display: flex; flex-direction: column; gap: var(--fw-sp-6); }
-  .install-block h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: var(--fw-sp-2); }
-  .install-block p { font-size: 14px; color: var(--fw-text-soft); max-width: 64ch; margin-bottom: var(--fw-sp-3); }
-  .install-block pre { margin-bottom: var(--fw-sp-3); }
-  .install-block pre:last-child { margin-bottom: 0; }
-  .install-block p code { font-family: var(--fw-font-mono); font-size: 13px; background: var(--fw-bg-dim); padding: 1px 5px; border-radius: 4px; }
-  .theme-editor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--fw-sp-4); }
-  .theme-editor-role { display: flex; align-items: center; gap: var(--fw-sp-3); }
-  .theme-editor-role input[type="color"] { width: 36px; height: 36px; padding: 0; border: var(--fw-border-w) solid var(--fw-bg-dim); border-radius: var(--fw-r-sm); background: none; cursor: pointer; flex-shrink: 0; }
-  .theme-editor-role label { font-size: 13px; font-weight: 600; }
-  #theme-editor-css { white-space: pre-wrap; word-break: break-word; }
-</style>
+<link rel="stylesheet" href="styles/index.css">
 </head>
 <body class="fw-root">
 <div class="kit-wrap">
@@ -75,7 +28,7 @@
   <!-- INSTALL -->
   <section>
     <div class="kit-sec-head"><h2>Install</h2><span class="num">00</span></div>
-    <p class="sec-note">One package, three ways in. Fonts are not bundled — add the Google Fonts link (or self-host) and the tokens' fallback stacks cover the rest.</p>
+    <p class="sec-note">One package, three ways to add to your project. Fonts are not bundled — add the Google Fonts link (or self-host) and the tokens' fallback stacks cover the rest.</p>
 
     <div class="install-grid">
       <div class="install-block">
@@ -370,6 +323,124 @@ toast.show('Invoice sent');</code></pre>
     </nav>
   </section>
 
+  <!-- TABLE -->
+  <section>
+    <div class="kit-sec-head"><h2>Table</h2><span class="num">07d</span></div>
+    <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. Inter for the cells, Plex Mono for money, IDs and dates. Click a header to sort; the checkbox column drives select-all. Shrink the window to scroll it sideways.</p>
+    <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-caption">
+      <table class="fw-table fw-table-striped" id="invoices-table" data-fw-table>
+        <caption id="inv-caption" class="fw-sr-only">Invoices</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+            <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+            <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Invoice</button></th>
+            <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+            <th scope="col">Status</th>
+            <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Due</button></th>
+            <th scope="col" class="fw-table-actions"><span class="fw-sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0142</span></label></td>
+          <td>Bright Path</td>
+          <td class="fw-table-num">INV-0142</td>
+          <td class="fw-table-num" data-fw-sort-value="1250.0">$1,250.00</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+          <td class="fw-table-num">2026-09-30</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0142"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0142"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0139</span></label></td>
+          <td>Maple & Co</td>
+          <td class="fw-table-num">INV-0139</td>
+          <td class="fw-table-num" data-fw-sort-value="980.0">$980.00</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
+          <td class="fw-table-num">2026-09-22</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0139"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0139"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0131</span></label></td>
+          <td>Harbor Dental</td>
+          <td class="fw-table-num">INV-0131</td>
+          <td class="fw-table-num" data-fw-sort-value="3420.5">$3,420.50</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-error">Overdue</span></td>
+          <td class="fw-table-num">2026-08-15</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0131"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0131"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0145</span></label></td>
+          <td>Juniper Studio</td>
+          <td class="fw-table-num">INV-0145</td>
+          <td class="fw-table-num" data-fw-sort-value="640.0">$640.00</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-secondary">Draft</span></td>
+          <td class="fw-table-num">2026-10-04</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0145"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0145"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0137</span></label></td>
+          <td>Northwind Farms</td>
+          <td class="fw-table-num">INV-0137</td>
+          <td class="fw-table-num" data-fw-sort-value="2100.0">$2,100.00</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+          <td class="fw-table-num">2026-09-18</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0137"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0137"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        <tr>
+          <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select INV-0144</span></label></td>
+          <td>Cedar Yoga</td>
+          <td class="fw-table-num">INV-0144</td>
+          <td class="fw-table-num" data-fw-sort-value="450.0">$450.00</td>
+          <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
+          <td class="fw-table-num">2026-10-01</td>
+          <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit INV-0144"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button><button class="fw-icon-btn" aria-label="More actions for INV-0144"><svg viewBox="0 0 16 16" fill="none"><circle cx="3.5" cy="8" r="1.2" fill="currentColor"/><circle cx="8" cy="8" r="1.2" fill="currentColor"/><circle cx="12.5" cy="8" r="1.2" fill="currentColor"/></svg></button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <nav class="fw-pagination" aria-label="Invoices pagination" style="margin-top:var(--fw-sp-4)">
+      <span class="fw-pag-info" id="inv-selected">Showing 1–6 of 84</span>
+      <div class="fw-pag-controls"><a class="fw-btn-page is-disabled" aria-disabled="true">← Prev</a><span class="fw-pag-label">Page 1 of 14</span><a class="fw-btn-page" href="#">Next →</a></div>
+    </nav>
+
+    <p class="sec-note" style="margin-top:var(--fw-sp-6)">Compact density with a sticky header. Add <code>.fw-table-sticky</code> to the wrapper and bound its height with <code>--fw-table-max-height</code>.</p>
+    <div class="fw-table-wrap fw-table-sticky" tabindex="0" role="region" aria-labelledby="pay-caption" style="--fw-table-max-height:220px">
+      <table class="fw-table fw-table-compact" data-fw-table>
+        <caption id="pay-caption" class="fw-sr-only">Recent payments</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="fw-table-num" aria-sort="descending" data-fw-sort><button type="button" class="fw-table-sort">Date</button></th>
+            <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+            <th scope="col">Method</th>
+            <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="fw-table-num">2026-09-12</td><td>Bright Path</td><td>Card</td><td class="fw-table-num" data-fw-sort-value="1250.0">$1,250.00</td></tr>
+          <tr><td class="fw-table-num">2026-09-11</td><td>Northwind Farms</td><td>ACH</td><td class="fw-table-num" data-fw-sort-value="2100.0">$2,100.00</td></tr>
+          <tr><td class="fw-table-num">2026-09-09</td><td>Cedar Yoga</td><td>Card</td><td class="fw-table-num" data-fw-sort-value="225.0">$225.00</td></tr>
+          <tr><td class="fw-table-num">2026-09-08</td><td>Maple & Co</td><td>Check</td><td class="fw-table-num" data-fw-sort-value="490.0">$490.00</td></tr>
+          <tr><td class="fw-table-num">2026-09-05</td><td>Harbor Dental</td><td>ACH</td><td class="fw-table-num" data-fw-sort-value="1710.25">$1,710.25</td></tr>
+          <tr><td class="fw-table-num">2026-09-03</td><td>Juniper Studio</td><td>Card</td><td class="fw-table-num" data-fw-sort-value="320.0">$320.00</td></tr>
+          <tr><td class="fw-table-num">2026-09-01</td><td>Bright Path</td><td>Card</td><td class="fw-table-num" data-fw-sort-value="1250.0">$1,250.00</td></tr>
+          <tr><td class="fw-table-num">2026-08-29</td><td>Cedar Yoga</td><td>Card</td><td class="fw-table-num" data-fw-sort-value="225.0">$225.00</td></tr>
+          <tr><td class="fw-table-num">2026-08-27</td><td>Northwind Farms</td><td>ACH</td><td class="fw-table-num" data-fw-sort-value="2100.0">$2,100.00</td></tr>
+          <tr><td class="fw-table-num">2026-08-25</td><td>Maple & Co</td><td>Check</td><td class="fw-table-num" data-fw-sort-value="490.0">$490.00</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="sec-note" style="margin-top:var(--fw-sp-6)">Empty and loading rows span the table; <code>aria-busy="true"</code> on the table dims the body while data is in flight.</p>
+    <div class="fw-table-wrap">
+      <table class="fw-table">
+        <caption class="fw-sr-only">Clients (empty)</caption>
+        <thead><tr><th scope="col">Client</th><th scope="col">Email</th><th scope="col" class="fw-table-num">Balance</th></tr></thead>
+        <tbody><tr class="fw-table-empty"><td colspan="3">No clients yet — add one and they'll show up here.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
   <!-- ASSEMBLED -->
   <section>
     <div class="kit-sec-head"><h2>Assembled example</h2><span class="num">08</span></div>
@@ -492,6 +563,14 @@ toast.show('Invoice sent');</code></pre>
     const btn = e.target.querySelector('[type="submit"]');
     setTimeout(() => { Fernwell.loading.resetButtonLoading(btn); Fernwell.toast.show('Client created'); }, 1200);
   });
+
+  // table demo: selection count in the pagination info, sort feedback as a toast
+  const inv = document.getElementById('invoices-table'), invInfo = document.getElementById('inv-selected');
+  inv.addEventListener('fw:select', (e) => {
+    const n = e.detail.rows.length;
+    invInfo.textContent = n ? `${n} selected` : 'Showing 1–6 of 84';
+  });
+  inv.addEventListener('fw:sort', (e) => Fernwell.toast.show(`Sorted by ${e.detail.th.textContent.trim()}, ${e.detail.direction}`));
 
   // theming: live palette editor — one <input type=color> per seed role
   (() => {
