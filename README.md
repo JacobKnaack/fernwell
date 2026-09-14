@@ -254,6 +254,23 @@ Semantic versioning, strictly: **major** for any rename or removal of a token, c
 
 **Deprecation policy (from 1.0):** a token or class slated for removal keeps working for at least one minor release, with a `/* @deprecated */` note in the CSS and an entry in the changelog naming the replacement. It's removed in the next major.
 
+## Releasing to npm
+
+Publishing a GitHub Release triggers [`.github/workflows/publish-npm.yml`](.github/workflows/publish-npm.yml), which builds the package and runs `npm publish --provenance` via npm's OIDC trusted publishing (no token stored in the repo). To ship a new version:
+
+1. Bump `version` in `package.json`.
+2. Move the `## [Unreleased]` section in `CHANGELOG.md` to a new dated heading, e.g. `## [0.2.0] — 2026-09-14`.
+3. Commit both and merge into `main` branch.
+4. Create a GitHub Release tagged `vX.Y.Z` (matching the version from step 1) targeting `main`:
+
+   ```bash
+   gh release create v0.2.0 --title v0.2.0 --notes-from-tag
+   ```
+
+   or via the GitHub UI: **Releases → Draft a new release**, tag `vX.Y.Z`, target `main`, then **Publish release**.
+
+Publishing the release fires the workflow, which checks the tag matches `package.json`'s version and that the version isn't already on the registry before publishing. Mark a release **pre-release** to cut a tag without triggering an npm publish. The workflow can also be run manually from the Actions tab (`workflow_dispatch`), which defaults to a `npm publish --dry-run` so the pipeline can be sanity-checked without shipping anything.
+
 ## License
 
 MIT

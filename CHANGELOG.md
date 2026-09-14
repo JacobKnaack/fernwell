@@ -5,6 +5,7 @@ All notable changes to this project are documented here. The format follows [Kee
 ## [Unreleased]
 
 ### Changed (breaking)
+
 - **Colour tokens renamed from the default palette to semantic roles**, so a consumer never has to rename a token to retheme it. `src/tokens/tokens.json` and every component now speak in roles; the shipped values are unchanged, just renamed:
   - `--fw-ink` → `--fw-text`, `--fw-ink-soft` → `--fw-text-soft`, `--fw-ink-fixed` → `--fw-on-primary`
   - `--fw-cloud` → `--fw-bg`, `--fw-cloud-dim` → `--fw-bg-dim`
@@ -22,6 +23,7 @@ All notable changes to this project are documented here. The format follows [Kee
 - `src/tokens/tokens.json` schema changed: `color.light` / `color.dark` (and `shadow.light` / `shadow.dark`) collapsed into one entry per token, `{ value }` (same both themes) or `{ light, dark? }`. A value can reference another token in the same group with `{name}`.
 
 ### Added
+
 - **Derived tokens**: `--fw-primary-hover`, `--fw-primary-soft`, `--fw-secondary-hover`, `--fw-secondary-bg`, `--fw-success-bg`, `--fw-warning-bg`, `--fw-danger-bg`, `--fw-info-bg`, `--fw-on-secondary-soft/-fill/-line`, `--fw-focus-ring` and `--fw-shadow-primary/-success` are now computed from their seed colour with `color-mix()` instead of being separately hand-tuned hex/rgba values — override the seed (e.g. `--fw-primary`) and every derived token follows, in both themes, without needing to be redeclared.
 - New `--fw-warning` / `--fw-warning-bg` tokens (the old `marigold-dk` pending accent, now independent of Primary).
 - Generated `src/css/tokens.css` now wraps its rules in `@layer fw-tokens`, so a plain (unlayered) consumer override always wins over Fernwell's own `[data-theme="dark"]` re-declaration, regardless of selector specificity or source order — previously a `:root` override had to be repeated for `[data-theme="dark"]` or it was clobbered on theme toggle.
@@ -35,6 +37,7 @@ All notable changes to this project are documented here. The format follows [Kee
 First standalone release. Extracted from the HunnyDo marketing site and app, where the system previously lived as two hand-synced copies.
 
 ### Added
+
 - Design tokens as `--fw-*` custom properties (light + `[data-theme="dark"]`), generated from `src/tokens/tokens.json`, also shipped as `fernwell/tokens.json`.
 - Components: button, icon button, card, tag/pill, eyebrow, field, checkbox/radio/toggle, combobox, alert, progress, spinner, nav, stat, empty state, modal, drawer, toast, list row, disclosure, pagination, layout helpers, opt-in `.fw-root` page defaults.
 - JS enhancers (ESM, CJS, IIFE): `theme`, `combobox`, `modal` (modals + drawers), `nav`, `loading`, `toast`, and an idempotent `init()`.
@@ -42,6 +45,7 @@ First standalone release. Extracted from the HunnyDo marketing site and app, whe
 - Token lint (`npm run lint`) that rejects raw colours, unprefixed variables and off-scale pixel values in component CSS.
 
 ### Changed (vs. the marketing/app copies)
+
 - All tokens renamed with the `--fw-` prefix; `--white` → `--fw-surface`.
 - All classes renamed with the `fw-` prefix; state classes are `is-*` (`.open` → `.is-open`, `.error` → `.is-error`, `.active` → `.is-active`).
 - Checkbox checkmark is drawn with a CSS mask — no inline SVG needed in the markup.
