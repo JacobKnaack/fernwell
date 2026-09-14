@@ -1,0 +1,98 @@
+name: Publish to npm
+
+# Publishes the `fernwell` package to npm using OIDC trusted publishing
+# (no NPM_TOKEN secret) whenever a GitHub Release is published. Also
+# runnable manually via workflow_dispatch, defaulting to a dry run, so the
+# pipeline can be validated before it's ever wired to a real publish.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Run npm publish --dry-run instead of a real publish"
+        type: boolean
+        required: false
+        default: true
+
+permissions:
+  contents: read
+  id-token: write   # required for npm OIDC trusted publishing
+
+# Prevent two publish attempts (e.g. a release + a manual re-run) from
+# racing each other against the registry.
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    # Skip pre-releases published on GitHub — they should not be pushed to
+    # the npm `latest` dist-tag by this workflow. Manual dispatch always runs.
+    if: github.event_name == 'workflow_dispatch' || github.event.release.prerelease == false
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+
+      - run: npm ci
+
+      # Defensive: trusted publishing requires npm >=11.5.1. Node 24 already
+      # bundles a newer npm, but pin/upgrade explicitly so a future runner
+      # image regression can't silently break OIDC auth.
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm install -g npm@latest
+          npm --version
+
+      # Catches the human-error case of tagging vX.Y.Z on GitHub without
+      # bumping package.json first.
+      - name: Verify release tag matches package.json version
+        if: github.event_name == 'release'
+        run: |
+          TAG_NAME="${{ github.event.release.tag_name }}"
+          EXPECTED_VERSION="${TAG_NAME#v}"
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if [ "$EXPECTED_VERSION" != "$PKG_VERSION" ]; then
+            echo "::error::Release tag '$TAG_NAME' does not match package.json version '$PKG_VERSION'. Update package.json and CHANGELOG.md, land that on main, then re-tag/re-release."
+            exit 1
+          fi
+          echo "OK: tag $TAG_NAME matches package.json version $PKG_VERSION"
+
+      # Catches accidental re-publish of a version already on the registry,
+      # with a clear error instead of npm publish's generic 403 deep in the
+      # publish step.
+      - name: Verify version is not already published
+        run: |
+          PKG_VERSION=$(node -p "require('./package.json').version")
+          if npm view fernwell@"$PKG_VERSION" version >/dev/null 2>&1; then
+            echo "::error::fernwell@$PKG_VERSION is already published to npm."
+            exit 1
+          fi
+          echo "OK: fernwell@$PKG_VERSION is not yet on the registry"
+
+      # tokens → lint → esbuild → tsc. Explicit for CI log visibility,
+      # mirroring deploy-docs.yml; prepublishOnly will also run this again
+      # during `npm publish` as a safety net for anyone who ever publishes
+      # by hand.
+      - run: npm run build
+
+      - name: Verify dist/ was built
+        run: |
+          test -f dist/fernwell.cjs
+          test -f dist/fernwell.esm.js
+          test -f dist/fernwell.css
+          test -f dist/index.d.ts
+
+      - name: Publish (dry run)
+        if: github.event_name == 'workflow_dispatch' && inputs.dry_run
+        run: npm publish --dry-run
+
+      - name: Publish to npm
+        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && !inputs.dry_run)
+        run: npm publish --provenance
