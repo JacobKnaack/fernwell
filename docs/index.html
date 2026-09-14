@@ -46,6 +46,12 @@
   pre { background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-cloud-dim); border-radius: var(--fw-r-md); padding: var(--fw-sp-4); overflow-x: auto; margin: 0 0 var(--fw-sp-4); font-size: 12.5px; line-height: 1.5; }
   .stack { display: flex; flex-direction: column; gap: var(--fw-sp-3); }
   .field-h4 { font-size: 18px; margin-bottom: var(--fw-sp-5); }
+  .install-grid { display: flex; flex-direction: column; gap: var(--fw-sp-6); }
+  .install-block h3 { font-size: 18px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: var(--fw-sp-2); }
+  .install-block p { font-size: 14px; color: var(--fw-ink-soft); max-width: 64ch; margin-bottom: var(--fw-sp-3); }
+  .install-block pre { margin-bottom: var(--fw-sp-3); }
+  .install-block pre:last-child { margin-bottom: 0; }
+  .install-block p code { font-family: var(--fw-font-mono); font-size: 13px; background: var(--fw-cloud-dim); padding: 1px 5px; border-radius: 4px; }
 </style>
 </head>
 <body class="fw-root">
@@ -65,18 +71,33 @@
   <section>
     <div class="kit-sec-head"><h2>Install</h2><span class="num">00</span></div>
     <p class="sec-note">One package, three ways in. Fonts are not bundled — add the Google Fonts link (or self-host) and the tokens' fallback stacks cover the rest.</p>
-    <pre><code>&lt;!-- 1. CDN, no build step --&gt;
-&lt;link rel="stylesheet" href="https://unpkg.com/fernwell/dist/fernwell.min.css"&gt;
-&lt;script src="https://unpkg.com/fernwell/dist/fernwell.iife.js"&gt;&lt;/script&gt;   &lt;!-- window.Fernwell, auto-inits --&gt;
 
-&lt;!-- 2. npm + bundler --&gt;
-npm install fernwell
-import 'fernwell/css';
+    <div class="install-grid">
+      <div class="install-block">
+        <h3>Script tag / CDN</h3>
+        <p>No build step. Exposes <code>window.Fernwell</code> and auto-initialises on <code>DOMContentLoaded</code> — add <code>data-fw-no-init</code> to the script tag to wire things up yourself.</p>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/fernwell/dist/fernwell.min.css"&gt;
+&lt;script src="https://unpkg.com/fernwell/dist/fernwell.iife.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>npm + bundler</h3>
+        <p>ESM and CommonJS builds with types. <code>init()</code> wires every <code>data-fw-*</code> hook on the page and is safe to call again after injecting markup.</p>
+        <pre><code>npm install fernwell</code></pre>
+        <pre><code>import 'fernwell/css';
 import { init, toast } from 'fernwell';
-init();
 
-&lt;!-- 3. CSS only --&gt;
-@import 'fernwell/css';            /* or fernwell/tokens.css for just the variables */</code></pre>
+init();
+toast.show('Invoice sent');</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>CSS only</h3>
+        <p>Everything is plain CSS and custom properties — no JavaScript required. Import just the tokens if you only want the palette and scales.</p>
+        <pre><code>@import 'fernwell/css';          /* tokens + base + components */
+@import 'fernwell/tokens.css';   /* just the custom properties */</code></pre>
+      </div>
+    </div>
   </section>
 
   <!-- COLOR -->
