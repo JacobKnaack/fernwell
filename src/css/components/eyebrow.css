@@ -1,0 +1,29 @@
+/* ---- eyebrow: small mono label above a heading ---- */
+.fw-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fw-plum);
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  padding: 7px 16px;
+  border-radius: var(--fw-r-full);
+  box-shadow: var(--fw-shadow-sm);
+}
+
+.fw-eyebrow::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fw-marigold);
+}
+
+[data-theme="dark"] .fw-eyebrow {
+  color: var(--fw-plum-dk);
+}

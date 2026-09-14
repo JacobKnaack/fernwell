@@ -1,0 +1,76 @@
+/* ---- base (opt-in) ----
+   Add class="fw-root" to <body> (or any container) to get the system's page
+   defaults: background, text color, body font, display headings with zero
+   margins. Components do NOT depend on it — every .fw-* class carries its own
+   font/color — so you can skip it and keep your own resets. Element resets
+   use :where() so they have zero specificity and any consumer rule wins. */
+.fw-root {
+  background: var(--fw-cloud);
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  transition: background var(--fw-motion-base) var(--fw-motion-ease), color var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-root,
+.fw-root *,
+.fw-root *::before,
+.fw-root *::after {
+  box-sizing: border-box;
+}
+
+.fw-root :where(h1, h2, h3, h4) {
+  font-family: var(--fw-font-display);
+  color: var(--fw-ink);
+  margin: 0;
+}
+
+.fw-root :where(p) {
+  margin: 0;
+}
+
+.fw-root :where(a) {
+  color: inherit;
+}
+
+.fw-root :where(code) {
+  font-family: var(--fw-font-mono);
+}
+
+/* The `hidden` attribute is a UA-stylesheet rule, so any author rule that sets
+   `display` (e.g. a flex .fw-field) silently wins over it. Restore it. */
+[hidden] {
+  display: none !important;
+}
+
+/* ---- accessibility helpers ---- */
+.fw-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Applied to <body> by the modal/drawer enhancers while an overlay is open. */
+.fw-scroll-lock {
+  overflow: hidden;
+}
+
+/* ---- reduced motion: transforms drop to opacity-only ---- */
+@media (prefers-reduced-motion: reduce) {
+  .fw-root {
+    scroll-behavior: auto;
+  }
+  .fw-btn,
+  .fw-btn:hover,
+  .fw-list-row,
+  .fw-list-row:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,116 @@
+/* ---- form fields ----
+   Markup:
+     <div class="fw-field">
+       <label class="fw-label" for="x">Email <span class="fw-required" aria-hidden="true">*</span><span class="fw-sr-only">(required)</span></label>
+       <input class="fw-input" id="x" type="email">
+       <span class="fw-hint">Helper copy.</span>          (or .fw-error-msg)
+     </div>
+   Add .is-error to the field (or the input) for the coral state, .is-disabled
+   to mute the label alongside a disabled control. Inputs, selects and
+   textareas inside .fw-field are styled automatically; .fw-input lets you
+   style one outside a field. */
+.fw-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 320px;
+}
+
+.fw-field-full {
+  max-width: none;
+}
+
+.fw-label,
+.fw-field > label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--fw-ink);
+}
+
+.fw-hint {
+  font-size: 12px;
+  color: var(--fw-ink-soft);
+}
+
+.fw-error-msg {
+  font-size: 12px;
+  color: var(--fw-coral);
+  font-weight: 600;
+}
+
+/* A required field gets a small coral asterisk after the label — coral is
+   otherwise reserved for errors, but this mark is universally recognised.
+   Always pair it with .fw-sr-only "(required)" text. */
+.fw-required {
+  color: var(--fw-coral);
+  font-weight: 700;
+  margin-left: 3px;
+}
+
+.fw-input,
+.fw-field input:not([type="checkbox"]):not([type="radio"]),
+.fw-field select,
+.fw-field textarea {
+  font-family: var(--fw-font-body);
+  font-size: 15px;
+  line-height: 1.4;
+  padding: 11px 14px;
+  border-radius: var(--fw-r-sm);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  color: var(--fw-ink);
+  outline: none;
+  width: 100%;
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease),
+    box-shadow var(--fw-motion-fast) var(--fw-motion-ease),
+    background var(--fw-motion-base) var(--fw-motion-ease),
+    color var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+textarea.fw-input,
+.fw-field textarea {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.fw-input::placeholder,
+.fw-field input::placeholder,
+.fw-field textarea::placeholder {
+  color: var(--fw-ink-soft);
+  opacity: 1;
+}
+
+.fw-input:focus,
+.fw-field input:focus,
+.fw-field select:focus,
+.fw-field textarea:focus {
+  border-color: var(--fw-marigold-dk);
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-input.is-error,
+.fw-input[aria-invalid="true"],
+.fw-field.is-error input,
+.fw-field.is-error select,
+.fw-field.is-error textarea,
+.fw-field input.is-error,
+.fw-field textarea.is-error {
+  border-color: var(--fw-coral);
+}
+
+/* Disabled fields mute to the Cloud-dim surface and drop the border contrast —
+   "not available" rather than "empty". */
+.fw-input:disabled,
+.fw-field input:disabled,
+.fw-field select:disabled,
+.fw-field textarea:disabled {
+  background: var(--fw-cloud-dim);
+  color: var(--fw-ink-soft);
+  border-color: var(--fw-cloud-dim);
+  cursor: not-allowed;
+}
+
+.fw-field.is-disabled .fw-label,
+.fw-field.is-disabled > label {
+  color: var(--fw-ink-soft);
+}

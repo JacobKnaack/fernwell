@@ -1,0 +1,25 @@
+/* ---- layout helpers ---- */
+.fw-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 var(--fw-sp-5);
+}
+
+.fw-row {
+  display: flex;
+  gap: var(--fw-sp-4);
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.fw-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--fw-sp-5);
+}
+
+@media (max-width: 640px) {
+  .fw-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

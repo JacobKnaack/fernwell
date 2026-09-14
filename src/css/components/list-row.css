@@ -1,0 +1,89 @@
+/* ---- list row: a clickable resource card (checklists, invoices, clients) ----
+     <a class="fw-list-row" href="…">
+       <div class="fw-list-row-main">
+         <span class="fw-list-row-title">Bright Path onboarding</span>
+         <span class="fw-tag fw-tag-pill fw-tag-live">Active</span>
+         <span class="fw-list-row-meta">4 of 9 done</span>
+       </div>
+     </a> */
+.fw-list-row {
+  display: block;
+  background: var(--fw-surface);
+  border-radius: var(--fw-r-lg);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  box-shadow: var(--fw-shadow-sm);
+  padding: var(--fw-sp-4) var(--fw-sp-5);
+  color: inherit;
+  font-family: var(--fw-font-body);
+  text-decoration: none;
+  transition: transform var(--fw-motion-fast) var(--fw-motion-ease), box-shadow var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-list-row:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--fw-shadow-md);
+  text-decoration: none;
+}
+
+.fw-list-row:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+/* Gated behind an unmet dependency — dimmed rather than hidden. */
+.fw-list-row.is-locked {
+  opacity: 0.6;
+}
+
+.fw-list-row.is-locked:hover {
+  transform: none;
+  box-shadow: var(--fw-shadow-sm);
+}
+
+.fw-list-row + .fw-list-row {
+  margin-top: var(--fw-sp-3);
+}
+
+.fw-list-row-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fw-sp-2) var(--fw-sp-4);
+}
+
+.fw-list-row-title {
+  font-family: var(--fw-font-display);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--fw-ink);
+}
+
+.fw-list-row-meta {
+  font-size: 13px;
+  color: var(--fw-ink-soft);
+}
+
+/* Nested sub-items under a row. */
+.fw-sub-list {
+  margin: var(--fw-sp-2) 0 0 var(--fw-sp-5);
+  padding-left: var(--fw-sp-4);
+  border-left: var(--fw-border-w) solid var(--fw-cloud-dim);
+}
+
+.fw-sub-list-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fw-sp-2) var(--fw-sp-3);
+  padding: var(--fw-sp-2) 0;
+}
+
+.fw-sub-list-row + .fw-sub-list-row {
+  border-top: 1px solid var(--fw-cloud-dim);
+}
+
+.fw-sub-list-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--fw-ink);
+}

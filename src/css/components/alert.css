@@ -1,0 +1,62 @@
+/* ---- alerts ----
+   Say what happened and what to do next. Never apologise, never blame the user:
+   "That card was declined", not "Oops! Something went wrong."
+     <div class="fw-alert fw-alert-success" role="status">
+       <div class="fw-alert-dot"></div>
+       <div><div class="fw-alert-title">Invoice sent</div><div class="fw-alert-body">…</div></div>
+     </div> */
+.fw-alert {
+  display: flex;
+  gap: var(--fw-sp-3);
+  padding: var(--fw-sp-4);
+  border-radius: var(--fw-r-md);
+  align-items: flex-start;
+  font-family: var(--fw-font-body);
+  color: var(--fw-ink);
+  background: var(--fw-cloud-dim);
+}
+
+.fw-alert-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 2px;
+  background: var(--fw-ink-soft);
+}
+
+.fw-alert-title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.fw-alert-body {
+  font-size: 13px;
+  color: var(--fw-ink-soft);
+  margin-top: 2px;
+}
+
+.fw-alert-success { background: var(--fw-meadow-bg); }
+.fw-alert-success .fw-alert-dot { background: var(--fw-meadow); }
+
+.fw-alert-error { background: var(--fw-coral-bg); }
+.fw-alert-error .fw-alert-dot { background: var(--fw-coral); }
+
+.fw-alert-pending { background: var(--fw-pending-bg); }
+.fw-alert-pending .fw-alert-dot { background: var(--fw-marigold-dk); }
+
+.fw-alert-info { background: var(--fw-sky-bg); }
+.fw-alert-info .fw-alert-dot { background: var(--fw-sky); }
+
+/* Alert with a trailing action button: <div class="fw-alert fw-alert-with-action"><div class="fw-alert-main">…</div><button class="fw-btn fw-btn-ghost">…</button></div> */
+.fw-alert-with-action {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.fw-alert-with-action .fw-alert-main {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-3);
+}

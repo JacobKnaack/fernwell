@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwell — UI Design System</title>
+<meta name="description" content="Fernwell: the design system behind HunnyDo — tokens, components, motion, and voice, published as a standalone package.">
+<script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../dist/fernwell.css">
+<style>
+  /* ---- docs-only chrome: not part of the package ---- */
+  .kit-wrap { max-width: 1080px; margin: 0 auto; padding: var(--fw-sp-8) var(--fw-sp-5) var(--fw-sp-9); }
+  .kit-wrap section { margin-bottom: var(--fw-sp-9); }
+  .intro { margin-bottom: var(--fw-sp-9); }
+  .intro h1 { font-size: 44px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; max-width: 14ch; margin-top: var(--fw-sp-5); }
+  .intro .lede { font-size: 18px; color: var(--fw-ink-soft); max-width: 56ch; margin-top: var(--fw-sp-4); }
+  .kit-sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--fw-sp-4); margin-bottom: var(--fw-sp-5); flex-wrap: wrap; }
+  .kit-sec-head h2 { font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
+  .kit-sec-head .num { font-family: var(--fw-font-mono); font-size: 13px; color: var(--fw-ink-soft); }
+  .sec-note { font-size: 15px; color: var(--fw-ink-soft); max-width: 64ch; margin-bottom: var(--fw-sp-5); }
+  .swatch-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--fw-sp-4); }
+  .swatch { border-radius: var(--fw-r-lg); overflow: hidden; box-shadow: var(--fw-shadow-sm); background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-cloud-dim); }
+  .swatch .chip { height: 88px; }
+  .swatch .meta { padding: var(--fw-sp-3) var(--fw-sp-4); }
+  .swatch .name { font-weight: 700; font-size: 14px; }
+  .swatch .hex { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); margin-top: 2px; }
+  .type-row { display: flex; align-items: baseline; gap: var(--fw-sp-5); padding: var(--fw-sp-4) 0; border-bottom: var(--fw-border-w) solid var(--fw-cloud-dim); flex-wrap: wrap; }
+  .type-row:last-child { border-bottom: none; }
+  .type-row .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); width: 120px; flex-shrink: 0; }
+  .type-display { font-family: var(--fw-font-display); font-weight: 800; }
+  .type-mono { font-family: var(--fw-font-mono); font-weight: 600; }
+  .shape-row { display: flex; gap: var(--fw-sp-5); flex-wrap: wrap; align-items: flex-end; }
+  .shape-demo { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); }
+  .shape-demo .box { width: 88px; height: 88px; background: var(--fw-plum); }
+  .shape-demo .lbl { font-family: var(--fw-font-mono); font-size: 12px; color: var(--fw-ink-soft); }
+  .spinner-caption { display: flex; flex-direction: column; align-items: center; gap: var(--fw-sp-2); font-size: 13px; color: var(--fw-ink-soft); font-weight: 600; }
+  .kv { display: grid; grid-template-columns: 180px 1fr; gap: var(--fw-sp-2) var(--fw-sp-5); font-size: 14px; margin: 0; }
+  .kv dt { font-family: var(--fw-font-mono); font-weight: 600; color: var(--fw-plum); }
+  .kv dd { margin: 0; color: var(--fw-ink-soft); }
+  @media (max-width: 560px) { .kv { grid-template-columns: 1fr; } }
+  .kit-note { border-top: var(--fw-border-w) solid var(--fw-cloud-dim); padding-top: var(--fw-sp-5); font-size: 13px; color: var(--fw-ink-soft); }
+  .kit-note code, pre code { font-family: var(--fw-font-mono); font-size: 12.5px; }
+  pre { background: var(--fw-surface); border: var(--fw-border-w) solid var(--fw-cloud-dim); border-radius: var(--fw-r-md); padding: var(--fw-sp-4); overflow-x: auto; margin: 0 0 var(--fw-sp-4); font-size: 12.5px; line-height: 1.5; }
+  .stack { display: flex; flex-direction: column; gap: var(--fw-sp-3); }
+  .field-h4 { font-size: 18px; margin-bottom: var(--fw-sp-5); }
+</style>
+</head>
+<body class="fw-root">
+<div class="kit-wrap">
+
+  <div class="intro">
+    <span class="fw-eyebrow">Design System · v0.1</span>
+    <h1>Fernwell UI System</h1>
+    <p class="lede">Warm, rounded, and legible — built to feel approachable to a first-time consumer trial and sturdy enough for the team running their business through it every day.</p>
+    <div class="fw-row" style="margin-top:var(--fw-sp-5)">
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+      <a class="fw-btn fw-btn-ghost" href="https://www.npmjs.com/package/fernwell">npm ↗</a>
+    </div>
+  </div>
+
+  <!-- INSTALL -->
+  <section>
+    <div class="kit-sec-head"><h2>Install</h2><span class="num">00</span></div>
+    <p class="sec-note">One package, three ways in. Fonts are not bundled — add the Google Fonts link (or self-host) and the tokens' fallback stacks cover the rest.</p>
+    <pre><code>&lt;!-- 1. CDN, no build step --&gt;
+&lt;link rel="stylesheet" href="https://unpkg.com/fernwell/dist/fernwell.min.css"&gt;
+&lt;script src="https://unpkg.com/fernwell/dist/fernwell.iife.js"&gt;&lt;/script&gt;   &lt;!-- window.Fernwell, auto-inits --&gt;
+
+&lt;!-- 2. npm + bundler --&gt;
+npm install fernwell
+import 'fernwell/css';
+import { init, toast } from 'fernwell';
+init();
+
+&lt;!-- 3. CSS only --&gt;
+@import 'fernwell/css';            /* or fernwell/tokens.css for just the variables */</code></pre>
+  </section>
+
+  <!-- COLOR -->
+  <section>
+    <div class="kit-sec-head"><h2>Color</h2><span class="num">01</span></div>
+    <p class="sec-note">Marigold carries the energy — used sparingly, only for the action you most want taken. Plum grounds the interface and does the heavy lifting in navigation and headers. Ink and Cloud are doing 90% of the actual work on any given screen.</p>
+    <div class="swatch-grid">
+      <div class="swatch"><div class="chip" style="background:var(--fw-ink)"></div><div class="meta"><div class="name">Ink</div><div class="hex">--fw-ink</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-cloud); border-bottom:var(--fw-border-w) solid var(--fw-cloud-dim)"></div><div class="meta"><div class="name">Cloud</div><div class="hex">--fw-cloud</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-marigold)"></div><div class="meta"><div class="name">Marigold</div><div class="hex">--fw-marigold</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-plum)"></div><div class="meta"><div class="name">Plum</div><div class="hex">--fw-plum</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-meadow)"></div><div class="meta"><div class="name">Meadow</div><div class="hex">--fw-meadow</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-coral)"></div><div class="meta"><div class="name">Coral</div><div class="hex">--fw-coral</div></div></div>
+      <div class="swatch"><div class="chip" style="background:var(--fw-sky)"></div><div class="meta"><div class="name">Sky</div><div class="hex">--fw-sky</div></div></div>
+    </div>
+    <dl class="kv" style="margin-top:var(--fw-sp-5)">
+      <dt>Dark theme</dt><dd>Not a straight inversion. Marigold stays the same hex in both themes. Neutrals move from warm cream to near-black (never pure black), status colors lift 1–2 steps lighter, and tinted backgrounds become low-opacity washes.</dd>
+      <dt>Ink-Fixed</dt><dd>Anything sitting on Marigold (buttons, avatars) uses <code>--fw-ink-fixed</code> for text, so it never fights the theme toggle.</dd>
+      <dt>Overriding</dt><dd>Redeclare any token after the stylesheet: <code>:root { --fw-marigold: #f0b030; }</code>. Every component reads tokens, none hardcode values.</dd>
+    </dl>
+  </section>
+
+  <!-- TYPE -->
+  <section>
+    <div class="kit-sec-head"><h2>Typography</h2><span class="num">02</span></div>
+    <p class="sec-note">Plus Jakarta Sans for anything that should feel like a voice — headlines, empty states, onboarding. Inter for anything the user reads quickly and often — tables, forms, nav. Plex Mono for numbers, IDs, and anywhere precision matters more than warmth.</p>
+    <div class="fw-card">
+      <div class="type-row"><span class="lbl">Display / 44</span><span class="type-display" style="font-size:40px">Get paid on time</span></div>
+      <div class="type-row"><span class="lbl">Display / 28</span><span class="type-display" style="font-size:28px">Invoices sent this week</span></div>
+      <div class="type-row"><span class="lbl">Body / 16</span><span style="font-size:16px">Set a due date, add your terms, and we'll remind clients before it's late.</span></div>
+      <div class="type-row"><span class="lbl">Body / 14</span><span style="font-size:14px; color:var(--fw-ink-soft)">Secondary text and helper copy sits here, always Ink-Soft, never pure gray.</span></div>
+      <div class="type-row"><span class="lbl">Mono / 13</span><span class="type-mono" style="font-size:13px">INV-04821 · $1,240.00</span></div>
+    </div>
+  </section>
+
+  <!-- SHAPE -->
+  <section>
+    <div class="kit-sec-head"><h2>Shape</h2><span class="num">03</span></div>
+    <p class="sec-note">One rounding system, four scales. The bigger the surface, the softer the corner — this is the single rule that ties every component together.</p>
+    <div class="shape-row">
+      <div class="shape-demo"><div class="box" style="border-radius:var(--fw-r-sm)"></div><span class="lbl">sm · 10px · inputs</span></div>
+      <div class="shape-demo"><div class="box" style="border-radius:var(--fw-r-md)"></div><span class="lbl">md · 16px · buttons</span></div>
+      <div class="shape-demo"><div class="box" style="border-radius:var(--fw-r-lg)"></div><span class="lbl">lg · 24px · cards</span></div>
+      <div class="shape-demo"><div class="box" style="border-radius:var(--fw-r-xl)"></div><span class="lbl">xl · 32px · modals</span></div>
+      <div class="shape-demo"><div class="box" style="border-radius:var(--fw-r-full)"></div><span class="lbl">full · avatars, pills</span></div>
+    </div>
+  </section>
+
+  <!-- BUTTONS -->
+  <section>
+    <div class="kit-sec-head"><h2>Buttons</h2><span class="num">04</span></div>
+    <p class="sec-note">Primary is Marigold and appears once per view. Secondary (Plum) is for the next-most-important action. Ghost for anything tertiary. Only one Primary button visible at a time — if two things feel equally important, neither is Primary.</p>
+    <div class="fw-row">
+      <button class="fw-btn fw-btn-primary">Send invoice</button>
+      <button class="fw-btn fw-btn-secondary">Save as draft</button>
+      <button class="fw-btn fw-btn-ghost">Cancel</button>
+      <button class="fw-btn fw-btn-danger">Delete</button>
+      <button class="fw-btn fw-btn-primary" disabled>Send invoice</button>
+      <button class="fw-icon-btn" aria-label="Edit"><svg viewBox="0 0 16 16" fill="none"><path d="M11.5 2.5l2 2L5 13H3v-2l8.5-8.5z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button>
+      <button class="fw-btn fw-btn-primary" id="loading-demo" data-fw-loading-text="Sending…">Try loading state</button>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section>
+    <div class="kit-sec-head"><h2>Progress &amp; loading</h2><span class="num">04b</span></div>
+    <p class="sec-note">Determinate bars for anything with a known length. Indeterminate bars for anything with an unknown duration. Spinners live inline — never as a full-page takeover unless the whole screen is genuinely blocked.</p>
+    <div class="fw-card" style="margin-bottom:var(--fw-sp-4)">
+      <div class="fw-progress-label"><span class="fw-progress-name">Uploading receipt.pdf</span><span class="fw-progress-pct" id="upload-pct">64%</span></div>
+      <div class="fw-progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="64" id="upload-bar"><div class="fw-progress-fill" id="upload-fill" style="width:64%"></div></div>
+      <div class="fw-row" style="margin-top:var(--fw-sp-4)"><button class="fw-btn fw-btn-ghost" id="simulate-btn" type="button">Simulate progress</button></div>
+    </div>
+    <div class="fw-grid-2">
+      <div class="fw-card">
+        <div class="fw-progress-label"><span class="fw-progress-name">Import complete</span><span class="fw-progress-pct">100%</span></div>
+        <div class="fw-progress is-success"><div class="fw-progress-fill" style="width:100%"></div></div>
+      </div>
+      <div class="fw-card">
+        <div class="fw-progress-label"><span class="fw-progress-name">Syncing with your bank</span><span class="fw-progress-pct">—</span></div>
+        <div class="fw-progress is-indeterminate"><div class="fw-progress-fill"></div></div>
+      </div>
+    </div>
+    <div style="height:var(--fw-sp-5)"></div>
+    <div class="fw-card">
+      <div class="fw-row" style="justify-content:space-around; text-align:center">
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-sm" style="color:var(--fw-plum)"></div>sm · inline text</div>
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-md" style="color:var(--fw-plum)"></div>md · cards, rows</div>
+        <div class="spinner-caption"><div class="fw-spinner fw-spinner-lg" style="color:var(--fw-plum)"></div>lg · panel / page</div>
+        <div class="spinner-caption"><button class="fw-btn fw-btn-primary fw-btn-loading" disabled aria-busy="true"><span class="fw-spinner fw-spinner-sm"></span>Sending…</button>in a button</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMS -->
+  <section>
+    <div class="kit-sec-head"><h2>Form fields</h2><span class="num">05</span></div>
+    <p class="sec-note">A required field gets a small coral asterisk after the label, always shipped with hidden text for screen readers. Disabled fields mute to the Cloud-dim surface and drop the border contrast, signalling "not available" rather than "empty."</p>
+    <div class="fw-row" style="align-items:flex-start">
+      <div class="fw-field">
+        <label class="fw-label" for="f-email">Client email <span class="fw-required" aria-hidden="true">*</span><span class="fw-sr-only">(required)</span></label>
+        <input id="f-email" type="text" value="hello@brightpath.co">
+        <span class="fw-hint">We'll send the invoice here.</span>
+      </div>
+      <div class="fw-field is-error">
+        <label class="fw-label" for="f-amount">Amount due <span class="fw-required" aria-hidden="true">*</span><span class="fw-sr-only">(required)</span></label>
+        <input id="f-amount" type="text" value="0.00" aria-invalid="true">
+        <span class="fw-error-msg">Enter an amount greater than $0.</span>
+      </div>
+      <div class="fw-field">
+        <label class="fw-label" for="f-note">Invoice note</label>
+        <input id="f-note" type="text" placeholder="Optional message for your client">
+        <span class="fw-hint">Placeholder text — check contrast in dark mode.</span>
+      </div>
+      <div class="fw-field is-disabled">
+        <label class="fw-label" for="f-num">Invoice number</label>
+        <input id="f-num" type="text" value="INV-04821" disabled>
+        <span class="fw-hint">Assigned automatically — can't be edited.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTION -->
+  <section>
+    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">05b</span></div>
+    <p class="sec-note">Native checkboxes and radios are visually hidden but stay in the DOM and fully keyboard/screen-reader operable — the styled box is a sibling driven purely by CSS. Marigold marks the "on" state everywhere.</p>
+    <div class="fw-card">
+      <div class="fw-row" style="gap:var(--fw-sp-7); align-items:flex-start">
+        <div class="fw-option-group">
+          <span class="fw-label">Checkbox</span>
+          <label class="fw-checkbox"><input type="checkbox" checked><span class="fw-box"></span><span>Email me a copy</span></label>
+          <label class="fw-checkbox"><input type="checkbox"><span class="fw-box"></span><span>Auto-charge saved card</span></label>
+          <label class="fw-checkbox"><input type="checkbox" disabled><span class="fw-box"></span><span>Locked by plan</span></label>
+        </div>
+        <div class="fw-option-group">
+          <span class="fw-label">Radio</span>
+          <label class="fw-radio"><input type="radio" name="billing" checked><span class="fw-box"></span><span>Monthly</span></label>
+          <label class="fw-radio"><input type="radio" name="billing"><span class="fw-box"></span><span>Quarterly</span></label>
+          <label class="fw-radio"><input type="radio" name="billing"><span class="fw-box"></span><span>Annually</span></label>
+        </div>
+        <div class="fw-option-group">
+          <span class="fw-label">Toggle</span>
+          <label class="fw-toggle"><input type="checkbox" checked><span class="fw-track"><span class="fw-thumb"></span></span><span>Auto-remind clients</span></label>
+          <label class="fw-toggle"><input type="checkbox"><span class="fw-track"><span class="fw-thumb"></span></span><span>Weekly summary email</span></label>
+          <label class="fw-toggle"><input type="checkbox" disabled><span class="fw-track"><span class="fw-thumb"></span></span><span>Beta features</span></label>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORM EXAMPLE -->
+  <section>
+    <div class="kit-sec-head"><h2>Form example</h2><span class="num">05c</span></div>
+    <p class="sec-note">All of the above assembled, including a textarea and a typeahead combobox backed by a native <code>&lt;datalist&gt;</code>. Try typing "s" or "m" into the City field. Submitting shows the loading state and a toast.</p>
+    <form class="fw-card" style="max-width:520px" id="demo-form" data-fw-loading>
+      <h4 class="field-h4">New client</h4>
+      <div class="fw-field fw-field-full" style="margin-bottom:var(--fw-sp-4)">
+        <label class="fw-label" for="c-name">Client name <span class="fw-required" aria-hidden="true">*</span><span class="fw-sr-only">(required)</span></label>
+        <input id="c-name" type="text" placeholder="Bright Path Co.">
+      </div>
+      <div class="fw-field fw-field-full" style="margin-bottom:var(--fw-sp-4)">
+        <label class="fw-label" for="city-input">City</label>
+        <div class="fw-combobox">
+          <input id="city-input" type="text" data-fw-combobox list="cities" placeholder="Start typing…">
+          <datalist id="cities">
+            <option value="Seattle"></option><option value="San Francisco"></option><option value="Portland"></option><option value="Denver"></option><option value="Austin"></option><option value="Chicago"></option><option value="Minneapolis"></option><option value="Salt Lake City"></option><option value="Boston"></option><option value="Miami"></option>
+          </datalist>
+        </div>
+        <span class="fw-hint">Used to localize invoice dates and currency.</span>
+      </div>
+      <div class="fw-field fw-field-full" style="margin-bottom:var(--fw-sp-5)">
+        <label class="fw-label" for="c-notes">Notes</label>
+        <textarea id="c-notes" placeholder="Anything the team should know about this client…"></textarea>
+      </div>
+      <div style="margin-bottom:var(--fw-sp-5)">
+        <span class="fw-label" style="display:block; margin-bottom:10px">Billing frequency</span>
+        <div class="fw-option-group fw-option-group-inline">
+          <label class="fw-radio"><input type="radio" name="billing-2" checked><span class="fw-box"></span><span>Monthly</span></label>
+          <label class="fw-radio"><input type="radio" name="billing-2"><span class="fw-box"></span><span>Quarterly</span></label>
+        </div>
+      </div>
+      <label class="fw-toggle" style="margin-bottom:var(--fw-sp-5)"><input type="checkbox" checked><span class="fw-track"><span class="fw-thumb"></span></span><span>Send automatic payment reminders</span></label>
+      <div class="fw-row">
+        <button class="fw-btn fw-btn-primary" type="submit" data-fw-loading-text="Creating…">Create client</button>
+        <button class="fw-btn fw-btn-ghost" type="reset">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <!-- TAGS -->
+  <section>
+    <div class="kit-sec-head"><h2>Status tags</h2><span class="num">06</span></div>
+    <p class="sec-note">A slight, consistent tilt on tags only — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted variant for dense rows.</p>
+    <div class="fw-row">
+      <span class="fw-tag fw-tag-live">Paid</span>
+      <span class="fw-tag fw-tag-pending">Pending</span>
+      <span class="fw-tag fw-tag-error">Overdue</span>
+      <span class="fw-tag fw-tag-info">Draft</span>
+      <span class="fw-tag fw-tag-plum">Pro</span>
+    </div>
+    <div class="fw-row" style="margin-top:var(--fw-sp-4)">
+      <span class="fw-tag fw-tag-pill fw-tag-live">Done</span>
+      <span class="fw-tag fw-tag-pill fw-tag-pending">Waiting</span>
+      <span class="fw-tag fw-tag-pill fw-tag-error">Overdue</span>
+    </div>
+  </section>
+
+  <!-- ALERTS -->
+  <section>
+    <div class="kit-sec-head"><h2>Alerts &amp; toasts</h2><span class="num">07</span></div>
+    <div class="stack">
+      <div class="fw-alert fw-alert-success" role="status"><div class="fw-alert-dot"></div><div><div class="fw-alert-title">Invoice sent to Bright Path Co.</div><div class="fw-alert-body">They'll get a reminder automatically if it's not paid within 7 days.</div></div></div>
+      <div class="fw-alert fw-alert-error" role="alert"><div class="fw-alert-dot"></div><div><div class="fw-alert-title">That card was declined</div><div class="fw-alert-body">Check the card details or try a different payment method.</div></div></div>
+      <div class="fw-alert fw-alert-info fw-alert-with-action"><div class="fw-alert-main"><div class="fw-alert-dot"></div><div><div class="fw-alert-title">Two clients haven't opened their checklist</div><div class="fw-alert-body">Nudge them or extend the due date.</div></div></div><button class="fw-btn fw-btn-ghost" type="button">Send reminder</button></div>
+    </div>
+    <div class="fw-row" style="margin-top:var(--fw-sp-4)">
+      <button class="fw-btn fw-btn-ghost" data-toast="success">Success toast</button>
+      <button class="fw-btn fw-btn-ghost" data-toast="error">Error toast</button>
+      <button class="fw-btn fw-btn-ghost" data-toast="info">Info toast</button>
+    </div>
+  </section>
+
+  <!-- OVERLAYS -->
+  <section>
+    <div class="kit-sec-head"><h2>Modal &amp; drawer</h2><span class="num">07b</span></div>
+    <p class="sec-note">Both close on backdrop click, Escape, or a close button, and return focus to whatever opened them. A text-selection drag that ends on the backdrop does <em>not</em> close them.</p>
+    <div class="fw-row">
+      <button class="fw-btn fw-btn-secondary" data-fw-open-modal="demo-modal">Open modal</button>
+      <button class="fw-btn fw-btn-ghost" data-fw-open-drawer="demo-drawer">Open drawer</button>
+    </div>
+  </section>
+
+  <!-- LISTS -->
+  <section>
+    <div class="kit-sec-head"><h2>List rows, disclosure, pagination</h2><span class="num">07c</span></div>
+    <div>
+      <a class="fw-list-row" href="#"><div class="fw-list-row-main"><span class="fw-list-row-title">Bright Path onboarding</span><span class="fw-tag fw-tag-pill fw-tag-live">Active</span><span class="fw-list-row-meta">4 of 9 done · due Fri</span></div></a>
+      <a class="fw-list-row is-locked" href="#"><div class="fw-list-row-main"><span class="fw-list-row-title">Closing documents</span><span class="fw-tag fw-tag-pill fw-tag-pending">Waiting</span><span class="fw-list-row-meta">Locked until onboarding completes</span></div></a>
+    </div>
+    <details class="fw-disclosure" style="margin-top:var(--fw-sp-4)">
+      <summary><svg class="fw-disclosure-chevron" viewBox="0 0 16 16" fill="none"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>Show archived <span class="fw-disclosure-count">3</span></summary>
+      <div class="fw-disclosure-body"><span class="fw-sub-list-title">Spring lease renewal</span><span class="fw-sub-list-title">2025 tax packet</span><span class="fw-sub-list-title">Old website launch</span></div>
+    </details>
+    <nav class="fw-pagination" aria-label="Pagination" style="margin-top:var(--fw-sp-5)">
+      <span class="fw-pag-info">Showing 1–20 of 84</span>
+      <div class="fw-pag-controls"><a class="fw-btn-page is-disabled" aria-disabled="true">← Prev</a><span class="fw-pag-label">Page 1 of 5</span><a class="fw-btn-page" href="#">Next →</a></div>
+    </nav>
+  </section>
+
+  <!-- ASSEMBLED -->
+  <section>
+    <div class="kit-sec-head"><h2>Assembled example</h2><span class="num">08</span></div>
+    <p class="sec-note">The tokens above, working together on a real screen. Shrink the window below 600px to see the nav collapse.</p>
+    <nav class="fw-nav">
+      <a class="fw-nav-brand" href="#"><span class="fw-nav-dot"></span>Fernwell</a>
+      <div class="fw-nav-links"><a href="#" class="is-active">Invoices</a><a href="#">Clients</a><a href="#">Reports</a></div>
+      <div class="fw-nav-right">
+        <button class="fw-nav-btn" data-fw-theme-toggle data-fw-theme-label-dark="☀️" data-fw-theme-label-light="🌙" aria-label="Toggle theme">🌙</button>
+        <button class="fw-nav-toggle" data-fw-nav-toggle aria-controls="nav-menu" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
+        <div class="fw-nav-avatar">JM</div>
+      </div>
+      <div class="fw-nav-dropdown" id="nav-menu"><a href="#" class="is-active">Invoices</a><a href="#">Clients</a><a href="#">Reports</a></div>
+    </nav>
+    <div style="height:var(--fw-sp-5)"></div>
+    <div class="fw-grid-2">
+      <div class="fw-card fw-stat">
+        <div class="fw-stat-label">Outstanding balance</div>
+        <div class="fw-stat-value">$8,420</div>
+        <div class="fw-stat-delta is-up">↓ 12% vs last month</div>
+      </div>
+      <div class="fw-card">
+        <div class="fw-empty">
+          <div class="fw-empty-blob">✉️</div>
+          <h4 class="fw-empty-title">No invoices sent yet</h4>
+          <p class="fw-empty-body">Create your first invoice and Fernwell will handle the reminders.</p>
+          <button class="fw-btn fw-btn-primary">Create invoice</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOTION -->
+  <section>
+    <div class="kit-sec-head"><h2>Motion</h2><span class="num">09</span></div>
+    <dl class="kv">
+      <dt>Buttons &amp; controls</dt><dd>120ms ease, 1px lift on hover. Never bounce — playful lives in shape and color, not in springy easing.</dd>
+      <dt>Cards &amp; modals entering</dt><dd>180ms, fade + 8px rise. No scale-up — it reads as cheap on data-dense screens.</dd>
+      <dt>Success states</dt><dd>A single checkmark draw-in (~300ms) is the one place a slightly more expressive animation is earned.</dd>
+      <dt>Reduced motion</dt><dd>All transforms drop to opacity-only fades when prefers-reduced-motion is set.</dd>
+    </dl>
+  </section>
+
+  <!-- VOICE -->
+  <section>
+    <div class="kit-sec-head"><h2>Voice</h2><span class="num">10</span></div>
+    <dl class="kv">
+      <dt>Buttons</dt><dd>Name the action, not the mechanism: "Send invoice," not "Submit."</dd>
+      <dt>Errors</dt><dd>Say what happened and what to do next. Never apologize, never blame the user: "That card was declined," not "Oops! Something went wrong."</dd>
+      <dt>Empty states</dt><dd>An invitation, not a description: "No invoices sent yet" + a direct next action, not "You have no data."</dd>
+      <dt>Confirmations</dt><dd>Match the verb on the button: "Send invoice" → "Invoice sent."</dd>
+    </dl>
+  </section>
+
+  <!-- ICONS -->
+  <section>
+    <div class="kit-sec-head"><h2>Icons</h2><span class="num">11</span></div>
+    <dl class="kv">
+      <dt>Style</dt><dd>Outline only, 16–20px box, 1.3–1.4px stroke, round caps and joins, <code>currentColor</code>.</dd>
+      <dt>The one exception</dt><dd>No fills, except a checkmark on a completed item — the one place a filled icon carries meaning instead of decoration.</dd>
+    </dl>
+  </section>
+
+  <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet; never fork the CSS.</p>
+</div>
+
+<!-- modal -->
+<div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+  <div class="fw-modal">
+    <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
+    <p style="font-size:14px; color:var(--fw-ink-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
+    <div class="fw-modal-foot">
+      <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
+      <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
+    </div>
+  </div>
+</div>
+
+<!-- drawer -->
+<div class="fw-drawer-overlay" data-fw-drawer-overlay="demo-drawer"></div>
+<aside class="fw-drawer" id="demo-drawer" role="dialog" aria-modal="true" aria-labelledby="demo-drawer-title">
+  <div class="fw-drawer-head">
+    <div class="fw-drawer-head-text"><div class="fw-drawer-eyebrow">Task · Upload</div><h2 class="fw-drawer-title" id="demo-drawer-title">Signed lease agreement</h2></div>
+    <button class="fw-icon-btn" data-fw-close-drawer aria-label="Close"><svg viewBox="0 0 16 16" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+  </div>
+  <div class="fw-drawer-body">
+    <div class="fw-field fw-field-full"><label class="fw-label" for="d-assignee">Assigned to</label><input id="d-assignee" type="text" value="Jordan M."></div>
+    <div class="fw-field fw-field-full"><label class="fw-label" for="d-due">Due</label><input id="d-due" type="date"></div>
+    <label class="fw-toggle"><input type="checkbox" checked><span class="fw-track"><span class="fw-thumb"></span></span><span>Remind every 3 days</span></label>
+  </div>
+  <div class="fw-drawer-foot">
+    <button class="fw-btn fw-btn-ghost" data-fw-close-drawer type="button">Close</button>
+    <button class="fw-btn fw-btn-primary" type="button">Save task</button>
+  </div>
+</aside>
+
+<script src="../dist/fernwell.iife.js"></script>
+<script>
+  document.getElementById('fw-version').textContent = Fernwell.version;
+
+  // progress simulation
+  const simulateBtn = document.getElementById('simulate-btn');
+  const fill = document.getElementById('upload-fill'), pct = document.getElementById('upload-pct'), bar = document.getElementById('upload-bar');
+  simulateBtn.addEventListener('click', () => {
+    let p = 0; fill.style.width = '0%'; pct.textContent = '0%'; simulateBtn.disabled = true;
+    const t = setInterval(() => {
+      p = Math.min(100, p + Math.round(8 + Math.random() * 14));
+      fill.style.width = p + '%'; pct.textContent = p + '%'; bar.setAttribute('aria-valuenow', p);
+      if (p >= 100) { clearInterval(t); simulateBtn.disabled = false; }
+    }, 220);
+  });
+
+  // button loading demo
+  const ld = document.getElementById('loading-demo');
+  ld.addEventListener('click', () => { Fernwell.loading.setButtonLoading(ld); setTimeout(() => Fernwell.loading.resetButtonLoading(ld), 1600); });
+
+  // form demo: loading state + toast, no navigation
+  document.getElementById('demo-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('[type="submit"]');
+    setTimeout(() => { Fernwell.loading.resetButtonLoading(btn); Fernwell.toast.show('Client created'); }, 1200);
+  });
+
+  // toasts
+  document.querySelectorAll('[data-toast]').forEach((b) => b.addEventListener('click', () => {
+    const v = b.dataset.toast;
+    Fernwell.toast.show({ success: 'Invoice sent', error: 'That card was declined', info: 'Reminder scheduled for Monday' }[v], { variant: v });
+  }));
+</script>
+</body>
+</html>

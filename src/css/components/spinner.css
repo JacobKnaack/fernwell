@@ -1,0 +1,34 @@
+/* ---- spinners ----
+   Live inline — in a button, next to a label, centred in a panel. Never a
+   full-page takeover unless the whole screen is genuinely blocked. Colour
+   comes from currentColor, so set `color:` on the spinner or its parent. */
+.fw-spinner {
+  display: inline-block;
+  border-radius: 50%;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--fw-cloud-dim);
+  border-top-color: currentColor;
+  animation: fw-spin 800ms linear infinite;
+}
+
+.fw-spinner-sm { width: 16px; height: 16px; border-width: 2px; }
+.fw-spinner-md { width: 24px; height: 24px; border-width: 3px; }
+.fw-spinner-lg { width: 40px; height: 40px; border-width: 4px; }
+
+@keyframes fw-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fw-pulse-opacity {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-spinner {
+    animation: fw-pulse-opacity 1.2s ease-in-out infinite;
+    border-top-color: var(--fw-cloud-dim);
+  }
+}

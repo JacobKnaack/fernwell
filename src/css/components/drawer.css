@@ -1,0 +1,151 @@
+/* ---- drawer: right-hand detail panel ----
+     <div class="fw-drawer-overlay" data-fw-drawer-overlay></div>
+     <aside class="fw-drawer" id="details" role="dialog" aria-modal="true">
+       <div class="fw-drawer-head">
+         <div class="fw-drawer-head-text"><div class="fw-drawer-eyebrow">Task</div><h2 class="fw-drawer-title">…</h2></div>
+         <button class="fw-icon-btn" data-fw-close-drawer aria-label="Close">×</button>
+       </div>
+       <div class="fw-drawer-body">…</div>
+       <div class="fw-drawer-foot">…</div>
+     </aside>
+   Open with data-fw-open-drawer="details" (uses the modal enhancer's
+   open/close/Esc/focus logic). */
+.fw-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--fw-overlay-soft);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fw-motion-base) var(--fw-motion-ease);
+  z-index: 90;
+}
+
+.fw-drawer-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fw-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 440px;
+  max-width: 92vw;
+  background: var(--fw-cloud);
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  box-shadow: var(--fw-shadow-lg);
+  border-left: var(--fw-border-w) solid var(--fw-cloud-dim);
+  transform: translateX(100%);
+  transition: transform 240ms var(--fw-motion-ease);
+  z-index: 91;
+  display: flex;
+  flex-direction: column;
+}
+
+.fw-drawer.is-open {
+  transform: translateX(0);
+}
+
+.fw-drawer-head {
+  padding: var(--fw-sp-5);
+  border-bottom: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--fw-sp-3);
+  flex-shrink: 0;
+}
+
+.fw-drawer-head-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.fw-drawer-eyebrow {
+  font-family: var(--fw-font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fw-ink-soft);
+  margin-bottom: 4px;
+}
+
+.fw-drawer-title {
+  font-family: var(--fw-font-display);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--fw-ink);
+  margin: 0;
+}
+
+/* Editable-title variant: a borderless input that only reveals a field on focus. */
+.fw-drawer-title-input {
+  font-family: var(--fw-font-display);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--fw-ink);
+  border: none;
+  background: transparent;
+  padding: 2px 0;
+  width: 100%;
+  outline: none;
+  border-radius: 6px;
+}
+
+.fw-drawer-title-input:focus {
+  background: var(--fw-cloud);
+  padding: 2px 6px;
+  margin: 0 -6px;
+}
+
+.fw-drawer > form {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.fw-drawer-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: var(--fw-sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-5);
+}
+
+.fw-drawer-foot {
+  padding: var(--fw-sp-4) var(--fw-sp-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fw-sp-3);
+  flex-shrink: 0;
+  border-top: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+}
+
+@media (max-width: 560px) {
+  .fw-drawer {
+    width: 100vw;
+    max-width: 100vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-drawer {
+    transition: opacity var(--fw-motion-base) var(--fw-motion-ease);
+    transform: none;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fw-drawer.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}

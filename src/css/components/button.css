@@ -1,0 +1,122 @@
+/* ---- buttons ----
+   Primary is Marigold and appears once per view. Secondary (Plum) is the
+   next-most-important action. Ghost for anything tertiary. If two things feel
+   equally important, neither is Primary. */
+.fw-btn {
+  font-family: var(--fw-font-body);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.2;
+  border-radius: var(--fw-r-md);
+  padding: 12px 22px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  text-decoration: none;
+  transition: transform var(--fw-motion-fast) var(--fw-motion-ease),
+    box-shadow var(--fw-motion-fast) var(--fw-motion-ease),
+    background var(--fw-motion-fast) var(--fw-motion-ease),
+    border-color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-btn:hover {
+  transform: translateY(-1px);
+}
+
+.fw-btn:active {
+  transform: translateY(0);
+}
+
+.fw-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-btn-primary {
+  background: var(--fw-marigold);
+  color: var(--fw-ink-fixed);
+  box-shadow: var(--fw-shadow-marigold);
+}
+
+.fw-btn-primary:hover {
+  background: var(--fw-marigold-dk);
+}
+
+.fw-btn-secondary {
+  background: var(--fw-plum);
+  color: var(--fw-on-brand);
+}
+
+.fw-btn-secondary:hover {
+  background: var(--fw-plum-dk);
+}
+
+.fw-btn-ghost {
+  background: transparent;
+  color: var(--fw-ink);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+}
+
+.fw-btn-ghost:hover {
+  border-color: var(--fw-ink-soft);
+}
+
+.fw-btn-danger {
+  background: var(--fw-coral-bg);
+  color: var(--fw-coral);
+}
+
+/* Marketing-density variant: a little more air for hero / CTA placements. */
+.fw-btn-lg {
+  padding: 14px 26px;
+}
+
+.fw-btn:disabled,
+.fw-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.fw-btn-loading {
+  cursor: progress;
+}
+
+.fw-btn .fw-spinner {
+  margin-right: 2px;
+}
+
+/* ---- icon button: small square action (task rows, toolbars) ---- */
+.fw-icon-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--fw-r-sm);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--fw-ink-soft);
+  flex-shrink: 0;
+  padding: 0;
+  text-decoration: none;
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease), color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-icon-btn:hover {
+  border-color: var(--fw-plum);
+  color: var(--fw-plum);
+}
+
+.fw-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-icon-btn svg {
+  width: 15px;
+  height: 15px;
+}

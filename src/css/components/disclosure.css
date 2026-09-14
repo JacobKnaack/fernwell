@@ -1,0 +1,63 @@
+/* ---- disclosure: native <details> as an inline expand/collapse ----
+     <details class="fw-disclosure">
+       <summary><svg class="fw-disclosure-chevron" …/> Show 3 more <span class="fw-disclosure-count">3</span></summary>
+       <div class="fw-disclosure-body">…</div>
+     </details> */
+.fw-disclosure > summary {
+  cursor: pointer;
+  color: var(--fw-plum);
+  font-family: var(--fw-font-body);
+  font-weight: 600;
+  font-size: 13px;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fw-disclosure > summary::-webkit-details-marker {
+  display: none;
+}
+
+.fw-disclosure > summary:hover {
+  text-decoration: underline;
+}
+
+.fw-disclosure > summary:focus-visible {
+  outline: none;
+  border-radius: 4px;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-disclosure-chevron {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+  transition: transform 150ms var(--fw-motion-ease);
+}
+
+.fw-disclosure[open] > summary .fw-disclosure-chevron {
+  transform: rotate(180deg);
+}
+
+.fw-disclosure-count {
+  font-family: var(--fw-font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--fw-plum);
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border-radius: var(--fw-r-full);
+  padding: 1px 7px;
+}
+
+.fw-disclosure-body {
+  margin-top: var(--fw-sp-3);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border-radius: var(--fw-r-md);
+  padding: var(--fw-sp-4);
+  background: var(--fw-cloud);
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-3);
+}

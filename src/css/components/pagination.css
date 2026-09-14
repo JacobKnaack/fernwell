@@ -1,0 +1,65 @@
+/* ---- pagination ----
+     <nav class="fw-pagination" aria-label="Pagination">
+       <span class="fw-pag-info">Showing 1–20 of 84</span>
+       <div class="fw-pag-controls">
+         <a class="fw-btn-page is-disabled" aria-disabled="true">← Prev</a>
+         <span class="fw-pag-label">Page 1 of 5</span>
+         <a class="fw-btn-page" href="?page=2">Next →</a>
+       </div>
+     </nav> */
+.fw-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--fw-sp-3);
+  font-family: var(--fw-font-body);
+}
+
+.fw-pag-info,
+.fw-pag-label {
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  color: var(--fw-ink-soft);
+}
+
+.fw-pag-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-3);
+}
+
+.fw-btn-page {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: var(--fw-r-sm);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-btn-page:hover {
+  border-color: var(--fw-ink-soft);
+  text-decoration: none;
+}
+
+.fw-btn-page:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-btn-page.is-disabled,
+.fw-btn-page[aria-disabled="true"],
+.fw-btn-page:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}

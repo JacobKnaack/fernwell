@@ -1,0 +1,110 @@
+/*
+ * Fernwell design tokens — GENERATED from src/tokens/tokens.json by scripts/gen-tokens.mjs.
+ * Do not edit by hand. Override any token in your own stylesheet after this file:
+ *   :root { --fw-marigold: #f0b030; }
+ * Dark theme: set data-theme="dark" on <html> (or any ancestor).
+ */
+:root {
+  /* ===== COLOR ===== */
+  --fw-ink: #1F2430; /* primary text, dark neutral */
+  --fw-ink-soft: #565D6E; /* secondary text — never pure gray */
+  --fw-ink-fixed: #1F2430; /* text on surfaces that stay light in both themes (Marigold buttons, avatars); never flips */
+  --fw-cloud: #F5F6F1; /* page background */
+  --fw-cloud-dim: #EAEBE4; /* dividers, input borders, recessed surfaces */
+  --fw-surface: #FFFFFF; /* card / panel surface */
+  --fw-marigold: #FFC145; /* primary brand / CTA — same hex in both themes */
+  --fw-marigold-dk: #E8A521; /* marigold hover / active */
+  --fw-marigold-lt: #FFD988; /* marigold highlight (empty-state blob gradient) */
+  --fw-plum: #4C3A73; /* secondary brand, nav, headers */
+  --fw-plum-dk: #392C58; /* plum hover */
+  --fw-plum-bg: #EEEAF6; /* plum tint */
+  --fw-meadow: #3FA672; /* success */
+  --fw-meadow-bg: #E6F5EC;
+  --fw-coral: #E85B4F; /* error / danger */
+  --fw-coral-bg: #FCEAE8;
+  --fw-sky: #3E8FD0; /* info */
+  --fw-sky-bg: #E8F2FA;
+  --fw-pending-bg: #FFF3DC; /* pending / waiting tint (pairs with marigold-dk text) */
+  --fw-on-brand: #FFFFFF; /* text on Plum / Ink surfaces (nav, footer, banners) */
+  --fw-on-brand-soft: rgba(255, 255, 255, 0.72); /* secondary text on Plum */
+  --fw-on-brand-fill: rgba(255, 255, 255, 0.10); /* translucent control fill on Plum */
+  --fw-on-brand-line: rgba(255, 255, 255, 0.16); /* translucent border on Plum */
+  --fw-overlay: rgba(31, 36, 48, 0.55); /* modal backdrop */
+  --fw-overlay-soft: rgba(31, 36, 48, 0.32); /* drawer backdrop */
+  --fw-focus-ring: 0 0 0 4px rgba(255, 193, 69, 0.25); /* box-shadow focus ring, marigold wash */
+
+  /* ===== TYPE ===== */
+  --fw-font-display: 'Plus Jakarta Sans', system-ui, sans-serif; /* anything that should feel like a voice — headlines, empty states, onboarding */
+  --fw-font-body: 'Inter', system-ui, sans-serif; /* anything read quickly and often — tables, forms, nav */
+  --fw-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; /* numbers, IDs, anywhere precision matters more than warmth */
+
+  /* ===== SPACING (8pt scale) ===== */
+  --fw-sp-1: 4px;
+  --fw-sp-2: 8px;
+  --fw-sp-3: 12px;
+  --fw-sp-4: 16px;
+  --fw-sp-5: 24px;
+  --fw-sp-6: 32px;
+  --fw-sp-7: 48px;
+  --fw-sp-8: 64px;
+  --fw-sp-9: 96px;
+
+  /* ===== SHAPE — bigger surface, softer corner ===== */
+  --fw-r-sm: 10px; /* inputs, small badges */
+  --fw-r-md: 16px; /* buttons, tags */
+  --fw-r-lg: 24px; /* cards */
+  --fw-r-xl: 32px; /* modals, hero panels */
+  --fw-r-full: 999px; /* avatars, pills */
+
+  /* ===== ELEVATION ===== */
+  --fw-shadow-sm: 0 1px 2px rgba(31, 36, 48, 0.06), 0 1px 1px rgba(31, 36, 48, 0.04);
+  --fw-shadow-md: 0 4px 12px rgba(31, 36, 48, 0.08), 0 2px 4px rgba(31, 36, 48, 0.04);
+  --fw-shadow-lg: 0 12px 32px rgba(31, 36, 48, 0.12), 0 4px 8px rgba(31, 36, 48, 0.06);
+  --fw-shadow-marigold: 0 6px 16px rgba(255, 193, 69, 0.35);
+  --fw-shadow-meadow: 0 6px 16px rgba(63, 166, 114, 0.28);
+
+  /* ===== BORDER ===== */
+  --fw-border-w: 1.5px; /* the system's one border weight */
+
+  /* ===== MOTION ===== */
+  --fw-motion-fast: 120ms; /* buttons & controls */
+  --fw-motion-base: 180ms; /* cards, modals, dropdowns entering */
+  --fw-motion-ease: ease;
+}
+
+[data-theme="dark"] {
+  /* ===== COLOR ===== */
+  --fw-ink: #F2F1EA; /* warm off-white, not pure white */
+  --fw-ink-soft: #9CA1B0;
+  --fw-ink-fixed: #1F2430;
+  --fw-cloud: #14161C; /* near-black with a trace of Plum — never pure black, which flattens elevation */
+  --fw-cloud-dim: #2B2F3B;
+  --fw-surface: #1D2029;
+  --fw-marigold: #FFC145; /* unchanged — the one constant that says "this is Fernwell" */
+  --fw-marigold-dk: #FFD166; /* hover brightens instead of darkens on a dark ground */
+  --fw-marigold-lt: #FFD988;
+  --fw-plum: #6B54A3; /* lifted a step so it stays legible against near-black */
+  --fw-plum-dk: #7E68B5;
+  --fw-plum-bg: rgba(107, 84, 163, 0.16);
+  --fw-meadow: #55D194; /* status colors lift 1–2 steps lighter to hold contrast */
+  --fw-meadow-bg: rgba(85, 209, 148, 0.14); /* tinted backgrounds become low-opacity washes, not pastel chips */
+  --fw-coral: #FF8478;
+  --fw-coral-bg: rgba(255, 132, 120, 0.14);
+  --fw-sky: #6BB3E8;
+  --fw-sky-bg: rgba(107, 179, 232, 0.14);
+  --fw-pending-bg: rgba(255, 193, 69, 0.16);
+  --fw-on-brand: #FFFFFF;
+  --fw-on-brand-soft: rgba(255, 255, 255, 0.72);
+  --fw-on-brand-fill: rgba(255, 255, 255, 0.10);
+  --fw-on-brand-line: rgba(255, 255, 255, 0.16);
+  --fw-overlay: rgba(0, 0, 0, 0.6);
+  --fw-overlay-soft: rgba(0, 0, 0, 0.4);
+  --fw-focus-ring: 0 0 0 4px rgba(255, 193, 69, 0.25);
+
+  /* ===== ELEVATION ===== */
+  --fw-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --fw-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --fw-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+  --fw-shadow-marigold: 0 6px 16px rgba(255, 193, 69, 0.22);
+  --fw-shadow-meadow: 0 6px 16px rgba(85, 209, 148, 0.22);
+}

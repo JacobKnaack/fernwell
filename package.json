@@ -1,0 +1,59 @@
+{
+  "name": "fernwell",
+  "version": "0.1.0",
+  "description": "Fernwell — the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Jacob Knaack",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JacobKnaack/fernwell.git"
+  },
+  "keywords": [
+    "design-system",
+    "design-tokens",
+    "css",
+    "ui",
+    "components",
+    "hunnydo",
+    "fernwell"
+  ],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "main": "./dist/fernwell.cjs",
+  "module": "./dist/fernwell.esm.js",
+  "types": "./dist/index.d.ts",
+  "style": "./dist/fernwell.css",
+  "unpkg": "./dist/fernwell.iife.js",
+  "jsdelivr": "./dist/fernwell.iife.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/fernwell.esm.js",
+      "require": "./dist/fernwell.cjs"
+    },
+    "./css": "./dist/fernwell.css",
+    "./css/min": "./dist/fernwell.min.css",
+    "./tokens.css": "./dist/fernwell.tokens.css",
+    "./tokens.json": "./dist/tokens.json",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "tokens": "node scripts/gen-tokens.mjs",
+    "lint": "node scripts/lint-tokens.mjs",
+    "build": "npm run tokens && npm run lint && node scripts/build.mjs && tsc",
+    "docs": "npx serve .",
+    "prepublishOnly": "npm run build"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12",
+    "typescript": "^5.9.3"
+  }
+}

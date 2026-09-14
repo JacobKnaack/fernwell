@@ -1,0 +1,89 @@
+/* ---- modal ----
+   180ms fade + rise. No scale-up beyond a hair — it reads as cheap on
+   data-dense screens.
+     <button class="fw-btn" data-fw-open-modal="confirm">Open</button>
+     <div class="fw-modal-overlay" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+       <div class="fw-modal">
+         <div class="fw-modal-head"><div><h2 id="confirm-title">Delete invoice?</h2><p class="fw-modal-sub">…</p></div></div>
+         …
+         <div class="fw-modal-foot"><button class="fw-btn fw-btn-ghost" data-fw-close-modal>Cancel</button><button class="fw-btn fw-btn-danger">Delete</button></div>
+       </div>
+     </div> */
+.fw-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--fw-overlay);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--fw-sp-5);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fw-modal {
+  background: var(--fw-surface);
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  border-radius: var(--fw-r-xl);
+  box-shadow: var(--fw-shadow-lg);
+  width: 100%;
+  max-width: 460px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: var(--fw-sp-6);
+  transform: translateY(8px) scale(0.98);
+  transition: transform var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-modal-wide {
+  max-width: 600px;
+}
+
+.fw-modal-overlay.is-open .fw-modal {
+  transform: translateY(0) scale(1);
+}
+
+.fw-modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--fw-sp-3);
+  margin-bottom: var(--fw-sp-5);
+}
+
+.fw-modal-head h2,
+.fw-modal-title {
+  font-family: var(--fw-font-display);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--fw-ink);
+  margin: 0;
+}
+
+.fw-modal-sub {
+  font-size: 13px;
+  color: var(--fw-ink-soft);
+  margin: 2px 0 0;
+}
+
+.fw-modal-foot {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--fw-sp-3);
+  align-items: center;
+  margin-top: var(--fw-sp-2);
+  padding-top: var(--fw-sp-5);
+  border-top: var(--fw-border-w) solid var(--fw-cloud-dim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-modal { transform: none; }
+}

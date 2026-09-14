@@ -1,0 +1,180 @@
+/* ---- selection controls (checkbox, radio, toggle) ----
+   Native inputs are visually hidden but stay in the DOM and fully keyboard /
+   screen-reader operable — the styled box is a sibling driven purely by CSS,
+   never a replacement control. Marigold marks the "on" state everywhere.
+
+   Markup:
+     <label class="fw-checkbox"><input type="checkbox"><span class="fw-box"></span><span>Label</span></label>
+     <label class="fw-radio"><input type="radio" name="g"><span class="fw-box"></span><span>Label</span></label>
+     <label class="fw-toggle"><input type="checkbox"><span class="fw-track"><span class="fw-thumb"></span></span><span>Label</span></label> */
+.fw-checkbox,
+.fw-radio,
+.fw-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-family: var(--fw-font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--fw-ink);
+}
+
+.fw-checkbox input,
+.fw-radio input,
+.fw-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+.fw-checkbox:has(input:disabled),
+.fw-radio:has(input:disabled),
+.fw-toggle:has(input:disabled) {
+  cursor: not-allowed;
+}
+
+.fw-checkbox input:disabled ~ span,
+.fw-radio input:disabled ~ span,
+.fw-toggle input:disabled ~ span {
+  color: var(--fw-ink-soft);
+}
+
+.fw-option-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-3);
+}
+
+.fw-option-group-inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--fw-sp-5);
+}
+
+/* ---- checkbox ---- */
+.fw-checkbox .fw-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background var(--fw-motion-fast) var(--fw-motion-ease), border-color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+/* The checkmark is the same path used on the HunnyDo logomark, drawn in
+   Ink-Fixed so it stays legible on Marigold in both themes. */
+.fw-checkbox .fw-box::after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  opacity: 0;
+  background-color: var(--fw-ink-fixed);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5L6.2 11.5L13 4.5' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M3 8.5L6.2 11.5L13 4.5' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  transition: opacity 100ms var(--fw-motion-ease);
+}
+
+.fw-checkbox input:checked + .fw-box {
+  background: var(--fw-marigold);
+  border-color: var(--fw-marigold);
+}
+
+.fw-checkbox input:checked + .fw-box::after {
+  opacity: 1;
+}
+
+.fw-checkbox input:focus-visible + .fw-box {
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-checkbox input:disabled + .fw-box {
+  background: var(--fw-cloud-dim);
+  border-color: var(--fw-cloud-dim);
+}
+
+/* ---- radio ---- */
+.fw-radio .fw-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  background: var(--fw-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-radio .fw-box::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: transparent;
+  transition: background var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-radio input:checked + .fw-box {
+  border-color: var(--fw-marigold);
+}
+
+.fw-radio input:checked + .fw-box::after {
+  background: var(--fw-marigold);
+}
+
+.fw-radio input:focus-visible + .fw-box {
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-radio input:disabled + .fw-box {
+  background: var(--fw-cloud-dim);
+  border-color: var(--fw-cloud-dim);
+}
+
+/* ---- toggle ---- */
+.fw-toggle .fw-track {
+  width: 42px;
+  height: 24px;
+  border-radius: var(--fw-r-full);
+  background: var(--fw-cloud-dim);
+  position: relative;
+  flex-shrink: 0;
+  transition: background 160ms var(--fw-motion-ease);
+}
+
+.fw-toggle .fw-thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--fw-surface);
+  box-shadow: var(--fw-shadow-sm);
+  transition: transform 160ms var(--fw-motion-ease);
+}
+
+.fw-toggle input:checked + .fw-track {
+  background: var(--fw-marigold);
+}
+
+.fw-toggle input:checked + .fw-track .fw-thumb {
+  transform: translateX(18px);
+}
+
+.fw-toggle input:focus-visible + .fw-track {
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-toggle input:disabled + .fw-track {
+  opacity: 0.5;
+}

@@ -1,0 +1,74 @@
+/* ---- tags / status stickers ----
+   A slight, consistent tilt — the one place the system allows itself to feel
+   hand-placed. Everything else stays on-grid. Use .fw-tag-pill for the
+   compact, untilted, fully-round variant (table cells, dense rows). */
+.fw-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 5px 12px;
+  border-radius: var(--fw-r-md);
+  transform: rotate(-2deg);
+  background: var(--fw-cloud-dim);
+  color: var(--fw-ink-soft);
+  white-space: nowrap;
+}
+
+.fw-tag:nth-of-type(2n) {
+  transform: rotate(1.5deg);
+}
+
+.fw-tag:nth-of-type(3n) {
+  transform: rotate(-1deg);
+}
+
+.fw-tag-pill,
+.fw-tag-pill:nth-of-type(n) {
+  transform: none;
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: var(--fw-r-full);
+}
+
+.fw-tag-live {
+  background: var(--fw-meadow-bg);
+  color: var(--fw-meadow);
+}
+
+.fw-tag-live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--fw-meadow);
+}
+
+.fw-tag-pending {
+  background: var(--fw-pending-bg);
+  color: var(--fw-marigold-dk);
+}
+
+.fw-tag-error {
+  background: var(--fw-coral-bg);
+  color: var(--fw-coral);
+}
+
+.fw-tag-info {
+  background: var(--fw-sky-bg);
+  color: var(--fw-sky);
+}
+
+.fw-tag-plum {
+  background: var(--fw-plum-bg);
+  color: var(--fw-plum);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .fw-tag {
+    transition: transform var(--fw-motion-fast) var(--fw-motion-ease);
+  }
+}

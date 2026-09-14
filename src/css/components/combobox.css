@@ -1,0 +1,70 @@
+/* ---- combobox / typeahead ----
+   Markup (the JS enhancer builds the list for you):
+     <div class="fw-combobox">
+       <input class="fw-input" data-fw-combobox list="cities" role="combobox">
+       <datalist id="cities"><option value="Seattle"></option>…</datalist>
+     </div>
+   Without JS the native <datalist> still works — this is progressive
+   enhancement, not a replacement. */
+.fw-combobox {
+  position: relative;
+}
+
+.fw-combobox-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  border-radius: var(--fw-r-md);
+  box-shadow: var(--fw-shadow-lg);
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 6px;
+  margin: 0;
+  list-style: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  pointer-events: none;
+  transition: opacity 140ms var(--fw-motion-ease), transform 140ms var(--fw-motion-ease);
+}
+
+.fw-combobox-list.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.fw-combobox-option {
+  padding: 10px 12px;
+  border-radius: var(--fw-r-sm);
+  font-family: var(--fw-font-body);
+  font-size: 14px;
+  cursor: pointer;
+  color: var(--fw-ink);
+}
+
+.fw-combobox-option:hover,
+.fw-combobox-option.is-active {
+  background: var(--fw-cloud);
+}
+
+.fw-combobox-option b {
+  color: var(--fw-marigold-dk);
+  font-weight: 700;
+}
+
+.fw-combobox-empty {
+  padding: 14px 12px;
+  font-size: 13px;
+  color: var(--fw-ink-soft);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-combobox-list {
+    transform: none;
+  }
+}

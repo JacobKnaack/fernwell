@@ -1,0 +1,12 @@
+/* ---- card ----
+   A card is always a card: same radius, shadow and border everywhere. What
+   changes between a pricing card and a dashboard stat card is density and
+   emphasis, not the shape language. */
+.fw-card {
+  background: var(--fw-surface);
+  border-radius: var(--fw-r-lg);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  box-shadow: var(--fw-shadow-sm);
+  padding: var(--fw-sp-5);
+  color: var(--fw-ink);
+}

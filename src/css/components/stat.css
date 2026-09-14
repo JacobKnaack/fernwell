@@ -1,0 +1,37 @@
+/* ---- stat ----
+     <div class="fw-card fw-stat">
+       <div class="fw-stat-label">Outstanding balance</div>
+       <div class="fw-stat-value">$8,420</div>
+       <div class="fw-stat-delta is-up">↓ 12% vs last month</div>
+     </div> */
+.fw-stat-label {
+  font-family: var(--fw-font-body);
+  font-size: 13px;
+  color: var(--fw-ink-soft);
+  font-weight: 600;
+}
+
+.fw-stat-value {
+  font-family: var(--fw-font-display);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--fw-ink);
+  margin-top: 4px;
+}
+
+.fw-stat-value .fw-stat-unit {
+  font-size: 18px;
+  color: var(--fw-marigold-dk);
+}
+
+.fw-stat-delta {
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--fw-ink-soft);
+  margin-top: 4px;
+}
+
+.fw-stat-delta.is-up { color: var(--fw-meadow); }
+.fw-stat-delta.is-down { color: var(--fw-coral); }

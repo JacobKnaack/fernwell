@@ -1,0 +1,220 @@
+/* ---- nav ----
+   Plum grounds the interface; the brand dot / avatar are the only Marigold.
+     <nav class="fw-nav">
+       <a class="fw-nav-brand" href="/"><span class="fw-nav-dot"></span>Fernwell</a>
+       <div class="fw-nav-links"><a class="is-active" href="#">Invoices</a><a href="#">Clients</a></div>
+       <div class="fw-nav-right">
+         <button class="fw-nav-toggle" data-fw-nav-toggle aria-controls="menu" aria-expanded="false" aria-label="Open menu"><span></span><span></span><span></span></button>
+         <div class="fw-nav-avatar">JM</div>
+       </div>
+       <div class="fw-nav-dropdown" id="menu"><a class="is-active" href="#">Invoices</a>…</div>
+     </nav>
+   Below 600px the inline links hide and the toggle + dropdown take over. */
+.fw-nav {
+  position: relative;
+  background: var(--fw-plum);
+  border-radius: var(--fw-r-lg);
+  padding: var(--fw-sp-4) var(--fw-sp-5);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fw-sp-4);
+  box-shadow: var(--fw-shadow-md);
+  font-family: var(--fw-font-body);
+  color: var(--fw-on-brand);
+}
+
+.fw-nav-sticky {
+  position: sticky;
+  top: var(--fw-sp-5);
+  z-index: 100;
+}
+
+.fw-nav-brand {
+  color: var(--fw-on-brand);
+  font-family: var(--fw-font-display);
+  font-weight: 800;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  text-decoration: none;
+}
+
+.fw-nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--fw-marigold);
+}
+
+/* Hexagon variant of the brand mark (the HunnyDo comb cell). */
+.fw-nav-hex {
+  width: 16px;
+  height: 16px;
+  background: var(--fw-marigold);
+  clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+}
+
+.fw-nav-links {
+  display: flex;
+  gap: var(--fw-sp-5);
+  align-items: center;
+}
+
+.fw-nav-links a {
+  color: var(--fw-on-brand-soft);
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-nav-links a:hover {
+  color: var(--fw-on-brand);
+}
+
+.fw-nav-links a.is-active {
+  color: var(--fw-on-brand);
+  border-bottom: 2px solid var(--fw-marigold);
+  padding-bottom: 3px;
+}
+
+.fw-nav-right {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-4);
+}
+
+.fw-nav-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--fw-r-sm);
+  background: var(--fw-marigold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 13px;
+  color: var(--fw-ink-fixed);
+  font-family: var(--fw-font-display);
+  border: none;
+  padding: 0;
+  cursor: default;
+}
+
+/* Square translucent control on the plum bar (theme toggle, hamburger). */
+.fw-nav-btn,
+.fw-nav-toggle {
+  width: 38px;
+  height: 38px;
+  border-radius: var(--fw-r-sm);
+  background: var(--fw-on-brand-fill);
+  border: var(--fw-border-w) solid var(--fw-on-brand-line);
+  color: var(--fw-on-brand);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 15px;
+  transition: background var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-nav-btn:hover,
+.fw-nav-toggle:hover {
+  background: var(--fw-on-brand-line);
+}
+
+.fw-nav-btn:focus-visible,
+.fw-nav-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+/* hamburger — hidden until the nav is tight */
+.fw-nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.fw-nav-toggle span {
+  width: 16px;
+  height: 2px;
+  background: var(--fw-on-brand);
+  border-radius: 2px;
+  transition: transform var(--fw-motion-base) var(--fw-motion-ease), opacity var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+.fw-nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.fw-nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+/* mobile dropdown panel */
+.fw-nav-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  background: var(--fw-surface);
+  border-radius: var(--fw-r-lg);
+  border: var(--fw-border-w) solid var(--fw-cloud-dim);
+  box-shadow: var(--fw-shadow-lg);
+  padding: var(--fw-sp-3);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.98);
+  pointer-events: none;
+  transition: opacity 160ms var(--fw-motion-ease), transform 160ms var(--fw-motion-ease);
+}
+
+.fw-nav-dropdown.is-open {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* Compact popover anchored under a single trigger (e.g. an account menu). */
+.fw-nav-dropdown-menu {
+  left: auto;
+  min-width: 200px;
+}
+
+.fw-nav-dropdown a,
+.fw-nav-dropdown button {
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  text-align: left;
+  padding: 12px 14px;
+  border-radius: var(--fw-r-sm);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-nav-dropdown a:hover,
+.fw-nav-dropdown button:hover {
+  background: var(--fw-cloud);
+}
+
+.fw-nav-dropdown a.is-active {
+  background: var(--fw-marigold);
+  color: var(--fw-ink-fixed);
+}
+
+@media (max-width: 600px) {
+  .fw-nav-links { display: none; }
+  .fw-nav-toggle { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-nav-dropdown { transform: none; }
+}

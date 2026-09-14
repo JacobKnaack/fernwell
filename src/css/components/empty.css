@@ -1,0 +1,41 @@
+/* ---- empty state ----
+   An invitation, not a description: "No invoices sent yet" + a direct next
+   action, never "You have no data."
+     <div class="fw-empty">
+       <div class="fw-empty-blob">✉️</div>
+       <h4 class="fw-empty-title">No invoices sent yet</h4>
+       <p class="fw-empty-body">Create your first invoice…</p>
+       <button class="fw-btn fw-btn-primary">Create invoice</button>
+     </div> */
+.fw-empty {
+  text-align: center;
+  padding: var(--fw-sp-7) var(--fw-sp-5);
+  font-family: var(--fw-font-body);
+}
+
+.fw-empty-blob {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto var(--fw-sp-4);
+  border-radius: 38% 62% 60% 40% / 48% 42% 58% 52%;
+  background: linear-gradient(135deg, var(--fw-marigold), var(--fw-marigold-lt));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+}
+
+.fw-empty-title {
+  font-family: var(--fw-font-display);
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--fw-ink);
+  margin: 0 0 6px;
+}
+
+.fw-empty-body {
+  font-size: 14px;
+  color: var(--fw-ink-soft);
+  max-width: 36ch;
+  margin: 0 auto var(--fw-sp-4);
+}

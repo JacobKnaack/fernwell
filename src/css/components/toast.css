@@ -1,0 +1,52 @@
+/* ---- toast ----
+   Confirmations match the verb on the button: "Send invoice" → "Invoice sent."
+   The JS enhancer (Fernwell.toast.show) creates this element for you. */
+.fw-toast {
+  position: fixed;
+  bottom: var(--fw-sp-6);
+  right: var(--fw-sp-6);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-3);
+  max-width: min(360px, calc(100vw - 2 * var(--fw-sp-5)));
+  background: var(--fw-meadow-bg);
+  color: var(--fw-ink);
+  font-family: var(--fw-font-body);
+  border-radius: var(--fw-r-md);
+  padding: var(--fw-sp-3) var(--fw-sp-4);
+  box-shadow: var(--fw-shadow-lg);
+  font-size: 13px;
+  font-weight: 600;
+  transform: translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--fw-motion-base) var(--fw-motion-ease), opacity var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-toast.is-show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.fw-toast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--fw-meadow);
+  flex-shrink: 0;
+}
+
+.fw-toast-error { background: var(--fw-coral-bg); }
+.fw-toast-error .fw-toast-dot { background: var(--fw-coral); }
+
+.fw-toast-info { background: var(--fw-sky-bg); }
+.fw-toast-info .fw-toast-dot { background: var(--fw-sky); }
+
+.fw-toast-pending { background: var(--fw-pending-bg); }
+.fw-toast-pending .fw-toast-dot { background: var(--fw-marigold-dk); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-toast { transform: none; }
+}
