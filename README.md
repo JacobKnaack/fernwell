@@ -199,3 +199,9 @@ Semantic versioning, strictly: **major** for any rename or removal of a token, c
 ## License
 
 MIT
+
+## Docs deployment
+
+`docs/` is published to GitHub Pages by [`.github/workflows/deploy-docs.yml`](.github/workflows/deploy-docs.yml) on every push to `main`. Because `docs/dist/` is generated (and gitignored), the workflow runs `npm run build` first and uploads the resulting `docs/` folder as the Pages artifact — so the deployed page always matches the built package.
+
+One-time setup in the GitHub repo: **Settings → Pages → Source → "GitHub Actions"** (not "Deploy from a branch").
