@@ -42,9 +42,9 @@ await Promise.all([
   js('src/js/index.ts', 'esm', 'fernwell.esm.js'),
   js('src/js/index.ts', 'cjs', 'fernwell.cjs'),
   js('src/js/iife.ts', 'iife', 'fernwell.iife.js', { globalName: 'Fernwell', footer: { js: 'Fernwell=Fernwell.default;' } }),
-  build({ ...shared, minify: false, entryPoints: [join(root, 'src/css/index.css')], outfile: join(dist, 'fernwell.css') }),
-  build({ ...shared, entryPoints: [join(root, 'src/css/index.css')], outfile: join(dist, 'fernwell.min.css') }),
-  build({ ...shared, minify: false, entryPoints: [join(root, 'src/css/tokens.css')], outfile: join(dist, 'fernwell.tokens.css') }),
+  build({ ...shared, sourcemap: false, minify: false, entryPoints: [join(root, 'src/css/index.css')], outfile: join(dist, 'fernwell.css') }),
+  build({ ...shared, sourcemap: false, entryPoints: [join(root, 'src/css/index.css')], outfile: join(dist, 'fernwell.min.css') }),
+  build({ ...shared, sourcemap: false, minify: false, entryPoints: [join(root, 'src/css/tokens.css')], outfile: join(dist, 'fernwell.tokens.css') }),
 ]);
 
 copyFileSync(join(root, 'src/tokens/tokens.json'), join(dist, 'tokens.json'));

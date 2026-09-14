@@ -1,7 +1,7 @@
 {
   "name": "fernwell",
   "version": "0.1.0",
-  "description": "Fernwell — the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
+  "description": "Fernwell \u2014 the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
   "type": "module",
   "license": "MIT",
   "author": "Jacob Knaack",
@@ -19,7 +19,8 @@
     "fernwell"
   ],
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "sideEffects": [
     "*.css"
