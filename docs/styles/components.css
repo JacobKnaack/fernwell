@@ -1,0 +1,76 @@
+/* ---- docs-only chrome for components.html: not part of the package ---- */
+
+.demo-wrap section.demo-component {
+  margin-bottom: var(--fw-sp-9);
+}
+
+.demo-code {
+  margin-bottom: var(--fw-sp-5);
+}
+
+.demo-tablist {
+  display: flex;
+  gap: var(--fw-sp-2);
+  border-bottom: var(--fw-border-w) solid var(--fw-bg-dim);
+  margin-bottom: var(--fw-sp-3);
+}
+
+.demo-tab {
+  font-family: var(--fw-font-body);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--fw-text-soft);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: var(--fw-sp-2) var(--fw-sp-3) var(--fw-sp-3);
+  margin-bottom: -1px;
+  cursor: pointer;
+}
+
+.demo-tab[aria-selected="true"] {
+  color: var(--fw-secondary);
+  border-bottom-color: var(--fw-secondary);
+}
+
+@media (hover: hover) {
+  .demo-tab:not([aria-selected="true"]):hover {
+    color: var(--fw-text);
+  }
+}
+
+.demo-tab:focus-visible {
+  outline: none;
+  border-radius: var(--fw-r-sm);
+  box-shadow: var(--fw-focus-ring);
+}
+
+.demo-tabpanel pre {
+  margin-bottom: 0;
+}
+
+.demo-render-label {
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fw-text-soft);
+  margin-bottom: var(--fw-sp-2);
+}
+
+.demo-render-surface {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--fw-sp-4);
+}
+
+.demo-render-surface.is-stack {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.demo-render-surface.is-block {
+  display: block;
+}
