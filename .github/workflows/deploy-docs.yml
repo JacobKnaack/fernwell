@@ -30,6 +30,8 @@ jobs:
 
       - run: npm ci
 
+      - run: npm test
+
       # tokens → lint → esbuild → tsc, then copies dist/ into docs/dist/
       - run: npm run build
 

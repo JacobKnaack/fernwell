@@ -1,6 +1,6 @@
 {
   "name": "fernwell",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fernwell — the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
   "type": "module",
   "license": "MIT",
@@ -47,7 +47,9 @@
     "dev": "npm run build && npm run docs",
     "tokens": "node scripts/gen-tokens.mjs",
     "lint": "node scripts/lint-tokens.mjs",
-    "build": "npm run tokens && npm run lint && node scripts/build.mjs && tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "build": "npm run tokens && npm run lint && node scripts/build.mjs && tsc -p tsconfig.build.json",
     "docs": "serve docs/",
     "prepublishOnly": "npm run build"
   },
@@ -55,8 +57,11 @@
     "node": ">=18"
   },
   "devDependencies": {
-    "esbuild": "^0.25.12",
+    "@testing-library/dom": "^10.4.2",
+    "esbuild": "^0.28.2",
+    "jsdom": "^29.1.1",
     "serve": "^14.2.6",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.1"
   }
 }

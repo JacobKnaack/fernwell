@@ -301,6 +301,7 @@ html {
   left: 0;
   width: 260px;
   height: 100vh;
+  height: 100dvh;
   padding: var(--fw-sp-7) var(--fw-sp-5);
   background: var(--fw-surface);
   border-right: var(--fw-border-w) solid var(--fw-bg-dim);
@@ -395,5 +396,27 @@ html {
   .kit-toc,
   .kit-toc-toggle::before {
     transition: none;
+  }
+}
+
+/* Invoices demo: below the same breakpoint .fw-table switches to a fixed
+   layout (src/css/components/table.css), leaving one fixed-width card too
+   narrow for all 7 columns. Trim the three least-essential (Invoice #, Due
+   date, Status — each still readable via each row's own detail view) to
+   leave enough room for Select/Client/Amount/Actions to stay legible. */
+@media (max-width: 560px) {
+  #invoices-table th:nth-child(3),
+  #invoices-table td:nth-child(3),
+  #invoices-table th:nth-child(5),
+  #invoices-table td:nth-child(5),
+  #invoices-table th:nth-child(6),
+  #invoices-table td:nth-child(6) {
+    display: none;
+  }
+
+  /* Give Amount a predictable share so Client (the only column left
+     without a declared width) gets the rest of the card. */
+  #invoices-table th:nth-child(4) {
+    width: 92px;
   }
 }

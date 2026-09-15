@@ -164,6 +164,7 @@
 .fw-table-select {
   width: 1%;
   padding-right: 0;
+  box-sizing: border-box;
 }
 
 .fw-table-select .fw-checkbox {
@@ -175,6 +176,7 @@
   width: 1%;
   text-align: right;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .fw-table-actions .fw-icon-btn {
@@ -265,4 +267,54 @@ th[aria-sort="descending"] .fw-table-sort::after {
   opacity: 1;
   -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23000' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+/* ---- narrow viewports: cap intrinsic width so a wide table can't inflate
+   the whole page ----
+   table-layout: auto (the default, kept above 560px) sizes each column to
+   its content's min-content width and sums them for the table's own width.
+   Even though .fw-table-wrap scrolls that overflow locally (overflow-x:
+   auto, above), a mobile browser's viewport-fit sizing still measures that
+   summed intrinsic width when laying out the document — so a wide table
+   can scroll the ENTIRE page into blank space well past what's visible.
+   table-layout: fixed pins the table to its container's width (100%, see
+   .fw-table above) regardless of content, removing that page-level side
+   effect. Columns with a declared width behave normally; columns without
+   one split whatever's left, based on the first row. */
+@media (max-width: 560px) {
+  .fw-table {
+    table-layout: fixed;
+  }
+
+  .fw-table-select {
+    width: var(--fw-table-select-w, 44px);
+  }
+
+  .fw-table-actions {
+    width: var(--fw-table-actions-w, 96px);
+  }
+
+  /* Text body cells: a fixed-width cell can't grow to fit unbroken content
+     anymore, so let it wrap instead of forcing overflow. Header labels are
+     short, design-controlled strings that read better clipped (below) than
+     broken mid-word, so this is scoped to <td>, not <th>. */
+  .fw-table td:not(.fw-table-select):not(.fw-table-actions):not(.fw-table-num) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Numeric/date columns (money, IDs, dates) read worse broken mid-value
+     than truncated. */
+  .fw-table-num {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* Safety net: clip header labels in place with an ellipsis rather than
+     let them wrap into a ragged multi-line header or spill into the next
+     cell if a column's fixed share is too narrow for its label. */
+  .fw-table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }
