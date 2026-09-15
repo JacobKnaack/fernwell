@@ -28,7 +28,7 @@
 
   <div class="intro">
     <span class="fw-eyebrow">Design System · v<span id="fw-version-hero"></span></span>
-    <h1>Component reference</h1>
+    <h1>Component Reference</h1>
     <p class="lede">Every component in Fernwell, with the exact markup to copy — plain HTML/JS or a React usage recipe — next to what it actually renders. For tokens, theming and voice, see <a href="index.html">the overview</a>.</p>
     <div class="fw-row" style="margin-top:var(--fw-sp-5)">
       <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
@@ -1221,6 +1221,15 @@ Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000
     });
     toc.appendChild(list);
     Fernwell.menu.init(toc);
+
+    // Mobile: picking a destination should close the off-canvas drawer,
+    // not leave it covering the page it just jumped to. Harmless at
+    // 1600px+, where the drawer is pinned open and .kit-toc-toggle is
+    // hidden — is-open there is overridden to a no-op by CSS.
+    const tocToggle = document.querySelector('[data-fw-nav-toggle][aria-controls="kit-toc"]');
+    toc.addEventListener('click', (e) => {
+      if (tocToggle && e.target.closest('a')) Fernwell.nav.close(tocToggle);
+    });
   })();
 </script>
 </body>

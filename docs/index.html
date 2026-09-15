@@ -774,6 +774,15 @@ toast.show('Invoice sent');</code></pre>
     });
     toc.appendChild(list);
     Fernwell.menu.init(toc);
+
+    // Mobile: picking a destination should close the off-canvas drawer,
+    // not leave it covering the page it just jumped to. Harmless at
+    // 1600px+, where the drawer is pinned open and .kit-toc-toggle is
+    // hidden — is-open there is overridden to a no-op by CSS.
+    const tocToggle = document.querySelector('[data-fw-nav-toggle][aria-controls="kit-toc"]');
+    toc.addEventListener('click', (e) => {
+      if (tocToggle && e.target.closest('a')) Fernwell.nav.close(tocToggle);
+    });
   })();
 </script>
 </body>
