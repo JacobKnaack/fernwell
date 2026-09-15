@@ -140,6 +140,34 @@
   color: var(--fw-text-soft);
 }
 
+.icon-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--fw-sp-3);
+  margin-top: var(--fw-sp-5);
+}
+
+.icon-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  padding: var(--fw-sp-4) var(--fw-sp-2);
+  border-radius: var(--fw-r-md);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  background: var(--fw-surface);
+}
+
+.icon-demo .fw-icon {
+  font-size: 22px;
+}
+
+.icon-demo .lbl {
+  font-family: var(--fw-font-mono);
+  font-size: 12px;
+  color: var(--fw-text-soft);
+}
+
 .spinner-caption {
   display: flex;
   flex-direction: column;

@@ -483,9 +483,56 @@ Fernwell.loading.resetButtonLoading(btn);
     </div>
   </section>
 
+  <!-- ICON -->
+  <section id="icon" class="demo-component">
+    <div class="kit-sec-head"><h2>Icon</h2><span class="num">10</span></div>
+    <p class="sec-note">Renders a named SVG into a <code>data-fw-icon</code> element. Decorative by default (<code>aria-hidden</code>) — give the accessible name to a wrapping control instead, e.g. <code>aria-label</code> on an icon button. Sized in <code>em</code> and colored via inherited <code>color</code>, so it always matches the text or button around it. See the full set on <a href="index.html#icons">the overview page</a>.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Icon usage">
+          <button type="button" class="demo-tab" id="icon-tab-html" role="tab" aria-selected="true" aria-controls="icon-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="icon-tab-react" role="tab" aria-selected="false" aria-controls="icon-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="icon-panel-html" role="tabpanel" aria-labelledby="icon-tab-html">
+<pre><code>&lt;span class="fw-icon" data-fw-icon="star" aria-hidden="true"&gt;&lt;/span&gt; Featured
+
+&lt;button class="fw-icon-btn" type="button" aria-label="Delete"&gt;
+  &lt;span data-fw-icon="trash" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="icon-panel-react" role="tabpanel" aria-labelledby="icon-tab-react" hidden>
+<pre><code>function Icon({ name }) {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.icon.init(ref.current); }, [name]);
+  return &lt;span className="fw-icon" data-fw-icon={name} aria-hidden="true" ref={ref} /&gt;;
+}
+
+function DeleteButton({ onClick }) {
+  return (
+    &lt;button className="fw-icon-btn" type="button" aria-label="Delete" onClick={onClick}&gt;
+      &lt;Icon name="trash" /&gt;
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <span><span class="fw-icon" data-fw-icon="star" aria-hidden="true"></span> Featured</span>
+        <button class="fw-icon-btn" type="button" aria-label="Edit"><span data-fw-icon="edit" aria-hidden="true"></span></button>
+        <button class="fw-icon-btn" type="button" aria-label="Delete"><span data-fw-icon="trash" aria-hidden="true"></span></button>
+        <button class="fw-icon-btn" type="button" aria-label="More actions"><span data-fw-icon="more" aria-hidden="true"></span></button>
+      </div>
+    </div>
+  </section>
+
   <!-- LIST ROW -->
   <section id="list-row" class="demo-component">
-    <div class="kit-sec-head"><h2>List row</h2><span class="num">10</span></div>
+    <div class="kit-sec-head"><h2>List row</h2><span class="num">11</span></div>
     <p class="sec-note">A clickable resource card — checklists, invoices, clients. Static markup.</p>
 
     <div class="demo-code">
@@ -535,7 +582,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- MENU -->
   <section id="menu" class="demo-component">
-    <div class="kit-sec-head"><h2>Menu</h2><span class="num">11</span></div>
+    <div class="kit-sec-head"><h2>Menu</h2><span class="num">12</span></div>
     <p class="sec-note">A nestable collapsible menu built on native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> — works without JS; the enhancer adds keyboard nav and auto-reveal of the current page.</p>
 
     <div class="demo-code">
@@ -614,7 +661,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- MODAL -->
   <section id="modal" class="demo-component">
-    <div class="kit-sec-head"><h2>Modal</h2><span class="num">12</span></div>
+    <div class="kit-sec-head"><h2>Modal</h2><span class="num">13</span></div>
     <p class="sec-note">180ms fade + rise, closes on backdrop click, Escape, or a <code>data-fw-close-modal</code> button; focus returns to the opener.</p>
 
     <div class="demo-code">
@@ -695,7 +742,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- NAV -->
   <section id="nav" class="demo-component">
-    <div class="kit-sec-head"><h2>Nav</h2><span class="num">13</span></div>
+    <div class="kit-sec-head"><h2>Nav</h2><span class="num">14</span></div>
     <p class="sec-note">Below 600px the inline links hide and the hamburger toggle + dropdown take over. The dropdown enhancer closes on outside click and Escape.</p>
 
     <div class="demo-code">
@@ -763,7 +810,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- PAGINATION -->
   <section id="pagination" class="demo-component">
-    <div class="kit-sec-head"><h2>Pagination</h2><span class="num">14</span></div>
+    <div class="kit-sec-head"><h2>Pagination</h2><span class="num">15</span></div>
     <p class="sec-note">Static markup — wire <code>href</code>/<code>onClick</code> to your own paging logic.</p>
 
     <div class="demo-code">
@@ -822,7 +869,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- PROGRESS -->
   <section id="progress" class="demo-component">
-    <div class="kit-sec-head"><h2>Progress</h2><span class="num">15</span></div>
+    <div class="kit-sec-head"><h2>Progress</h2><span class="num">16</span></div>
     <p class="sec-note">Determinate bars for anything with a known length; <code>.is-indeterminate</code> for an unknown duration; <code>.is-success</code> once complete.</p>
 
     <div class="demo-code">
@@ -870,7 +917,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- SELECTION -->
   <section id="selection" class="demo-component">
-    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">16</span></div>
+    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">17</span></div>
     <p class="sec-note">Native inputs stay in the DOM and fully keyboard/screen-reader operable — the styled box is a CSS-only sibling, never a replacement control.</p>
 
     <div class="demo-code">
@@ -917,7 +964,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- SPINNER -->
   <section id="spinner" class="demo-component">
-    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">17</span></div>
+    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">18</span></div>
     <p class="sec-note">Live inline — never a full-page takeover unless the whole screen is genuinely blocked. Colour comes from <code>currentColor</code>.</p>
 
     <div class="demo-code">
@@ -951,7 +998,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- STAT -->
   <section id="stat" class="demo-component">
-    <div class="kit-sec-head"><h2>Stat</h2><span class="num">18</span></div>
+    <div class="kit-sec-head"><h2>Stat</h2><span class="num">19</span></div>
     <p class="sec-note">A card variant for a single headline number. Static markup.</p>
 
     <div class="demo-code">
@@ -995,7 +1042,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TABLE -->
   <section id="table" class="demo-component">
-    <div class="kit-sec-head"><h2>Table</h2><span class="num">19</span></div>
+    <div class="kit-sec-head"><h2>Table</h2><span class="num">20</span></div>
     <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. The enhancer adds client-side column sorting (<code>aria-sort</code>-driven) and row selection, emitting <code>fw:sort</code>/<code>fw:select</code>.</p>
 
     <div class="demo-code">
@@ -1107,7 +1154,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TAG -->
   <section id="tag" class="demo-component">
-    <div class="kit-sec-head"><h2>Tag</h2><span class="num">20</span></div>
+    <div class="kit-sec-head"><h2>Tag</h2><span class="num">21</span></div>
     <p class="sec-note">A slight, consistent tilt — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted, fully-round variant for table cells and dense rows.</p>
 
     <div class="demo-code">
@@ -1143,7 +1190,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TOAST -->
   <section id="toast" class="demo-component">
-    <div class="kit-sec-head"><h2>Toast</h2><span class="num">21</span></div>
+    <div class="kit-sec-head"><h2>Toast</h2><span class="num">22</span></div>
     <p class="sec-note">A single, reused, bottom-right notice — there's no static markup to author, just call <code>Fernwell.toast.show()</code>. It's the one component where the ref+effect recipe used elsewhere on this page is unnecessary; call it directly from an event handler.</p>
 
     <div class="demo-code">

@@ -1,0 +1,19 @@
+/* ---- icon: a named SVG dropped into a `data-fw-icon` element ----
+     <span class="fw-icon" data-fw-icon="trash" aria-hidden="true"></span>
+
+     Sized in em and colored via inherited `color`, so an icon always
+     matches the size and color of the text around it — no icon-specific
+     color or dark-mode overrides needed.
+*/
+.fw-icon {
+  display: inline-flex;
+  width: 1em;
+  height: 1em;
+  color: inherit;
+  vertical-align: -0.125em;
+}
+.fw-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
