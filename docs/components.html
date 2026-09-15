@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwell — Component reference</title>
+<meta name="description" content="Fernwell component reference: markup and React usage for every component, next to what it renders.">
+<script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dist/fernwell.css">
+<link rel="stylesheet" href="styles/index.css">
+<link rel="stylesheet" href="styles/components.css">
+</head>
+<body class="fw-root">
+<div class="kit-toc-wrap">
+  <button type="button" class="kit-toc-toggle" data-fw-nav-toggle aria-controls="kit-toc" aria-expanded="false" aria-label="Toggle page navigation"></button>
+  <nav class="fw-menu kit-toc" aria-label="Docs navigation" data-fw-menu id="kit-toc">
+    <ul class="fw-menu-list kit-toc-pages">
+      <li class="fw-menu-item"><a class="fw-menu-link" href="index.html">Overview</a></li>
+      <li class="fw-menu-item"><a class="fw-menu-link" href="components.html" aria-current="page">Components</a></li>
+    </ul>
+    <p class="fw-eyebrow">On this page</p>
+  </nav>
+</div>
+<div class="kit-wrap demo-wrap">
+
+  <div class="intro">
+    <span class="fw-eyebrow">Design System · v<span id="fw-version-hero"></span></span>
+    <h1>Component reference</h1>
+    <p class="lede">Every component in Fernwell, with the exact markup to copy — plain HTML/JS or a React usage recipe — next to what it actually renders. For tokens, theming and voice, see <a href="index.html">the overview</a>.</p>
+    <div class="fw-row" style="margin-top:var(--fw-sp-5)">
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+    </div>
+  </div>
+
+  <!-- ALERT -->
+  <section id="alert" class="demo-component">
+    <div class="kit-sec-head"><h2>Alert</h2><span class="num">01</span></div>
+    <p class="sec-note">Say what happened and what to do next. Variants: <code>.fw-alert-success</code>, <code>-error</code>, <code>-pending</code>, <code>-info</code>. Static markup — no JS enhancer.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Alert usage">
+          <button type="button" class="demo-tab" id="alert-tab-html" role="tab" aria-selected="true" aria-controls="alert-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="alert-tab-react" role="tab" aria-selected="false" aria-controls="alert-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="alert-panel-html" role="tabpanel" aria-labelledby="alert-tab-html">
+<pre><code>&lt;div class="fw-alert fw-alert-success" role="status"&gt;
+  &lt;div class="fw-alert-dot"&gt;&lt;/div&gt;
+  &lt;div&gt;
+    &lt;div class="fw-alert-title"&gt;Invoice sent&lt;/div&gt;
+    &lt;div class="fw-alert-body"&gt;Bright Path will get a copy by email.&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="alert-panel-react" role="tabpanel" aria-labelledby="alert-tab-react" hidden>
+<pre><code>function InvoiceSentAlert() {
+  return (
+    &lt;div className="fw-alert fw-alert-success" role="status"&gt;
+      &lt;div className="fw-alert-dot" /&gt;
+      &lt;div&gt;
+        &lt;div className="fw-alert-title"&gt;Invoice sent&lt;/div&gt;
+        &lt;div className="fw-alert-body"&gt;Bright Path will get a copy by email.&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface is-stack">
+        <div class="fw-alert fw-alert-success" role="status">
+          <div class="fw-alert-dot"></div>
+          <div><div class="fw-alert-title">Invoice sent</div><div class="fw-alert-body">Bright Path will get a copy by email.</div></div>
+        </div>
+        <div class="fw-alert fw-alert-error" role="status">
+          <div class="fw-alert-dot"></div>
+          <div><div class="fw-alert-title">That card was declined</div><div class="fw-alert-body">Try another payment method.</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUTTON -->
+  <section id="button" class="demo-component">
+    <div class="kit-sec-head"><h2>Button</h2><span class="num">02</span></div>
+    <p class="sec-note">Primary appears once per view; Secondary is next-most-important; Ghost for anything tertiary. Loading state is imperative in vanilla JS (<code>Fernwell.loading</code>) — model it with component state in React instead.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Button usage">
+          <button type="button" class="demo-tab" id="button-tab-html" role="tab" aria-selected="true" aria-controls="button-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="button-tab-react" role="tab" aria-selected="false" aria-controls="button-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="button-panel-html" role="tabpanel" aria-labelledby="button-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-primary" type="button"&gt;Send invoice&lt;/button&gt;
+&lt;button class="fw-btn fw-btn-secondary" type="button"&gt;Save draft&lt;/button&gt;
+&lt;button class="fw-btn fw-btn-ghost" type="button"&gt;Cancel&lt;/button&gt;
+&lt;button class="fw-btn fw-btn-danger" type="button"&gt;Delete&lt;/button&gt;
+
+&lt;script&gt;
+// Loading state: disables the button, swaps in a spinner, restores on reset.
+Fernwell.loading.setButtonLoading(btn, 'Sending…');
+Fernwell.loading.resetButtonLoading(btn);
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="button-panel-react" role="tabpanel" aria-labelledby="button-tab-react" hidden>
+<pre><code>function SendInvoiceButton() {
+  const [loading, setLoading] = useState(false);
+  return (
+    &lt;button
+      className={`fw-btn fw-btn-primary${loading ? ' fw-btn-loading' : ''}`}
+      type="button"
+      aria-busy={loading || undefined}
+      disabled={loading}
+      onClick={() =&gt; setLoading(true)}
+    &gt;
+      {loading &amp;&amp; &lt;span className="fw-spinner fw-spinner-sm" aria-hidden="true" /&gt;}
+      {loading ? 'Sending…' : 'Send invoice'}
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-primary" type="button" data-demo-loading data-fw-loading-text="Sending…">Send invoice</button>
+        <button class="fw-btn fw-btn-secondary" type="button">Save draft</button>
+        <button class="fw-btn fw-btn-ghost" type="button">Cancel</button>
+        <button class="fw-btn fw-btn-danger" type="button">Delete</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section id="card" class="demo-component">
+    <div class="kit-sec-head"><h2>Card</h2><span class="num">03</span></div>
+    <p class="sec-note">A card is always a card: same radius, shadow and border everywhere. Density and emphasis change; the shape language doesn't.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Card usage">
+          <button type="button" class="demo-tab" id="card-tab-html" role="tab" aria-selected="true" aria-controls="card-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="card-tab-react" role="tab" aria-selected="false" aria-controls="card-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="card-panel-html" role="tabpanel" aria-labelledby="card-tab-html">
+<pre><code>&lt;div class="fw-card"&gt;
+  &lt;p&gt;Card content — background, radius, border and shadow apply uniformly.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="card-panel-react" role="tabpanel" aria-labelledby="card-tab-react" hidden>
+<pre><code>function Card({ children }) {
+  return &lt;div className="fw-card"&gt;{children}&lt;/div&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <p>Card content — background, radius, border and shadow apply uniformly.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMBOBOX -->
+  <section id="combobox" class="demo-component">
+    <div class="kit-sec-head"><h2>Combobox</h2><span class="num">04</span></div>
+    <p class="sec-note">Progressive enhancement over an <code>&lt;input&gt;</code> + <code>&lt;datalist&gt;</code> — works without JS, the enhancer builds the filtered list on top.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Combobox usage">
+          <button type="button" class="demo-tab" id="combobox-tab-html" role="tab" aria-selected="true" aria-controls="combobox-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="combobox-tab-react" role="tab" aria-selected="false" aria-controls="combobox-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="combobox-panel-html" role="tabpanel" aria-labelledby="combobox-tab-html">
+<pre><code>&lt;div class="fw-combobox"&gt;
+  &lt;input class="fw-input" data-fw-combobox list="cities" placeholder="Start typing…"&gt;
+  &lt;datalist id="cities"&gt;
+    &lt;option value="Seattle"&gt;&lt;/option&gt;
+    &lt;option value="Spokane"&gt;&lt;/option&gt;
+    &lt;option value="Tacoma"&gt;&lt;/option&gt;
+  &lt;/datalist&gt;
+&lt;/div&gt;
+
+&lt;script&gt;Fernwell.init();&lt;/script&gt; &lt;!-- auto-runs on DOMContentLoaded via the CDN build --&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="combobox-panel-react" role="tabpanel" aria-labelledby="combobox-tab-react" hidden>
+<pre><code>function CityCombobox() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div className="fw-combobox" ref={ref}&gt;
+      &lt;input className="fw-input" data-fw-combobox list="cities" placeholder="Start typing…" /&gt;
+      &lt;datalist id="cities"&gt;
+        &lt;option value="Seattle" /&gt;
+        &lt;option value="Spokane" /&gt;
+        &lt;option value="Tacoma" /&gt;
+      &lt;/datalist&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div class="fw-combobox">
+          <input class="fw-input" data-fw-combobox list="demo-cities" placeholder="Start typing…">
+          <datalist id="demo-cities">
+            <option value="Seattle"></option>
+            <option value="Spokane"></option>
+            <option value="Tacoma"></option>
+          </datalist>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLOSURE -->
+  <section id="disclosure" class="demo-component">
+    <div class="kit-sec-head"><h2>Disclosure</h2><span class="num">05</span></div>
+    <p class="sec-note">Native <code>&lt;details&gt;</code> as an inline expand/collapse — no JS enhancer at all.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Disclosure usage">
+          <button type="button" class="demo-tab" id="disclosure-tab-html" role="tab" aria-selected="true" aria-controls="disclosure-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="disclosure-tab-react" role="tab" aria-selected="false" aria-controls="disclosure-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="disclosure-panel-html" role="tabpanel" aria-labelledby="disclosure-tab-html">
+<pre><code>&lt;details class="fw-disclosure"&gt;
+  &lt;summary&gt;Show 3 more &lt;span class="fw-disclosure-count"&gt;3&lt;/span&gt;&lt;/summary&gt;
+  &lt;div class="fw-disclosure-body"&gt;Additional line items appear here.&lt;/div&gt;
+&lt;/details&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="disclosure-panel-react" role="tabpanel" aria-labelledby="disclosure-tab-react" hidden>
+<pre><code>function MoreLineItems() {
+  return (
+    &lt;details className="fw-disclosure"&gt;
+      &lt;summary&gt;Show 3 more &lt;span className="fw-disclosure-count"&gt;3&lt;/span&gt;&lt;/summary&gt;
+      &lt;div className="fw-disclosure-body"&gt;Additional line items appear here.&lt;/div&gt;
+    &lt;/details&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <details class="fw-disclosure">
+          <summary>Show 3 more <span class="fw-disclosure-count">3</span></summary>
+          <div class="fw-disclosure-body">Additional line items appear here.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- DRAWER -->
+  <section id="drawer" class="demo-component">
+    <div class="kit-sec-head"><h2>Drawer</h2><span class="num">06</span></div>
+    <p class="sec-note">A right-hand detail panel, built on the same open/close/Escape/focus logic as Modal. Opens with <code>data-fw-open-drawer</code>; the backdrop pairs via <code>data-fw-drawer-overlay</code>.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Drawer usage">
+          <button type="button" class="demo-tab" id="drawer-tab-html" role="tab" aria-selected="true" aria-controls="drawer-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="drawer-tab-react" role="tab" aria-selected="false" aria-controls="drawer-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="drawer-panel-html" role="tabpanel" aria-labelledby="drawer-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-open-drawer="onboarding-drawer"&gt;Open drawer&lt;/button&gt;
+
+&lt;div class="fw-drawer-overlay" data-fw-drawer-overlay="onboarding-drawer"&gt;&lt;/div&gt;
+&lt;aside class="fw-drawer" id="onboarding-drawer" role="dialog" aria-modal="true" aria-labelledby="onboarding-drawer-title"&gt;
+  &lt;div class="fw-drawer-head"&gt;
+    &lt;div class="fw-drawer-head-text"&gt;
+      &lt;div class="fw-drawer-eyebrow"&gt;Task&lt;/div&gt;
+      &lt;h2 class="fw-drawer-title" id="onboarding-drawer-title"&gt;Bright Path onboarding&lt;/h2&gt;
+    &lt;/div&gt;
+    &lt;button class="fw-icon-btn" type="button" data-fw-close-drawer aria-label="Close"&gt;×&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="fw-drawer-body"&gt;4 of 9 steps complete.&lt;/div&gt;
+  &lt;div class="fw-drawer-foot"&gt;
+    &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-drawer&gt;Close&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/aside&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="drawer-panel-react" role="tabpanel" aria-labelledby="drawer-tab-react" hidden>
+<pre><code>function OnboardingDrawer() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-open-drawer="onboarding-drawer"&gt;
+        Open drawer
+      &lt;/button&gt;
+      &lt;div className="fw-drawer-overlay" data-fw-drawer-overlay="onboarding-drawer" /&gt;
+      &lt;aside className="fw-drawer" id="onboarding-drawer" role="dialog" aria-modal="true" aria-labelledby="onboarding-drawer-title"&gt;
+        &lt;div className="fw-drawer-head"&gt;
+          &lt;div className="fw-drawer-head-text"&gt;
+            &lt;div className="fw-drawer-eyebrow"&gt;Task&lt;/div&gt;
+            &lt;h2 className="fw-drawer-title" id="onboarding-drawer-title"&gt;Bright Path onboarding&lt;/h2&gt;
+          &lt;/div&gt;
+          &lt;button className="fw-icon-btn" type="button" data-fw-close-drawer aria-label="Close"&gt;×&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className="fw-drawer-body"&gt;4 of 9 steps complete.&lt;/div&gt;
+      &lt;/aside&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-ghost" type="button" data-fw-open-drawer="demo-drawer">Open drawer</button>
+      </div>
+      <div class="fw-drawer-overlay" data-fw-drawer-overlay="demo-drawer"></div>
+      <aside class="fw-drawer" id="demo-drawer" role="dialog" aria-modal="true" aria-labelledby="demo-drawer-title">
+        <div class="fw-drawer-head">
+          <div class="fw-drawer-head-text">
+            <div class="fw-drawer-eyebrow">Task</div>
+            <h2 class="fw-drawer-title" id="demo-drawer-title">Bright Path onboarding</h2>
+          </div>
+          <button class="fw-icon-btn" type="button" data-fw-close-drawer aria-label="Close">×</button>
+        </div>
+        <div class="fw-drawer-body">4 of 9 steps complete.</div>
+        <div class="fw-drawer-foot">
+          <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-drawer>Close</button>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- EMPTY -->
+  <section id="empty" class="demo-component">
+    <div class="kit-sec-head"><h2>Empty</h2><span class="num">07</span></div>
+    <p class="sec-note">An invitation, not a description — a direct next action, never "you have no data."</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Empty state usage">
+          <button type="button" class="demo-tab" id="empty-tab-html" role="tab" aria-selected="true" aria-controls="empty-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="empty-tab-react" role="tab" aria-selected="false" aria-controls="empty-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="empty-panel-html" role="tabpanel" aria-labelledby="empty-tab-html">
+<pre><code>&lt;div class="fw-empty"&gt;
+  &lt;div class="fw-empty-blob"&gt;✉️&lt;/div&gt;
+  &lt;h4 class="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
+  &lt;p class="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
+  &lt;button class="fw-btn fw-btn-primary" type="button"&gt;Create invoice&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="empty-panel-react" role="tabpanel" aria-labelledby="empty-tab-react" hidden>
+<pre><code>function NoInvoicesYet({ onCreate }) {
+  return (
+    &lt;div className="fw-empty"&gt;
+      &lt;div className="fw-empty-blob"&gt;✉️&lt;/div&gt;
+      &lt;h4 className="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
+      &lt;p className="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
+      &lt;button className="fw-btn fw-btn-primary" type="button" onClick={onCreate}&gt;
+        Create invoice
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <div class="fw-empty">
+          <div class="fw-empty-blob">✉️</div>
+          <h4 class="fw-empty-title">No invoices sent yet</h4>
+          <p class="fw-empty-body">Create your first invoice to get paid faster.</p>
+          <button class="fw-btn fw-btn-primary" type="button">Create invoice</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EYEBROW -->
+  <section id="eyebrow" class="demo-component">
+    <div class="kit-sec-head"><h2>Eyebrow</h2><span class="num">08</span></div>
+    <p class="sec-note">A small mono label above a heading. Static markup.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Eyebrow usage">
+          <button type="button" class="demo-tab" id="eyebrow-tab-html" role="tab" aria-selected="true" aria-controls="eyebrow-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="eyebrow-tab-react" role="tab" aria-selected="false" aria-controls="eyebrow-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="eyebrow-panel-html" role="tabpanel" aria-labelledby="eyebrow-tab-html">
+<pre><code>&lt;span class="fw-eyebrow"&gt;On this page&lt;/span&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="eyebrow-panel-react" role="tabpanel" aria-labelledby="eyebrow-tab-react" hidden>
+<pre><code>function Eyebrow({ children }) {
+  return &lt;span className="fw-eyebrow"&gt;{children}&lt;/span&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <span class="fw-eyebrow">On this page</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIELD -->
+  <section id="field" class="demo-component">
+    <div class="kit-sec-head"><h2>Field</h2><span class="num">09</span></div>
+    <p class="sec-note">Inputs, selects and textareas inside <code>.fw-field</code> style automatically. Add <code>.is-error</code> for the coral state, <code>.is-disabled</code> to mute the label.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Field usage">
+          <button type="button" class="demo-tab" id="field-tab-html" role="tab" aria-selected="true" aria-controls="field-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="field-tab-react" role="tab" aria-selected="false" aria-controls="field-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="field-panel-html" role="tabpanel" aria-labelledby="field-tab-html">
+<pre><code>&lt;div class="fw-field"&gt;
+  &lt;label class="fw-label" for="email"&gt;
+    Email &lt;span class="fw-required" aria-hidden="true"&gt;*&lt;/span&gt;&lt;span class="fw-sr-only"&gt;(required)&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;input class="fw-input" id="email" type="email"&gt;
+  &lt;span class="fw-hint"&gt;We'll only use this for invoice receipts.&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="field-panel-react" role="tabpanel" aria-labelledby="field-tab-react" hidden>
+<pre><code>function EmailField() {
+  const [value, setValue] = useState('');
+  return (
+    &lt;div className="fw-field"&gt;
+      &lt;label className="fw-label" htmlFor="email"&gt;
+        Email &lt;span className="fw-required" aria-hidden="true"&gt;*&lt;/span&gt;
+        &lt;span className="fw-sr-only"&gt;(required)&lt;/span&gt;
+      &lt;/label&gt;
+      &lt;input
+        className="fw-input"
+        id="email"
+        type="email"
+        value={value}
+        onChange={(e) =&gt; setValue(e.target.value)}
+      /&gt;
+      &lt;span className="fw-hint"&gt;We'll only use this for invoice receipts.&lt;/span&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <div class="fw-field">
+          <label class="fw-label" for="demo-email">Email <span class="fw-required" aria-hidden="true">*</span><span class="fw-sr-only">(required)</span></label>
+          <input class="fw-input" id="demo-email" type="email">
+          <span class="fw-hint">We'll only use this for invoice receipts.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIST ROW -->
+  <section id="list-row" class="demo-component">
+    <div class="kit-sec-head"><h2>List row</h2><span class="num">10</span></div>
+    <p class="sec-note">A clickable resource card — checklists, invoices, clients. Static markup.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="List row usage">
+          <button type="button" class="demo-tab" id="list-row-tab-html" role="tab" aria-selected="true" aria-controls="list-row-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="list-row-tab-react" role="tab" aria-selected="false" aria-controls="list-row-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="list-row-panel-html" role="tabpanel" aria-labelledby="list-row-tab-html">
+<pre><code>&lt;a class="fw-list-row" href="/clients/bright-path"&gt;
+  &lt;div class="fw-list-row-main"&gt;
+    &lt;span class="fw-list-row-title"&gt;Bright Path onboarding&lt;/span&gt;
+    &lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Active&lt;/span&gt;
+    &lt;span class="fw-list-row-meta"&gt;4 of 9 done&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/a&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="list-row-panel-react" role="tabpanel" aria-labelledby="list-row-tab-react" hidden>
+<pre><code>function ClientRow({ href, title, status, meta }) {
+  return (
+    &lt;a className="fw-list-row" href={href}&gt;
+      &lt;div className="fw-list-row-main"&gt;
+        &lt;span className="fw-list-row-title"&gt;{title}&lt;/span&gt;
+        &lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{status}&lt;/span&gt;
+        &lt;span className="fw-list-row-meta"&gt;{meta}&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/a&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="demo-render-surface is-block">
+        <a class="fw-list-row" href="#">
+          <div class="fw-list-row-main">
+            <span class="fw-list-row-title">Bright Path onboarding</span>
+            <span class="fw-tag fw-tag-pill fw-tag-live">Active</span>
+            <span class="fw-list-row-meta">4 of 9 done</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section id="menu" class="demo-component">
+    <div class="kit-sec-head"><h2>Menu</h2><span class="num">11</span></div>
+    <p class="sec-note">A nestable collapsible menu built on native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> — works without JS; the enhancer adds keyboard nav and auto-reveal of the current page.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Menu usage">
+          <button type="button" class="demo-tab" id="menu-tab-html" role="tab" aria-selected="true" aria-controls="menu-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="menu-tab-react" role="tab" aria-selected="false" aria-controls="menu-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="menu-panel-html" role="tabpanel" aria-labelledby="menu-tab-html">
+<pre><code>&lt;nav class="fw-menu" aria-label="Docs" data-fw-menu&gt;
+  &lt;ul class="fw-menu-list"&gt;
+    &lt;li class="fw-menu-item"&gt;&lt;a class="fw-menu-link" href="/" aria-current="page"&gt;Overview&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="fw-menu-item"&gt;
+      &lt;details class="fw-menu-group" open&gt;
+        &lt;summary class="fw-menu-summary"&gt;Billing&lt;/summary&gt;
+        &lt;ul class="fw-menu-list"&gt;
+          &lt;li class="fw-menu-item"&gt;&lt;a class="fw-menu-link" href="/billing/invoices"&gt;Invoices&lt;/a&gt;&lt;/li&gt;
+          &lt;li class="fw-menu-item"&gt;&lt;a class="fw-menu-link" href="/billing/plans"&gt;Plans&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/details&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="menu-panel-react" role="tabpanel" aria-labelledby="menu-tab-react" hidden>
+<pre><code>function DocsMenu() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.menu.init(ref.current); }, []);
+  return (
+    &lt;nav className="fw-menu" aria-label="Docs" data-fw-menu ref={ref}&gt;
+      &lt;ul className="fw-menu-list"&gt;
+        &lt;li className="fw-menu-item"&gt;
+          &lt;a className="fw-menu-link" href="/" aria-current="page"&gt;Overview&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li className="fw-menu-item"&gt;
+          &lt;details className="fw-menu-group" open&gt;
+            &lt;summary className="fw-menu-summary"&gt;Billing&lt;/summary&gt;
+            &lt;ul className="fw-menu-list"&gt;
+              &lt;li className="fw-menu-item"&gt;
+                &lt;a className="fw-menu-link" href="/billing/invoices"&gt;Invoices&lt;/a&gt;
+              &lt;/li&gt;
+              &lt;li className="fw-menu-item"&gt;
+                &lt;a className="fw-menu-link" href="/billing/plans"&gt;Plans&lt;/a&gt;
+              &lt;/li&gt;
+            &lt;/ul&gt;
+          &lt;/details&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/nav&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card" style="max-width:280px">
+        <nav class="fw-menu" aria-label="Docs demo" data-fw-menu>
+          <ul class="fw-menu-list">
+            <li class="fw-menu-item"><a class="fw-menu-link" href="#" aria-current="page">Overview</a></li>
+            <li class="fw-menu-item">
+              <details class="fw-menu-group" open>
+                <summary class="fw-menu-summary">Billing</summary>
+                <ul class="fw-menu-list">
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#">Invoices</a></li>
+                  <li class="fw-menu-item"><a class="fw-menu-link" href="#">Plans</a></li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL -->
+  <section id="modal" class="demo-component">
+    <div class="kit-sec-head"><h2>Modal</h2><span class="num">12</span></div>
+    <p class="sec-note">180ms fade + rise, closes on backdrop click, Escape, or a <code>data-fw-close-modal</code> button; focus returns to the opener.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Modal usage">
+          <button type="button" class="demo-tab" id="modal-tab-html" role="tab" aria-selected="true" aria-controls="modal-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="modal-tab-react" role="tab" aria-selected="false" aria-controls="modal-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="modal-panel-html" role="tabpanel" aria-labelledby="modal-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-danger" type="button" data-fw-open-modal="confirm-delete"&gt;Delete invoice&lt;/button&gt;
+
+&lt;div class="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
+  &lt;div class="fw-modal"&gt;
+    &lt;div class="fw-modal-head"&gt;
+      &lt;div&gt;
+        &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+        &lt;p class="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="fw-modal-foot"&gt;
+      &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+      &lt;button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="modal-panel-react" role="tabpanel" aria-labelledby="modal-tab-react" hidden>
+<pre><code>function DeleteInvoiceModal() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-open-modal="confirm-delete"&gt;
+        Delete invoice
+      &lt;/button&gt;
+      &lt;div className="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
+        &lt;div className="fw-modal"&gt;
+          &lt;div className="fw-modal-head"&gt;
+            &lt;div&gt;
+              &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+              &lt;p className="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+            &lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div className="fw-modal-foot"&gt;
+            &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+            &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-danger" type="button" data-fw-open-modal="demo-modal">Delete invoice</button>
+      </div>
+      <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
+        <div class="fw-modal">
+          <div class="fw-modal-head">
+            <div>
+              <h2 id="demo-modal-title">Delete invoice?</h2>
+              <p class="fw-modal-sub">This can't be undone.</p>
+            </div>
+          </div>
+          <div class="fw-modal-foot">
+            <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal>Cancel</button>
+            <button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal>Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAV -->
+  <section id="nav" class="demo-component">
+    <div class="kit-sec-head"><h2>Nav</h2><span class="num">13</span></div>
+    <p class="sec-note">Below 600px the inline links hide and the hamburger toggle + dropdown take over. The dropdown enhancer closes on outside click and Escape.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Nav usage">
+          <button type="button" class="demo-tab" id="nav-tab-html" role="tab" aria-selected="true" aria-controls="nav-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="nav-tab-react" role="tab" aria-selected="false" aria-controls="nav-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="nav-panel-html" role="tabpanel" aria-labelledby="nav-tab-html">
+<pre><code>&lt;nav class="fw-nav"&gt;
+  &lt;a class="fw-nav-brand" href="/"&gt;&lt;span class="fw-nav-dot"&gt;&lt;/span&gt;Fernwell&lt;/a&gt;
+  &lt;div class="fw-nav-links"&gt;&lt;a class="is-active" href="#"&gt;Invoices&lt;/a&gt;&lt;a href="#"&gt;Clients&lt;/a&gt;&lt;/div&gt;
+  &lt;div class="fw-nav-right"&gt;
+    &lt;button class="fw-nav-toggle" type="button" data-fw-nav-toggle aria-controls="nav-dropdown" aria-expanded="false" aria-label="Open menu"&gt;
+      &lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;div class="fw-nav-avatar"&gt;JM&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="fw-nav-dropdown" id="nav-dropdown"&gt;&lt;a class="is-active" href="#"&gt;Invoices&lt;/a&gt;&lt;a href="#"&gt;Clients&lt;/a&gt;&lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="nav-panel-react" role="tabpanel" aria-labelledby="nav-tab-react" hidden>
+<pre><code>function PrimaryNav() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.nav.init(ref.current); }, []);
+  return (
+    &lt;nav className="fw-nav" ref={ref}&gt;
+      &lt;a className="fw-nav-brand" href="/"&gt;&lt;span className="fw-nav-dot" /&gt;Fernwell&lt;/a&gt;
+      &lt;div className="fw-nav-links"&gt;
+        &lt;a className="is-active" href="#"&gt;Invoices&lt;/a&gt;
+        &lt;a href="#"&gt;Clients&lt;/a&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-nav-right"&gt;
+        &lt;button className="fw-nav-toggle" type="button" data-fw-nav-toggle aria-controls="nav-dropdown" aria-expanded="false" aria-label="Open menu"&gt;
+          &lt;span /&gt;&lt;span /&gt;&lt;span /&gt;
+        &lt;/button&gt;
+        &lt;div className="fw-nav-avatar"&gt;JM&lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-nav-dropdown" id="nav-dropdown"&gt;
+        &lt;a className="is-active" href="#"&gt;Invoices&lt;/a&gt;
+        &lt;a href="#"&gt;Clients&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="demo-render-surface is-block">
+        <nav class="fw-nav">
+          <a class="fw-nav-brand" href="#"><span class="fw-nav-dot"></span>Fernwell</a>
+          <div class="fw-nav-links"><a class="is-active" href="#">Invoices</a><a href="#">Clients</a></div>
+          <div class="fw-nav-right">
+            <button class="fw-nav-toggle" type="button" data-fw-nav-toggle aria-controls="demo-nav-dropdown" aria-expanded="false" aria-label="Open menu"><span></span><span></span><span></span></button>
+            <div class="fw-nav-avatar">JM</div>
+          </div>
+          <div class="fw-nav-dropdown" id="demo-nav-dropdown"><a class="is-active" href="#">Invoices</a><a href="#">Clients</a></div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGINATION -->
+  <section id="pagination" class="demo-component">
+    <div class="kit-sec-head"><h2>Pagination</h2><span class="num">14</span></div>
+    <p class="sec-note">Static markup — wire <code>href</code>/<code>onClick</code> to your own paging logic.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Pagination usage">
+          <button type="button" class="demo-tab" id="pagination-tab-html" role="tab" aria-selected="true" aria-controls="pagination-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="pagination-tab-react" role="tab" aria-selected="false" aria-controls="pagination-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="pagination-panel-html" role="tabpanel" aria-labelledby="pagination-tab-html">
+<pre><code>&lt;nav class="fw-pagination" aria-label="Pagination"&gt;
+  &lt;span class="fw-pag-info"&gt;Showing 1–20 of 84&lt;/span&gt;
+  &lt;div class="fw-pag-controls"&gt;
+    &lt;a class="fw-btn-page is-disabled" aria-disabled="true"&gt;← Prev&lt;/a&gt;
+    &lt;span class="fw-pag-label"&gt;Page 1 of 5&lt;/span&gt;
+    &lt;a class="fw-btn-page" href="?page=2"&gt;Next →&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="pagination-panel-react" role="tabpanel" aria-labelledby="pagination-tab-react" hidden>
+<pre><code>function Pagination({ page, pageCount, total, onChange }) {
+  return (
+    &lt;nav className="fw-pagination" aria-label="Pagination"&gt;
+      &lt;span className="fw-pag-info"&gt;Showing {(page - 1) * 20 + 1}–{Math.min(page * 20, total)} of {total}&lt;/span&gt;
+      &lt;div className="fw-pag-controls"&gt;
+        &lt;a
+          className={`fw-btn-page${page &lt;= 1 ? ' is-disabled' : ''}`}
+          aria-disabled={page &lt;= 1}
+          onClick={() =&gt; page &gt; 1 &amp;&amp; onChange(page - 1)}
+        &gt;
+          ← Prev
+        &lt;/a&gt;
+        &lt;span className="fw-pag-label"&gt;Page {page} of {pageCount}&lt;/span&gt;
+        &lt;a className="fw-btn-page" onClick={() =&gt; onChange(page + 1)}&gt;Next →&lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/nav&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface is-block">
+        <nav class="fw-pagination" aria-label="Pagination">
+          <span class="fw-pag-info">Showing 1–20 of 84</span>
+          <div class="fw-pag-controls">
+            <a class="fw-btn-page is-disabled" aria-disabled="true">← Prev</a>
+            <span class="fw-pag-label">Page 1 of 5</span>
+            <a class="fw-btn-page" href="#">Next →</a>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="progress" class="demo-component">
+    <div class="kit-sec-head"><h2>Progress</h2><span class="num">15</span></div>
+    <p class="sec-note">Determinate bars for anything with a known length; <code>.is-indeterminate</code> for an unknown duration; <code>.is-success</code> once complete.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Progress usage">
+          <button type="button" class="demo-tab" id="progress-tab-html" role="tab" aria-selected="true" aria-controls="progress-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="progress-tab-react" role="tab" aria-selected="false" aria-controls="progress-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="progress-panel-html" role="tabpanel" aria-labelledby="progress-tab-html">
+<pre><code>&lt;div class="fw-progress-label"&gt;
+  &lt;span class="fw-progress-name"&gt;Uploading&lt;/span&gt;&lt;span class="fw-progress-pct"&gt;64%&lt;/span&gt;
+&lt;/div&gt;
+&lt;div class="fw-progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"&gt;
+  &lt;div class="fw-progress-fill" style="width:64%"&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="progress-panel-react" role="tabpanel" aria-labelledby="progress-tab-react" hidden>
+<pre><code>function UploadProgress({ percent }) {
+  return (
+    &lt;&gt;
+      &lt;div className="fw-progress-label"&gt;
+        &lt;span className="fw-progress-name"&gt;Uploading&lt;/span&gt;
+        &lt;span className="fw-progress-pct"&gt;{percent}%&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-progress" role="progressbar" aria-valuenow={percent} aria-valuemin={0} aria-valuemax={100}&gt;
+        &lt;div className="fw-progress-fill" style={{ width: `${percent}%` }} /&gt;
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card" style="max-width:320px">
+        <div class="fw-progress-label"><span class="fw-progress-name">Uploading</span><span class="fw-progress-pct">64%</span></div>
+        <div class="fw-progress" role="progressbar" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100">
+          <div class="fw-progress-fill" style="width:64%"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SELECTION -->
+  <section id="selection" class="demo-component">
+    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">16</span></div>
+    <p class="sec-note">Native inputs stay in the DOM and fully keyboard/screen-reader operable — the styled box is a CSS-only sibling, never a replacement control.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Selection controls usage">
+          <button type="button" class="demo-tab" id="selection-tab-html" role="tab" aria-selected="true" aria-controls="selection-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="selection-tab-react" role="tab" aria-selected="false" aria-controls="selection-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="selection-panel-html" role="tabpanel" aria-labelledby="selection-tab-html">
+<pre><code>&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox"&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span&gt;Email me a copy&lt;/span&gt;&lt;/label&gt;
+
+&lt;label class="fw-radio"&gt;&lt;input type="radio" name="pay-method"&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span&gt;Card&lt;/span&gt;&lt;/label&gt;
+&lt;label class="fw-radio"&gt;&lt;input type="radio" name="pay-method"&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span&gt;Bank transfer&lt;/span&gt;&lt;/label&gt;
+
+&lt;label class="fw-toggle"&gt;&lt;input type="checkbox"&gt;&lt;span class="fw-track"&gt;&lt;span class="fw-thumb"&gt;&lt;/span&gt;&lt;/span&gt;&lt;span&gt;Auto-send reminders&lt;/span&gt;&lt;/label&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="selection-panel-react" role="tabpanel" aria-labelledby="selection-tab-react" hidden>
+<pre><code>function EmailCopyCheckbox() {
+  const [checked, setChecked] = useState(false);
+  return (
+    &lt;label className="fw-checkbox"&gt;
+      &lt;input type="checkbox" checked={checked} onChange={(e) =&gt; setChecked(e.target.checked)} /&gt;
+      &lt;span className="fw-box" /&gt;
+      &lt;span&gt;Email me a copy&lt;/span&gt;
+    &lt;/label&gt;
+  );
+}
+// The same controlled pattern applies to .fw-radio (name + checked) and
+// .fw-toggle (checked + onChange) — only the inner span markup differs.</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface is-stack">
+        <label class="fw-checkbox"><input type="checkbox"><span class="fw-box"></span><span>Email me a copy</span></label>
+        <label class="fw-radio"><input type="radio" name="demo-pay-method"><span class="fw-box"></span><span>Card</span></label>
+        <label class="fw-radio"><input type="radio" name="demo-pay-method"><span class="fw-box"></span><span>Bank transfer</span></label>
+        <label class="fw-toggle"><input type="checkbox"><span class="fw-track"><span class="fw-thumb"></span></span><span>Auto-send reminders</span></label>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPINNER -->
+  <section id="spinner" class="demo-component">
+    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">17</span></div>
+    <p class="sec-note">Live inline — never a full-page takeover unless the whole screen is genuinely blocked. Colour comes from <code>currentColor</code>.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Spinner usage">
+          <button type="button" class="demo-tab" id="spinner-tab-html" role="tab" aria-selected="true" aria-controls="spinner-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="spinner-tab-react" role="tab" aria-selected="false" aria-controls="spinner-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="spinner-panel-html" role="tabpanel" aria-labelledby="spinner-tab-html">
+<pre><code>&lt;span class="fw-spinner fw-spinner-sm" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;span class="fw-spinner fw-spinner-md" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;span class="fw-spinner fw-spinner-lg" aria-hidden="true"&gt;&lt;/span&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="spinner-panel-react" role="tabpanel" aria-labelledby="spinner-tab-react" hidden>
+<pre><code>function Spinner({ size = 'md' }) {
+  return &lt;span className={`fw-spinner fw-spinner-${size}`} aria-hidden="true" /&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <span class="fw-spinner fw-spinner-sm" aria-hidden="true"></span>
+        <span class="fw-spinner fw-spinner-md" aria-hidden="true"></span>
+        <span class="fw-spinner fw-spinner-lg" aria-hidden="true"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAT -->
+  <section id="stat" class="demo-component">
+    <div class="kit-sec-head"><h2>Stat</h2><span class="num">18</span></div>
+    <p class="sec-note">A card variant for a single headline number. Static markup.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Stat usage">
+          <button type="button" class="demo-tab" id="stat-tab-html" role="tab" aria-selected="true" aria-controls="stat-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="stat-tab-react" role="tab" aria-selected="false" aria-controls="stat-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="stat-panel-html" role="tabpanel" aria-labelledby="stat-tab-html">
+<pre><code>&lt;div class="fw-card fw-stat"&gt;
+  &lt;div class="fw-stat-label"&gt;Outstanding balance&lt;/div&gt;
+  &lt;div class="fw-stat-value"&gt;$8,420&lt;/div&gt;
+  &lt;div class="fw-stat-delta is-up"&gt;↓ 12% vs last month&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="stat-panel-react" role="tabpanel" aria-labelledby="stat-tab-react" hidden>
+<pre><code>function StatCard({ label, value, delta }) {
+  return (
+    &lt;div className="fw-card fw-stat"&gt;
+      &lt;div className="fw-stat-label"&gt;{label}&lt;/div&gt;
+      &lt;div className="fw-stat-value"&gt;{value}&lt;/div&gt;
+      &lt;div className="fw-stat-delta is-up"&gt;{delta}&lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="demo-render-surface is-block" style="max-width:240px">
+        <div class="fw-card fw-stat">
+          <div class="fw-stat-label">Outstanding balance</div>
+          <div class="fw-stat-value">$8,420</div>
+          <div class="fw-stat-delta is-up">↓ 12% vs last month</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABLE -->
+  <section id="table" class="demo-component">
+    <div class="kit-sec-head"><h2>Table</h2><span class="num">19</span></div>
+    <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. The enhancer adds client-side column sorting (<code>aria-sort</code>-driven) and row selection, emitting <code>fw:sort</code>/<code>fw:select</code>.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Table usage">
+          <button type="button" class="demo-tab" id="table-tab-html" role="tab" aria-selected="true" aria-controls="table-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="table-tab-react" role="tab" aria-selected="false" aria-controls="table-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="table-panel-html" role="tabpanel" aria-labelledby="table-tab-html">
+<pre><code>&lt;div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-cap"&gt;
+  &lt;table class="fw-table fw-table-striped" data-fw-table&gt;
+    &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+    &lt;thead&gt;&lt;tr&gt;
+      &lt;th scope="col" class="fw-table-select"&gt;
+        &lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-all&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select all rows&lt;/span&gt;&lt;/label&gt;
+      &lt;/th&gt;
+      &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+      &lt;th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+      &lt;th scope="col"&gt;Status&lt;/th&gt;
+    &lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;
+      &lt;tr&gt;
+        &lt;td class="fw-table-select"&gt;&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-row&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select Bright Path&lt;/span&gt;&lt;/label&gt;&lt;/td&gt;
+        &lt;td&gt;Bright Path&lt;/td&gt;
+        &lt;td class="fw-table-num" data-fw-sort-value="1250"&gt;$1,250.00&lt;/td&gt;
+        &lt;td&gt;&lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Paid&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="table-panel-react" role="tabpanel" aria-labelledby="table-tab-react" hidden>
+<pre><code>function InvoiceTable({ rows }) {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.table.init(ref.current); }, []);
+  return (
+    &lt;div className="fw-table-wrap" tabIndex={0} role="region" aria-labelledby="inv-cap" ref={ref}&gt;
+      &lt;table className="fw-table fw-table-striped" data-fw-table&gt;
+        &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+        &lt;thead&gt;
+          &lt;tr&gt;
+            &lt;th scope="col" className="fw-table-select"&gt;
+              &lt;label className="fw-checkbox"&gt;
+                &lt;input type="checkbox" data-fw-select-all /&gt;&lt;span className="fw-box" /&gt;
+                &lt;span className="fw-sr-only"&gt;Select all rows&lt;/span&gt;
+              &lt;/label&gt;
+            &lt;/th&gt;
+            &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+            &lt;th scope="col" className="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+            &lt;th scope="col"&gt;Status&lt;/th&gt;
+          &lt;/tr&gt;
+        &lt;/thead&gt;
+        &lt;tbody&gt;
+          {rows.map((row) =&gt; (
+            &lt;tr key={row.id}&gt;
+              &lt;td className="fw-table-select"&gt;
+                &lt;label className="fw-checkbox"&gt;
+                  &lt;input type="checkbox" data-fw-select-row /&gt;&lt;span className="fw-box" /&gt;
+                  &lt;span className="fw-sr-only"&gt;Select {row.client}&lt;/span&gt;
+                &lt;/label&gt;
+              &lt;/td&gt;
+              &lt;td&gt;{row.client}&lt;/td&gt;
+              &lt;td className="fw-table-num" data-fw-sort-value={row.amount}&gt;${row.amount.toFixed(2)}&lt;/td&gt;
+              &lt;td&gt;&lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{row.status}&lt;/span&gt;&lt;/td&gt;
+            &lt;/tr&gt;
+          ))}
+        &lt;/tbody&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="demo-table-caption">
+          <table class="fw-table fw-table-striped" data-fw-table>
+            <caption id="demo-table-caption">Invoices</caption>
+            <thead>
+              <tr>
+                <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+                <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+                <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
+                <td>Bright Path</td>
+                <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
+                <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+              </tr>
+              <tr>
+                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Meadow Co</span></label></td>
+                <td>Meadow Co</td>
+                <td class="fw-table-num" data-fw-sort-value="420">$420.00</td>
+                <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAG -->
+  <section id="tag" class="demo-component">
+    <div class="kit-sec-head"><h2>Tag</h2><span class="num">20</span></div>
+    <p class="sec-note">A slight, consistent tilt — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted, fully-round variant for table cells and dense rows.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tag usage">
+          <button type="button" class="demo-tab" id="tag-tab-html" role="tab" aria-selected="true" aria-controls="tag-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tag-tab-react" role="tab" aria-selected="false" aria-controls="tag-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tag-panel-html" role="tabpanel" aria-labelledby="tag-tab-html">
+<pre><code>&lt;span class="fw-tag fw-tag-live"&gt;Active&lt;/span&gt;
+&lt;span class="fw-tag fw-tag-pending"&gt;Pending&lt;/span&gt;
+&lt;span class="fw-tag fw-tag-error"&gt;Overdue&lt;/span&gt;
+&lt;span class="fw-tag fw-tag-pill fw-tag-info"&gt;Draft&lt;/span&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tag-panel-react" role="tabpanel" aria-labelledby="tag-tab-react" hidden>
+<pre><code>function StatusTag({ status, pill = false }) {
+  return &lt;span className={`fw-tag${pill ? ' fw-tag-pill' : ''} fw-tag-${status}`}&gt;{'…'}&lt;/span&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <span class="fw-tag fw-tag-live">Active</span>
+        <span class="fw-tag fw-tag-pending">Pending</span>
+        <span class="fw-tag fw-tag-error">Overdue</span>
+        <span class="fw-tag fw-tag-pill fw-tag-info">Draft</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOAST -->
+  <section id="toast" class="demo-component">
+    <div class="kit-sec-head"><h2>Toast</h2><span class="num">21</span></div>
+    <p class="sec-note">A single, reused, bottom-right notice — there's no static markup to author, just call <code>Fernwell.toast.show()</code>. It's the one component where the ref+effect recipe used elsewhere on this page is unnecessary; call it directly from an event handler.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Toast usage">
+          <button type="button" class="demo-tab" id="toast-tab-html" role="tab" aria-selected="true" aria-controls="toast-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="toast-tab-react" role="tab" aria-selected="false" aria-controls="toast-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="toast-panel-html" role="tabpanel" aria-labelledby="toast-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-ghost" type="button" onclick="Fernwell.toast.show('Invoice sent')"&gt;
+  Send invoice
+&lt;/button&gt;
+
+&lt;script&gt;
+Fernwell.toast.show('Invoice sent');
+Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000 });
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="toast-panel-react" role="tabpanel" aria-labelledby="toast-tab-react" hidden>
+<pre><code>function SendInvoiceButton() {
+  return (
+    &lt;button
+      className="fw-btn fw-btn-ghost"
+      type="button"
+      onClick={() =&gt; window.Fernwell.toast.show('Invoice sent')}
+    &gt;
+      Send invoice
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-ghost" type="button" data-demo-toast="success">Send invoice</button>
+        <button class="fw-btn fw-btn-ghost" type="button" data-demo-toast="error">Decline card</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAYOUT (no code/render template — pure structural utility) -->
+  <section id="layout" class="demo-component">
+    <div class="kit-sec-head"><h2>Layout utilities</h2></div>
+    <p class="sec-note">Structural helpers used throughout this page's own render panes above — no visual identity of their own, so they don't get a dedicated code/render section. See <code>src/css/components/layout.css</code>.</p>
+    <dl class="kv">
+      <dt>.fw-wrap</dt><dd>Centers content with a max width and side padding.</dd>
+      <dt>.fw-row</dt><dd>A wrapping flex row with a consistent gap — used for every inline button/control group on this page.</dd>
+      <dt>.fw-grid-2</dt><dd>A two-column grid that collapses to one column under 640px.</dd>
+    </dl>
+  </section>
+
+</div>
+
+<script src="dist/fernwell.iife.js"></script>
+<script src="scripts/components.js"></script>
+<script>
+  document.getElementById('fw-version-hero').textContent = Fernwell.version;
+
+  // on-page navigation: an fw-menu built from this page's own component sections.
+  (() => {
+    const toc = document.getElementById('kit-toc');
+    if (!toc) return;
+    const list = document.createElement('ul');
+    list.className = 'fw-menu-list';
+    document.querySelectorAll('.demo-wrap > section').forEach((section) => {
+      const h2 = section.querySelector(':scope > .kit-sec-head > h2');
+      if (!h2 || !section.id) return;
+      const item = document.createElement('li');
+      item.className = 'fw-menu-item';
+      item.innerHTML = `<a class="fw-menu-link" href="#${section.id}">${h2.textContent}</a>`;
+      list.appendChild(item);
+    });
+    toc.appendChild(list);
+    Fernwell.menu.init(toc);
+  })();
+</script>
+</body>
+</html>

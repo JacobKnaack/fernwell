@@ -319,6 +319,12 @@ html {
   margin-bottom: var(--fw-sp-3);
 }
 
+.kit-toc-pages {
+  margin-bottom: var(--fw-sp-4);
+  padding-bottom: var(--fw-sp-3);
+  border-bottom: var(--fw-border-w) solid var(--fw-bg-dim);
+}
+
 .kit-toc .fw-menu-link,
 .kit-toc .fw-menu-summary {
   font-size: 13px;
