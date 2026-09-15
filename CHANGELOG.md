@@ -4,6 +4,12 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.3.0] — 2026-09-15
+
+### Added
+
+- Docs: new **Components** page (`docs/components.html`) with a live demo and markup for every shipped component (Alert, Button, Card, Combobox, Disclosure, Drawer, Empty, Eyebrow, Field, List row, Menu, Modal, Nav, Pagination, Progress, Selection controls, Spinner, Stat, Table, Tag, Toast) plus layout utilities, linked from a new docs-wide page nav alongside the Overview page.
+
 ### Fixed
 
 - **`.fw-table` no longer inflates the whole page's width on narrow viewports.** Below 560px it now switches to `table-layout: fixed` (was always `auto`): a wide table's content-driven intrinsic width was previously counted by mobile browsers' viewport-fit sizing even though `.fw-table-wrap`'s `overflow-x: auto` already scrolled that overflow locally, producing horizontal scroll on the entire document into blank space. `.fw-table-select` / `.fw-table-actions` get a small explicit width at that breakpoint (override via `--fw-table-select-w` / `--fw-table-actions-w`) instead of relying on the `width: 1%` shrink-trick, which behaves differently once the table stops sizing to content; other columns share the remaining space and wrap their text, except `.fw-table-num` cells (money, dates, IDs), which truncate with an ellipsis rather than break mid-value. Desktop (`>560px`) is unchanged.

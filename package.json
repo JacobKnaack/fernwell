@@ -1,6 +1,6 @@
 {
   "name": "fernwell",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Fernwell — the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
   "type": "module",
   "license": "MIT",
