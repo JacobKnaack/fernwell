@@ -19,9 +19,11 @@
 @import './components/empty.css';
 @import './components/modal.css';
 @import './components/drawer.css';
+@import './components/popover.css';
 @import './components/toast.css';
 @import './components/list-row.css';
 @import './components/disclosure.css';
 @import './components/menu.css';
 @import './components/pagination.css';
 @import './components/table.css';
+@import './components/tooltip.css';

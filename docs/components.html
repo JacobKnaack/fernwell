@@ -867,9 +867,81 @@ function DeleteButton({ onClick }) {
     </div>
   </section>
 
+  <!-- POPOVER -->
+  <section id="popover" class="demo-component">
+    <div class="kit-sec-head"><h2>Popover</h2><span class="num">16</span></div>
+    <p class="sec-note">A non-modal floating panel anchored to its trigger — flips/shifts to stay in the viewport, dismisses on Escape, an outside click, or focus leaving it, and returns focus to the trigger on close. Defaults to centered above/below/beside the trigger; add <code>-placement="bottom-right"</code> (or <code>top-left</code> / <code>top-right</code> / <code>bottom-left</code>) to lean it toward a corner instead — this demo does that to clear the page's own nav toggle at the left edge.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Popover usage">
+          <button type="button" class="demo-tab" id="popover-tab-html" role="tab" aria-selected="true" aria-controls="popover-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="popover-tab-react" role="tab" aria-selected="false" aria-controls="popover-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="popover-panel-html" role="tabpanel" aria-labelledby="popover-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="settings-pop" data-fw-popover-placement="bottom-right"&gt;Settings&lt;/button&gt;
+
+&lt;div class="fw-popover" id="settings-pop"&gt;
+  &lt;div class="fw-popover-head"&gt;
+    &lt;h3 class="fw-popover-title"&gt;Settings&lt;/h3&gt;
+    &lt;button class="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close"&gt;
+      &lt;span data-fw-icon="close" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="fw-popover-body"&gt;
+    &lt;p&gt;Notification preferences live here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="popover-panel-react" role="tabpanel" aria-labelledby="popover-tab-react" hidden>
+<pre><code>function SettingsPopover() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="settings-pop" data-fw-popover-placement="bottom-right"&gt;
+        Settings
+      &lt;/button&gt;
+      &lt;div className="fw-popover" id="settings-pop"&gt;
+        &lt;div className="fw-popover-head"&gt;
+          &lt;h3 className="fw-popover-title"&gt;Settings&lt;/h3&gt;
+          &lt;button className="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close"&gt;
+            &lt;span data-fw-icon="close" aria-hidden="true"&gt;&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className="fw-popover-body"&gt;
+          &lt;p&gt;Notification preferences live here.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="demo-popover" data-fw-popover-placement="bottom-right">Settings</button>
+      </div>
+      <div class="fw-popover" id="demo-popover">
+        <div class="fw-popover-head">
+          <h3 class="fw-popover-title">Settings</h3>
+          <button class="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close">
+            <span data-fw-icon="close" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="fw-popover-body">
+          <p>Notification preferences live here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROGRESS -->
   <section id="progress" class="demo-component">
-    <div class="kit-sec-head"><h2>Progress</h2><span class="num">16</span></div>
+    <div class="kit-sec-head"><h2>Progress</h2><span class="num">17</span></div>
     <p class="sec-note">Determinate bars for anything with a known length; <code>.is-indeterminate</code> for an unknown duration; <code>.is-success</code> once complete.</p>
 
     <div class="demo-code">
@@ -917,7 +989,7 @@ function DeleteButton({ onClick }) {
 
   <!-- SELECTION -->
   <section id="selection" class="demo-component">
-    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">17</span></div>
+    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">18</span></div>
     <p class="sec-note">Native inputs stay in the DOM and fully keyboard/screen-reader operable — the styled box is a CSS-only sibling, never a replacement control.</p>
 
     <div class="demo-code">
@@ -964,7 +1036,7 @@ function DeleteButton({ onClick }) {
 
   <!-- SPINNER -->
   <section id="spinner" class="demo-component">
-    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">18</span></div>
+    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">19</span></div>
     <p class="sec-note">Live inline — never a full-page takeover unless the whole screen is genuinely blocked. Colour comes from <code>currentColor</code>.</p>
 
     <div class="demo-code">
@@ -998,7 +1070,7 @@ function DeleteButton({ onClick }) {
 
   <!-- STAT -->
   <section id="stat" class="demo-component">
-    <div class="kit-sec-head"><h2>Stat</h2><span class="num">19</span></div>
+    <div class="kit-sec-head"><h2>Stat</h2><span class="num">20</span></div>
     <p class="sec-note">A card variant for a single headline number. Static markup.</p>
 
     <div class="demo-code">
@@ -1042,7 +1114,7 @@ function DeleteButton({ onClick }) {
 
   <!-- TABLE -->
   <section id="table" class="demo-component">
-    <div class="kit-sec-head"><h2>Table</h2><span class="num">20</span></div>
+    <div class="kit-sec-head"><h2>Table</h2><span class="num">21</span></div>
     <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. The enhancer adds client-side column sorting (<code>aria-sort</code>-driven) and row selection, emitting <code>fw:sort</code>/<code>fw:select</code>.</p>
 
     <div class="demo-code">
@@ -1154,7 +1226,7 @@ function DeleteButton({ onClick }) {
 
   <!-- TAG -->
   <section id="tag" class="demo-component">
-    <div class="kit-sec-head"><h2>Tag</h2><span class="num">21</span></div>
+    <div class="kit-sec-head"><h2>Tag</h2><span class="num">22</span></div>
     <p class="sec-note">A slight, consistent tilt — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted, fully-round variant for table cells and dense rows.</p>
 
     <div class="demo-code">
@@ -1190,7 +1262,7 @@ function DeleteButton({ onClick }) {
 
   <!-- TOAST -->
   <section id="toast" class="demo-component">
-    <div class="kit-sec-head"><h2>Toast</h2><span class="num">22</span></div>
+    <div class="kit-sec-head"><h2>Toast</h2><span class="num">23</span></div>
     <p class="sec-note">A single, reused, bottom-right notice — there's no static markup to author, just call <code>Fernwell.toast.show()</code>. It's the one component where the ref+effect recipe used elsewhere on this page is unnecessary; call it directly from an event handler.</p>
 
     <div class="demo-code">
@@ -1230,6 +1302,140 @@ Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000
       <div class="fw-card demo-render-surface">
         <button class="fw-btn fw-btn-ghost" type="button" data-demo-toast="success">Send invoice</button>
         <button class="fw-btn fw-btn-ghost" type="button" data-demo-toast="error">Decline card</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLTIP -->
+  <section id="tooltip" class="demo-component">
+    <div class="kit-sec-head"><h2>Tooltip</h2><span class="num">24</span></div>
+    <p class="sec-note">A short hover/focus annotation. Content comes from the trigger's own <code>title</code> attribute — the enhancer moves it into the floating bubble and gives it a real no-JS fallback.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tooltip usage">
+          <button type="button" class="demo-tab" id="tooltip-tab-html" role="tab" aria-selected="true" aria-controls="tooltip-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tooltip-tab-react" role="tab" aria-selected="false" aria-controls="tooltip-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-panel-html" role="tabpanel" aria-labelledby="tooltip-tab-html">
+<pre><code>&lt;button class="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip&gt;
+  &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-panel-react" role="tabpanel" aria-labelledby="tooltip-tab-react" hidden>
+<pre><code>function CopyButton() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip&gt;
+        &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip>
+          <span data-fw-icon="copy" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top: var(--fw-sp-2);">Every side is centered on the trigger by default: <code>data-fw-tooltip-placement</code> takes <code>top</code> (default) / <code>bottom</code> / <code>left</code> / <code>right</code>, or a corner variant that leans the bubble toward that corner instead of centering it: <code>top-left</code> / <code>top-right</code> / <code>bottom-left</code> / <code>bottom-right</code>.</p>
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tooltip placement usage">
+          <button type="button" class="demo-tab" id="tooltip-placement-tab-html" role="tab" aria-selected="true" aria-controls="tooltip-placement-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tooltip-placement-tab-react" role="tab" aria-selected="false" aria-controls="tooltip-placement-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-placement-panel-html" role="tabpanel" aria-labelledby="tooltip-placement-tab-html">
+<pre><code>&lt;div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)"&gt;
+  &lt;span class="fw-stat-label"&gt;top&lt;/span&gt;
+  &lt;button class="fw-icon-btn" type="button" title="Appears above, centered" data-fw-tooltip data-fw-tooltip-placement="top"&gt;
+    &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;!-- repeat per placement: bottom, left, right, top-left, top-right, bottom-left, bottom-right --&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-placement-panel-react" role="tabpanel" aria-labelledby="tooltip-placement-tab-react" hidden>
+<pre><code>const PLACEMENTS = ['top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'];
+
+function PlacementExamples() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div className="fw-row" ref={ref}&gt;
+      {PLACEMENTS.map((placement) =&gt; (
+        &lt;div key={placement} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--fw-sp-2)' }}&gt;
+          &lt;span className="fw-stat-label"&gt;{placement}&lt;/span&gt;
+          &lt;button className="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip data-fw-tooltip-placement={placement}&gt;
+            &lt;span data-fw-icon="copy" aria-hidden="true" /&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top</span>
+          <button class="fw-icon-btn" type="button" title="Appears above, centered" data-fw-tooltip data-fw-tooltip-placement="top">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom</span>
+          <button class="fw-icon-btn" type="button" title="Appears below, centered" data-fw-tooltip data-fw-tooltip-placement="bottom">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">left</span>
+          <button class="fw-icon-btn" type="button" title="Appears to the left, centered" data-fw-tooltip data-fw-tooltip-placement="left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">right</span>
+          <button class="fw-icon-btn" type="button" title="Appears to the right, centered" data-fw-tooltip data-fw-tooltip-placement="right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top-left</span>
+          <button class="fw-icon-btn" type="button" title="Above, leaning left" data-fw-tooltip data-fw-tooltip-placement="top-left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top-right</span>
+          <button class="fw-icon-btn" type="button" title="Above, leaning right" data-fw-tooltip data-fw-tooltip-placement="top-right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom-left</span>
+          <button class="fw-icon-btn" type="button" title="Below, leaning left" data-fw-tooltip data-fw-tooltip-placement="bottom-left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom-right</span>
+          <button class="fw-icon-btn" type="button" title="Below, leaning right" data-fw-tooltip data-fw-tooltip-placement="bottom-right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
       </div>
     </div>
   </section>

@@ -177,6 +177,8 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Empty state | `.fw-empty`, `-blob`, `-title`, `-body` |
 | Modal | `.fw-modal-overlay` > `.fw-modal` (`-wide`); `-head`, `-title`, `-sub`, `-foot` |
 | Drawer | `.fw-drawer-overlay` + `.fw-drawer`; `-head`, `-eyebrow`, `-title`, `-body`, `-foot` |
+| Popover | `.fw-popover` (`role="dialog"`, non-modal); `-head`, `-title`, `-body` |
+| Tooltip | `.fw-tooltip` (`role="tooltip"`, singleton, created on first show) |
 | Toast | `.fw-toast` + `-error` `-info` `-pending` (created by `toast.show`) |
 | List row | `.fw-list-row` (`.is-locked`), `-main`, `-title`, `-meta`; `.fw-sub-list` |
 | Disclosure | `details.fw-disclosure`, `-chevron`, `-count`, `-body` |
@@ -195,6 +197,8 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 | `input[data-fw-combobox]` | typeahead over the `<datalist>` in `list=` (↑ ↓ Enter Esc, `aria-activedescendant`) |
 | `[data-fw-open-modal="id"]` / `[data-fw-close-modal]` | modal with backdrop-click (drag-safe), Escape, focus return, scroll lock |
 | `[data-fw-open-drawer="id"]` / `[data-fw-close-drawer]` / `[data-fw-drawer-overlay="id"]` | same for drawers |
+| `[data-fw-popover-trigger="id"]` (+ `-placement`, `-offset`) / `[data-fw-popover-close]` | non-modal floating panel: flip/shift to stay in the viewport, Escape, outside-click, focus-out, and close-button dismissal, focus return to trigger |
+| `[data-fw-tooltip]` (+ `-placement`, `-offset`, `-delay`) | hover (with delay) or focus (instant) tooltip sourced from the trigger's `title`; hoverable per WCAG 1.4.13, dismisses on Escape |
 | `[data-fw-nav-toggle][aria-controls]` | dropdown open/close, outside-click and Escape |
 | `form[data-fw-loading]` | submit button gets a spinner + `data-fw-loading-text` label on submit |
 | `table[data-fw-table]` with `th[data-fw-sort]`, `input[data-fw-select-all]` / `[data-fw-select-row]` | client-side column sort (cycles `aria-sort`, honours `td[data-fw-sort-value]`), row selection with select-all + indeterminate, `.is-selected` / `aria-selected` on rows |
@@ -203,7 +207,7 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 Programmatic API:
 
 ```js
-import { theme, combobox, modal, nav, loading, toast, table, menu } from 'fernwell';
+import { theme, combobox, modal, nav, loading, toast, table, menu, popover, tooltip } from 'fernwell';
 
 theme.get();
 theme.set('dark');
@@ -229,9 +233,13 @@ table.selectAll(tableEl, false);
 menu.open(groupEl); menu.close(groupEl); menu.toggle(groupEl);   // groupEl = details.fw-menu-group
 menu.reveal(linkEl);                    // open every ancestor group of an element
 menu.expandAll(menuEl); menu.collapseAll(menuEl);
+const pop = popover(triggerEl, panelEl, { placement: 'bottom', offset: 8 });
+pop.open(); pop.close(); pop.toggle(); pop.destroy();
+const tip = tooltip(triggerEl, { placement: 'top', delay: 400 });
+tip.show(); tip.hide(); tip.destroy();
 ```
 
-Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
+Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal, drawer, or popover, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
 
 ## Principles
 
