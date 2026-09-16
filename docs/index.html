@@ -339,7 +339,8 @@ toast.show('Invoice sent');</code></pre>
   <section>
     <div class="kit-sec-head"><h2>Table</h2><span class="num">07d</span></div>
     <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. Inter for the cells, Plex Mono for money, IDs and dates. Click a header to sort; the checkbox column drives select-all. Shrink the window to scroll it sideways.</p>
-    <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-caption">
+    <div class="fw-table-wrap">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="inv-caption">
       <table class="fw-table fw-table-striped" id="invoices-table" data-fw-table>
         <caption id="inv-caption" class="fw-sr-only">Invoices</caption>
         <thead>
@@ -410,6 +411,7 @@ toast.show('Invoice sent');</code></pre>
         </tr>
         </tbody>
       </table>
+      </div>
     </div>
     <nav class="fw-pagination" aria-label="Invoices pagination" style="margin-top:var(--fw-sp-4)">
       <span class="fw-pag-info" id="inv-selected">Showing 1–6 of 84</span>
@@ -417,7 +419,8 @@ toast.show('Invoice sent');</code></pre>
     </nav>
 
     <p class="sec-note" style="margin-top:var(--fw-sp-6)">Compact density with a sticky header. Add <code>.fw-table-sticky</code> to the wrapper and bound its height with <code>--fw-table-max-height</code>.</p>
-    <div class="fw-table-wrap fw-table-sticky" tabindex="0" role="region" aria-labelledby="pay-caption" style="--fw-table-max-height:220px">
+    <div class="fw-table-wrap fw-table-sticky" style="--fw-table-max-height:220px">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="pay-caption">
       <table class="fw-table fw-table-compact" data-fw-table>
         <caption id="pay-caption" class="fw-sr-only">Recent payments</caption>
         <thead>
@@ -441,15 +444,18 @@ toast.show('Invoice sent');</code></pre>
           <tr><td class="fw-table-num">2026-08-25</td><td>Maple & Co</td><td>Check</td><td class="fw-table-num" data-fw-sort-value="490.0">$490.00</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <p class="sec-note" style="margin-top:var(--fw-sp-6)">Empty and loading rows span the table; <code>aria-busy="true"</code> on the table dims the body while data is in flight.</p>
     <div class="fw-table-wrap">
+      <div class="fw-table-scroll">
       <table class="fw-table">
         <caption class="fw-sr-only">Clients (empty)</caption>
         <thead><tr><th scope="col">Client</th><th scope="col">Email</th><th scope="col" class="fw-table-num">Balance</th></tr></thead>
         <tbody><tr class="fw-table-empty"><td colspan="3">No clients yet — add one and they'll show up here.</td></tr></tbody>
       </table>
+      </div>
     </div>
   </section>
 
@@ -645,11 +651,13 @@ toast.show('Invoice sent');</code></pre>
 <!-- modal -->
 <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
   <div class="fw-modal">
-    <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
-    <p style="font-size:14px; color:var(--fw-text-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
-    <div class="fw-modal-foot">
-      <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
-      <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
+    <div class="fw-modal-scroll">
+      <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
+      <p style="font-size:14px; color:var(--fw-text-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
+      <div class="fw-modal-foot">
+        <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
+        <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
+      </div>
     </div>
   </div>
 </div>

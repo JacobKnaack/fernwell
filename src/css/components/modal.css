@@ -4,11 +4,17 @@
      <button class="fw-btn" data-fw-open-modal="confirm">Open</button>
      <div class="fw-modal-overlay" id="confirm" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
        <div class="fw-modal">
-         <div class="fw-modal-head"><div><h2 id="confirm-title">Delete invoice?</h2><p class="fw-modal-sub">…</p></div></div>
-         …
-         <div class="fw-modal-foot"><button class="fw-btn fw-btn-ghost" data-fw-close-modal>Cancel</button><button class="fw-btn fw-btn-danger">Delete</button></div>
+         <div class="fw-modal-scroll">
+           <div class="fw-modal-head"><div><h2 id="confirm-title">Delete invoice?</h2><p class="fw-modal-sub">…</p></div></div>
+           …
+           <div class="fw-modal-foot"><button class="fw-btn fw-btn-ghost" data-fw-close-modal>Cancel</button><button class="fw-btn fw-btn-danger">Delete</button></div>
+         </div>
        </div>
-     </div> */
+     </div>
+   `.fw-modal` only holds the rounded shape (radius/shadow/clip); `.fw-modal-scroll`
+   is the actual scrolling region. Split so the scrollbar is clipped to the
+   rounded corners instead of cutting through them (overflow doesn't clip a
+   child's own scrollbar decoration when they're the same element). */
 .fw-modal-overlay {
   position: fixed;
   inset: 0;
@@ -34,13 +40,17 @@
   font-family: var(--fw-font-body);
   border-radius: var(--fw-r-xl);
   box-shadow: var(--fw-shadow-lg);
+  overflow: hidden;
   width: 100%;
   max-width: 460px;
+  transform: translateY(8px) scale(0.98);
+  transition: transform var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-modal-scroll {
   max-height: 88vh;
   overflow-y: auto;
   padding: var(--fw-sp-6);
-  transform: translateY(8px) scale(0.98);
-  transition: transform var(--fw-motion-base) var(--fw-motion-ease);
 }
 
 .fw-modal-wide {

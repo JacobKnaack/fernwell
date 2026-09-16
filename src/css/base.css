@@ -67,6 +67,19 @@
   border: 0;
 }
 
+/* Reserves the page scrollbar's width the instant a modal/drawer locks
+   scroll (below), so removing the native scrollbar never changes available
+   content width — eliminates the "page jumps right when a modal opens" CLS.
+   Scoped via :has() so a page with .fw-scroll-lock inactive today has zero
+   footprint — no permanent global gutter reservation. Progressive
+   enhancement only: no Safari support for scrollbar-gutter, and :has()
+   itself needs Firefox 121+ (above this repo's own stated 113+ floor), so
+   older Firefox and all Safari versions keep today's behavior (jump still
+   happens) rather than gaining a broken partial fix. */
+html:has(body.fw-scroll-lock) {
+  scrollbar-gutter: stable;
+}
+
 /* Applied to <body> by the modal/drawer enhancers while an overlay is open. */
 .fw-scroll-lock {
   overflow: hidden;

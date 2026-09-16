@@ -679,15 +679,17 @@ function DeleteButton({ onClick }) {
 
 &lt;div class="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
   &lt;div class="fw-modal"&gt;
-    &lt;div class="fw-modal-head"&gt;
-      &lt;div&gt;
-        &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
-        &lt;p class="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+    &lt;div class="fw-modal-scroll"&gt;
+      &lt;div class="fw-modal-head"&gt;
+        &lt;div&gt;
+          &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+          &lt;p class="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="fw-modal-foot"&gt;
-      &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
-      &lt;button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+      &lt;div class="fw-modal-foot"&gt;
+        &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+        &lt;button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -703,15 +705,17 @@ function DeleteButton({ onClick }) {
       &lt;/button&gt;
       &lt;div className="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
         &lt;div className="fw-modal"&gt;
-          &lt;div className="fw-modal-head"&gt;
-            &lt;div&gt;
-              &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
-              &lt;p className="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+          &lt;div className="fw-modal-scroll"&gt;
+            &lt;div className="fw-modal-head"&gt;
+              &lt;div&gt;
+                &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+                &lt;p className="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+              &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div className="fw-modal-foot"&gt;
-            &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
-            &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+            &lt;div className="fw-modal-foot"&gt;
+              &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+              &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -729,15 +733,17 @@ function DeleteButton({ onClick }) {
       </div>
       <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
         <div class="fw-modal">
-          <div class="fw-modal-head">
-            <div>
-              <h2 id="demo-modal-title">Delete invoice?</h2>
-              <p class="fw-modal-sub">This can't be undone.</p>
+          <div class="fw-modal-scroll">
+            <div class="fw-modal-head">
+              <div>
+                <h2 id="demo-modal-title">Delete invoice?</h2>
+                <p class="fw-modal-sub">This can't be undone.</p>
+              </div>
             </div>
-          </div>
-          <div class="fw-modal-foot">
-            <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal>Cancel</button>
-            <button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal>Delete</button>
+            <div class="fw-modal-foot">
+              <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal>Cancel</button>
+              <button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal>Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1128,26 +1134,28 @@ function DeleteButton({ onClick }) {
           <button type="button" class="demo-tab" id="table-tab-react" role="tab" aria-selected="false" aria-controls="table-panel-react" tabindex="-1">React</button>
         </div>
         <div class="demo-tabpanel" id="table-panel-html" role="tabpanel" aria-labelledby="table-tab-html">
-<pre><code>&lt;div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-cap"&gt;
-  &lt;table class="fw-table fw-table-striped" data-fw-table&gt;
-    &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
-    &lt;thead&gt;&lt;tr&gt;
-      &lt;th scope="col" class="fw-table-select"&gt;
-        &lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-all&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select all rows&lt;/span&gt;&lt;/label&gt;
-      &lt;/th&gt;
-      &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
-      &lt;th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
-      &lt;th scope="col"&gt;Status&lt;/th&gt;
-    &lt;/tr&gt;&lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr&gt;
-        &lt;td class="fw-table-select"&gt;&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-row&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select Bright Path&lt;/span&gt;&lt;/label&gt;&lt;/td&gt;
-        &lt;td&gt;Bright Path&lt;/td&gt;
-        &lt;td class="fw-table-num" data-fw-sort-value="1250"&gt;$1,250.00&lt;/td&gt;
-        &lt;td&gt;&lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Paid&lt;/span&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
+<pre><code>&lt;div class="fw-table-wrap"&gt;
+  &lt;div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="inv-cap"&gt;
+    &lt;table class="fw-table fw-table-striped" data-fw-table&gt;
+      &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+      &lt;thead&gt;&lt;tr&gt;
+        &lt;th scope="col" class="fw-table-select"&gt;
+          &lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-all&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select all rows&lt;/span&gt;&lt;/label&gt;
+        &lt;/th&gt;
+        &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+        &lt;th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+        &lt;th scope="col"&gt;Status&lt;/th&gt;
+      &lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td class="fw-table-select"&gt;&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-row&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select Bright Path&lt;/span&gt;&lt;/label&gt;&lt;/td&gt;
+          &lt;td&gt;Bright Path&lt;/td&gt;
+          &lt;td class="fw-table-num" data-fw-sort-value="1250"&gt;$1,250.00&lt;/td&gt;
+          &lt;td&gt;&lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Paid&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </div>
         <div class="demo-tabpanel" id="table-panel-react" role="tabpanel" aria-labelledby="table-tab-react" hidden>
@@ -1155,38 +1163,40 @@ function DeleteButton({ onClick }) {
   const ref = useRef(null);
   useEffect(() =&gt; { window.Fernwell.table.init(ref.current); }, []);
   return (
-    &lt;div className="fw-table-wrap" tabIndex={0} role="region" aria-labelledby="inv-cap" ref={ref}&gt;
-      &lt;table className="fw-table fw-table-striped" data-fw-table&gt;
-        &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
-        &lt;thead&gt;
-          &lt;tr&gt;
-            &lt;th scope="col" className="fw-table-select"&gt;
-              &lt;label className="fw-checkbox"&gt;
-                &lt;input type="checkbox" data-fw-select-all /&gt;&lt;span className="fw-box" /&gt;
-                &lt;span className="fw-sr-only"&gt;Select all rows&lt;/span&gt;
-              &lt;/label&gt;
-            &lt;/th&gt;
-            &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
-            &lt;th scope="col" className="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
-            &lt;th scope="col"&gt;Status&lt;/th&gt;
-          &lt;/tr&gt;
-        &lt;/thead&gt;
-        &lt;tbody&gt;
-          {rows.map((row) =&gt; (
-            &lt;tr key={row.id}&gt;
-              &lt;td className="fw-table-select"&gt;
+    &lt;div className="fw-table-wrap"&gt;
+      &lt;div className="fw-table-scroll" tabIndex={0} role="region" aria-labelledby="inv-cap" ref={ref}&gt;
+        &lt;table className="fw-table fw-table-striped" data-fw-table&gt;
+          &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th scope="col" className="fw-table-select"&gt;
                 &lt;label className="fw-checkbox"&gt;
-                  &lt;input type="checkbox" data-fw-select-row /&gt;&lt;span className="fw-box" /&gt;
-                  &lt;span className="fw-sr-only"&gt;Select {row.client}&lt;/span&gt;
+                  &lt;input type="checkbox" data-fw-select-all /&gt;&lt;span className="fw-box" /&gt;
+                  &lt;span className="fw-sr-only"&gt;Select all rows&lt;/span&gt;
                 &lt;/label&gt;
-              &lt;/td&gt;
-              &lt;td&gt;{row.client}&lt;/td&gt;
-              &lt;td className="fw-table-num" data-fw-sort-value={row.amount}&gt;${row.amount.toFixed(2)}&lt;/td&gt;
-              &lt;td&gt;&lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{row.status}&lt;/span&gt;&lt;/td&gt;
+              &lt;/th&gt;
+              &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+              &lt;th scope="col" className="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+              &lt;th scope="col"&gt;Status&lt;/th&gt;
             &lt;/tr&gt;
-          ))}
-        &lt;/tbody&gt;
-      &lt;/table&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            {rows.map((row) =&gt; (
+              &lt;tr key={row.id}&gt;
+                &lt;td className="fw-table-select"&gt;
+                  &lt;label className="fw-checkbox"&gt;
+                    &lt;input type="checkbox" data-fw-select-row /&gt;&lt;span className="fw-box" /&gt;
+                    &lt;span className="fw-sr-only"&gt;Select {row.client}&lt;/span&gt;
+                  &lt;/label&gt;
+                &lt;/td&gt;
+                &lt;td&gt;{row.client}&lt;/td&gt;
+                &lt;td className="fw-table-num" data-fw-sort-value={row.amount}&gt;${row.amount.toFixed(2)}&lt;/td&gt;
+                &lt;td&gt;&lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{row.status}&lt;/span&gt;&lt;/td&gt;
+              &lt;/tr&gt;
+            ))}
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }</code></pre>
@@ -1197,32 +1207,34 @@ function DeleteButton({ onClick }) {
     <div class="demo-render">
       <p class="demo-render-label">Render</p>
       <div class="fw-card">
-        <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="demo-table-caption">
-          <table class="fw-table fw-table-striped" data-fw-table>
-            <caption id="demo-table-caption">Invoices</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
-                <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
-                <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
-                <td>Bright Path</td>
-                <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
-                <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
-              </tr>
-              <tr>
-                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Meadow Co</span></label></td>
-                <td>Meadow Co</td>
-                <td class="fw-table-num" data-fw-sort-value="420">$420.00</td>
-                <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="fw-table-wrap">
+          <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="demo-table-caption">
+            <table class="fw-table fw-table-striped" data-fw-table>
+              <caption id="demo-table-caption">Invoices</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+                  <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+                  <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
+                  <td>Bright Path</td>
+                  <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
+                  <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+                </tr>
+                <tr>
+                  <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Meadow Co</span></label></td>
+                  <td>Meadow Co</td>
+                  <td class="fw-table-num" data-fw-sort-value="420">$420.00</td>
+                  <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

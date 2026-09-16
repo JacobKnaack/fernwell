@@ -175,7 +175,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Nav | `.fw-nav` (`-sticky`), `-brand`, `-dot` / `-hex`, `-links`, `-right`, `-avatar`, `-btn`, `-toggle`, `-dropdown` (`-menu`) |
 | Stat | `.fw-stat-label` `-value` (`-unit`) `-delta` (`.is-up` / `.is-down`) |
 | Empty state | `.fw-empty`, `-blob`, `-title`, `-body` |
-| Modal | `.fw-modal-overlay` > `.fw-modal` (`-wide`); `-head`, `-title`, `-sub`, `-foot` |
+| Modal | `.fw-modal-overlay` > `.fw-modal` (`-wide`) > `.fw-modal-scroll` (the scrolling region — keeps the scrollbar clipped to the panel's rounded corners) > `-head`, `-title`, `-sub`, `-foot` |
 | Drawer | `.fw-drawer-overlay` + `.fw-drawer`; `-head`, `-eyebrow`, `-title`, `-body`, `-foot` |
 | Popover | `.fw-popover` (`role="dialog"`, non-modal); `-head`, `-title`, `-body` |
 | Tooltip | `.fw-tooltip` (`role="tooltip"`, singleton, created on first show) |
@@ -183,7 +183,7 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | List row | `.fw-list-row` (`.is-locked`), `-main`, `-title`, `-meta`; `.fw-sub-list` |
 | Disclosure | `details.fw-disclosure`, `-chevron`, `-count`, `-body` |
 | Pagination | `.fw-pagination`, `.fw-pag-info`, `.fw-pag-controls`, `.fw-pag-label`, `.fw-btn-page` |
-| Table | `.fw-table-wrap` (`.fw-table-sticky` + `--fw-table-max-height`) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
+| Table | `.fw-table-wrap` (`.fw-table-sticky`) > `.fw-table-scroll` (the scrolling region — carries `tabindex="0" role="region"`, bounded by `--fw-table-max-height` when sticky, kept separate from `.fw-table-wrap` so the scrollbar stays clipped to the card's rounded corners) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
 | Collapsible menu | `.fw-menu` (`-accordion`) > `.fw-menu-list` > `.fw-menu-item` (`.fw-menu-split`) > `.fw-menu-link` or `details.fw-menu-group` > `.fw-menu-summary` (`-icon`, `.is-current`) + nested `.fw-menu-list` or `.fw-menu-panel`; `[aria-current="page"]` marks the current link; `--fw-menu-indent`, `--fw-menu-row-h` |
 | Layout | `.fw-wrap`, `.fw-row`, `.fw-grid-2`, `.fw-sr-only` |
 
