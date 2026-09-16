@@ -31,7 +31,7 @@
     <h1>Component Reference</h1>
     <p class="lede">Every component in Fernwell, with the exact markup to copy — plain HTML/JS or a React usage recipe — next to what it actually renders. For tokens, theming and voice, see <a href="index.html">the overview</a>.</p>
     <div class="fw-row" style="margin-top:var(--fw-sp-5)">
-      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" data-fw-theme-label-dark="Preview light theme" data-fw-theme-label-light="Preview dark theme"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span> Preview dark theme</button>
     </div>
   </div>
 
@@ -361,7 +361,9 @@ Fernwell.loading.resetButtonLoading(btn);
         </div>
         <div class="demo-tabpanel" id="empty-panel-html" role="tabpanel" aria-labelledby="empty-tab-html">
 <pre><code>&lt;div class="fw-empty"&gt;
-  &lt;div class="fw-empty-blob"&gt;✉️&lt;/div&gt;
+  &lt;div class="fw-empty-blob"&gt;
+    &lt;span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/div&gt;
   &lt;h4 class="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
   &lt;p class="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
   &lt;button class="fw-btn fw-btn-primary" type="button"&gt;Create invoice&lt;/button&gt;
@@ -371,7 +373,9 @@ Fernwell.loading.resetButtonLoading(btn);
 <pre><code>function NoInvoicesYet({ onCreate }) {
   return (
     &lt;div className="fw-empty"&gt;
-      &lt;div className="fw-empty-blob"&gt;✉️&lt;/div&gt;
+      &lt;div className="fw-empty-blob"&gt;
+        &lt;span className="fw-icon" data-fw-icon="envelope" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/div&gt;
       &lt;h4 className="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
       &lt;p className="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
       &lt;button className="fw-btn fw-btn-primary" type="button" onClick={onCreate}&gt;
@@ -388,7 +392,7 @@ Fernwell.loading.resetButtonLoading(btn);
       <p class="demo-render-label">Render</p>
       <div class="fw-card">
         <div class="fw-empty">
-          <div class="fw-empty-blob">✉️</div>
+          <div class="fw-empty-blob"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span></div>
           <h4 class="fw-empty-title">No invoices sent yet</h4>
           <p class="fw-empty-body">Create your first invoice to get paid faster.</p>
           <button class="fw-btn fw-btn-primary" type="button">Create invoice</button>

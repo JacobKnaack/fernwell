@@ -51,6 +51,26 @@ const icons: Record<string, string> = {
     '<path d="M9 4H5.5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1H9"/><line x1="14" y1="12" x2="21" y2="12"/><polyline points="17.5,8.5 21,12 17.5,15.5"/>',
   paperclip:
     '<path d="M21 11.5 12.4 20a4.3 4.3 0 0 1-6-6.1L15 5.3a2.9 2.9 0 0 1 4.1 4.1l-8.6 8.6a1.4 1.4 0 0 1-2-2l7.9-7.9"/>',
+  envelope: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M4 6.5 12 13l8-6.5"/>',
+  'chevron-up': '<polyline points="6,15 12,9 18,15"/>',
+  'chevron-left': '<polyline points="15,6 9,12 15,18"/>',
+  'chevron-right': '<polyline points="9,6 15,12 9,18"/>',
+  'arrow-up': '<line x1="12" y1="19" x2="12" y2="5"/><polyline points="5,12 12,5 19,12"/>',
+  'arrow-down': '<line x1="12" y1="5" x2="12" y2="19"/><polyline points="5,12 12,19 19,12"/>',
+  unlock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.8-1.3"/>',
+  'thumbs-up':
+    '<path d="M7 11v9H4.5a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1H7Z"/><path d="M7 11l4.3-7.3a1.4 1.4 0 0 1 2.6.8L13 9h5.6a2 2 0 0 1 1.9 2.6l-2 6.5A2 2 0 0 1 16.6 19.5H10a3 3 0 0 1-3-3"/>',
+  'thumbs-down':
+    '<path d="M7 13V4h2.5a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7Z"/><path d="M7 13l4.3 7.3a1.4 1.4 0 0 0 2.6-.8L13 15h5.6a2 2 0 0 0 1.9-2.6l-2-6.5A2 2 0 0 0 16.6 4.5H10a3 3 0 0 0-3 3"/>',
+  'eye-closed':
+    '<path d="M3.5 12S7 6 12 6s8.5 6 8.5 6-3.5 6-8.5 6-8.5-6-8.5-6Z"/><line x1="4" y1="19" x2="20" y2="5"/>',
+  'help-circle':
+    '<circle cx="12" cy="12" r="9"/><path d="M9.2 9.2a2.8 2.8 0 1 1 4.3 2.4c-.9.6-1.5 1.1-1.5 2.2"/><circle cx="12" cy="17" r="1" fill="currentColor" stroke="none"/>',
+  chat: '<path d="M4 5.5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9.5L5 20.5V16.5H5a1 1 0 0 1-1-1Z"/>',
+  kebab:
+    '<circle cx="12" cy="5" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="19" r="1.4" fill="currentColor" stroke="none"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><line x1="12" y1="2" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22"/><line x1="2" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22" y2="12"/><line x1="4.9" y1="4.9" x2="6.6" y2="6.6"/><line x1="17.4" y1="17.4" x2="19.1" y2="19.1"/><line x1="4.9" y1="19.1" x2="6.6" y2="17.4"/><line x1="17.4" y1="6.6" x2="19.1" y2="4.9"/>',
+  moon: '<path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a7 7 0 0 0 10.7 10.7Z"/>',
 };
 
 export type IconName = keyof typeof icons;

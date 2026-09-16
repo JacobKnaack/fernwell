@@ -96,6 +96,19 @@ describe('theme', () => {
     expect(btn.textContent).toBe('Light');
   });
 
+  it('init() renders an icon for a data-fw-theme-icon toggle instead of text', () => {
+    document.body.innerHTML = `
+      <button data-fw-theme-toggle aria-label="Toggle theme"
+        data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon"></button>
+    `;
+
+    theme.init();
+
+    const btn = document.querySelector('[data-fw-theme-toggle]') as HTMLElement;
+    expect(btn.querySelector('svg')).not.toBeNull();
+    expect(btn.textContent?.trim()).toBe('');
+  });
+
   it('setTokens() renders a <style data-fw-tokens> in <head>; resetTokens() removes it', () => {
     theme.setTokens({ primary: '#2266ff' });
 

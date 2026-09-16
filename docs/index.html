@@ -30,7 +30,9 @@
     <h1>Fernwell UI System</h1>
     <p class="lede">Simple and Extensible.  Built to handle all your web design needs from a simple static website to a complex dynamic web application.</p>
     <div class="fw-row" style="margin-top:var(--fw-sp-5)">
-      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" data-fw-theme-label-dark="Preview light theme" data-fw-theme-label-light="Preview dark theme">
+        <span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span>Preview dark theme
+      </button>
       <a class="fw-btn fw-btn-ghost" href="https://www.npmjs.com/package/fernwell">npm ↗</a>
     </div>
   </div>
@@ -532,7 +534,7 @@ toast.show('Invoice sent');</code></pre>
       <a class="fw-nav-brand" href="#"><span class="fw-nav-dot"></span>Fernwell</a>
       <div class="fw-nav-links"><a href="#" class="is-active">Invoices</a><a href="#">Clients</a><a href="#">Reports</a></div>
       <div class="fw-nav-right">
-        <button class="fw-nav-btn" data-fw-theme-toggle data-fw-theme-label-dark="☀️" data-fw-theme-label-light="🌙" aria-label="Toggle theme">🌙</button>
+        <button class="fw-nav-btn" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" aria-label="Toggle theme" style="padding: var(--fw-sp-2);"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span></button>
         <button class="fw-nav-toggle" data-fw-nav-toggle aria-controls="nav-menu" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
         <div class="fw-nav-avatar">JM</div>
       </div>
@@ -547,7 +549,7 @@ toast.show('Invoice sent');</code></pre>
       </div>
       <div class="fw-card">
         <div class="fw-empty">
-          <div class="fw-empty-blob">✉️</div>
+          <div class="fw-empty-blob"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span></div>
           <h4 class="fw-empty-title">No invoices sent yet</h4>
           <p class="fw-empty-body">Create your first invoice and Fernwell will handle the reminders.</p>
           <button class="fw-btn fw-btn-primary">Create invoice</button>
@@ -592,33 +594,48 @@ toast.show('Invoice sent');</code></pre>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="edit" aria-hidden="true"></span><span class="lbl">edit</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="trash" aria-hidden="true"></span><span class="lbl">trash</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="save" aria-hidden="true"></span><span class="lbl">save</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="copy" aria-hidden="true"></span><span class="lbl">copy</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="refresh" aria-hidden="true"></span><span class="lbl">refresh</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="menu" aria-hidden="true"></span><span class="lbl">menu</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="more" aria-hidden="true"></span><span class="lbl">more</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="kebab" aria-hidden="true"></span><span class="lbl">kebab</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-up" aria-hidden="true"></span><span class="lbl">chevron-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-down" aria-hidden="true"></span><span class="lbl">chevron-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-left" aria-hidden="true"></span><span class="lbl">chevron-left</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-right" aria-hidden="true"></span><span class="lbl">chevron-right</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-up" aria-hidden="true"></span><span class="lbl">arrow-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-down" aria-hidden="true"></span><span class="lbl">arrow-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-left" aria-hidden="true"></span><span class="lbl">arrow-left</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-right" aria-hidden="true"></span><span class="lbl">arrow-right</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="eye" aria-hidden="true"></span><span class="lbl">eye</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="eye-closed" aria-hidden="true"></span><span class="lbl">eye-closed</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="lock" aria-hidden="true"></span><span class="lbl">lock</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="unlock" aria-hidden="true"></span><span class="lbl">unlock</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="search" aria-hidden="true"></span><span class="lbl">search</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="settings" aria-hidden="true"></span><span class="lbl">settings</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="filter" aria-hidden="true"></span><span class="lbl">filter</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bell" aria-hidden="true"></span><span class="lbl">bell</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span><span class="lbl">envelope</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chat" aria-hidden="true"></span><span class="lbl">chat</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="thumbs-up" aria-hidden="true"></span><span class="lbl">thumbs-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="thumbs-down" aria-hidden="true"></span><span class="lbl">thumbs-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="heart" aria-hidden="true"></span><span class="lbl">heart</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="star" aria-hidden="true"></span><span class="lbl">star</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="folder" aria-hidden="true"></span><span class="lbl">folder</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bookmark" aria-hidden="true"></span><span class="lbl">bookmark</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="paperclip" aria-hidden="true"></span><span class="lbl">paperclip</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="download" aria-hidden="true"></span><span class="lbl">download</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="upload" aria-hidden="true"></span><span class="lbl">upload</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="share" aria-hidden="true"></span><span class="lbl">share</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="copy" aria-hidden="true"></span><span class="lbl">copy</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="menu" aria-hidden="true"></span><span class="lbl">menu</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="more" aria-hidden="true"></span><span class="lbl">more</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="user" aria-hidden="true"></span><span class="lbl">user</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bell" aria-hidden="true"></span><span class="lbl">bell</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="heart" aria-hidden="true"></span><span class="lbl">heart</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="star" aria-hidden="true"></span><span class="lbl">star</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="calendar" aria-hidden="true"></span><span class="lbl">calendar</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="refresh" aria-hidden="true"></span><span class="lbl">refresh</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="filter" aria-hidden="true"></span><span class="lbl">filter</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="info" aria-hidden="true"></span><span class="lbl">info</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="warning" aria-hidden="true"></span><span class="lbl">warning</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="lock" aria-hidden="true"></span><span class="lbl">lock</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="eye" aria-hidden="true"></span><span class="lbl">eye</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-down" aria-hidden="true"></span><span class="lbl">chevron-down</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-left" aria-hidden="true"></span><span class="lbl">arrow-left</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-right" aria-hidden="true"></span><span class="lbl">arrow-right</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="folder" aria-hidden="true"></span><span class="lbl">folder</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bookmark" aria-hidden="true"></span><span class="lbl">bookmark</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="help-circle" aria-hidden="true"></span><span class="lbl">help-circle</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="sun" aria-hidden="true"></span><span class="lbl">sun</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span><span class="lbl">moon</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="user" aria-hidden="true"></span><span class="lbl">user</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="settings" aria-hidden="true"></span><span class="lbl">settings</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="home" aria-hidden="true"></span><span class="lbl">home</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="calendar" aria-hidden="true"></span><span class="lbl">calendar</span></div>
       <div class="icon-demo"><span class="fw-icon" data-fw-icon="logout" aria-hidden="true"></span><span class="lbl">logout</span></div>
-      <div class="icon-demo"><span class="fw-icon" data-fw-icon="paperclip" aria-hidden="true"></span><span class="lbl">paperclip</span></div>
     </div>
   </section>
 

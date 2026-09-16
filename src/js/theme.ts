@@ -8,11 +8,21 @@
  *   <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle
  *           data-fw-theme-label-dark="☀️ Light" data-fw-theme-label-light="🌙 Dark">🌙 Dark</button>
  *
+ * For a real icon instead of an emoji, use `data-fw-theme-icon-dark` /
+ * `data-fw-theme-icon-light` (icon names from `icon.ts`) in place of the
+ * `-label-` attributes — optionally alongside a `-label-` pair, which is
+ * appended as text after the icon:
+ *
+ *   <button class="fw-nav-btn" data-fw-theme-toggle aria-label="Toggle theme"
+ *           data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon"></button>
+ *
  * init() never animates the theme it applies on load (toggling and live OS
  * changes still do) — but to also avoid a flash of the *wrong* theme's
  * colours before this script runs at all, inline this before your CSS:
  *   <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
  */
+import { render as renderIcon } from './icon';
+
 export type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'fw-theme';
@@ -52,8 +62,14 @@ export function toggle(): Theme {
 
 function syncToggle(btn: HTMLElement, theme: Theme): void {
   btn.setAttribute('aria-pressed', String(theme === 'dark'));
+  const iconName = theme === 'dark' ? btn.dataset.fwThemeIconDark : btn.dataset.fwThemeIconLight;
   const label = theme === 'dark' ? btn.dataset.fwThemeLabelDark : btn.dataset.fwThemeLabelLight;
-  if (label !== undefined) btn.textContent = label;
+  if (iconName !== undefined) {
+    const icon = `<span class="fw-icon" aria-hidden="true">${renderIcon(iconName)}</span>`;
+    btn.innerHTML = label !== undefined ? `${icon} ${label}` : icon;
+  } else if (label !== undefined) {
+    btn.textContent = label;
+  }
 }
 
 /** Wait two animation frames — long enough for a `transition: none` frame to actually paint. */
