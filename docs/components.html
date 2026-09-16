@@ -1521,6 +1521,94 @@ function PlacementExamples() {
   </section>
 
   <!-- LAYOUT (no code/render template — pure structural utility) -->
+  <!-- DIVIDER -->
+  <section id="divider" class="demo-component">
+    <div class="kit-sec-head"><h2>Divider</h2><span class="num">26</span></div>
+    <p class="sec-note">A thin rule separating content. Decorative by default (a plain <code>&lt;hr&gt;</code>) — for a divider that must be announced to assistive tech, use <code>role="separator"</code> with <code>aria-orientation</code> on a <code>&lt;div&gt;</code> instead. Variants: <code>.fw-divider-dashed</code>, <code>-dotted</code>, <code>-labeled</code> (with <code>-start</code>/<code>-end</code> alignment). Static markup — no JS enhancer.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Divider usage">
+          <button type="button" class="demo-tab" id="divider-tab-html" role="tab" aria-selected="true" aria-controls="divider-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="divider-tab-react" role="tab" aria-selected="false" aria-controls="divider-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="divider-panel-html" role="tabpanel" aria-labelledby="divider-tab-html">
+<pre><code>&lt;hr class="fw-divider"&gt;
+&lt;hr class="fw-divider fw-divider-dashed"&gt;
+&lt;div class="fw-divider-labeled"&gt;or continue with&lt;/div&gt;
+&lt;div class="fw-divider" role="separator" aria-orientation="vertical"&gt;&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="divider-panel-react" role="tabpanel" aria-labelledby="divider-tab-react" hidden>
+<pre><code>function Divider({ orientation = 'horizontal', variant = 'solid', decorative = true, label }) {
+  if (label) return &lt;div className="fw-divider-labeled"&gt;{label}&lt;/div&gt;;
+  const className = `fw-divider${variant !== 'solid' ? ` fw-divider-${variant}` : ''}`;
+  if (decorative) return &lt;hr className={className} /&gt;;
+  return &lt;div className={className} role="separator" aria-orientation={orientation} /&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface is-stack">
+        <p>Above the rule</p>
+        <hr class="fw-divider">
+        <p>Below the rule</p>
+        <div class="fw-divider-labeled">or continue with</div>
+        <div class="fw-row" style="height:48px">
+          <span>Left</span>
+          <div class="fw-divider" role="separator" aria-orientation="vertical"></div>
+          <span>Right</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASPECT RATIO -->
+  <section id="aspect-ratio" class="demo-component">
+    <div class="kit-sec-head"><h2>Aspect ratio</h2><span class="num">27</span></div>
+    <p class="sec-note">Crops media (or any content) to a fixed ratio using the native CSS <code>aspect-ratio</code> property, reserving space up front to prevent layout shift while images load. Use a preset via <code>data-fw-ratio</code>, or set <code>--fw-aspect-ratio</code> inline for an arbitrary ratio. Children fill the box with <code>object-fit: cover</code> by default — use <code>data-fw-fit="contain"</code> to change that, and <code>--fw-aspect-position</code> inline to set a focal point. Static markup — no JS enhancer.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Aspect ratio usage">
+          <button type="button" class="demo-tab" id="aspect-ratio-tab-html" role="tab" aria-selected="true" aria-controls="aspect-ratio-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="aspect-ratio-tab-react" role="tab" aria-selected="false" aria-controls="aspect-ratio-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="aspect-ratio-panel-html" role="tabpanel" aria-labelledby="aspect-ratio-tab-html">
+<pre><code>&lt;div class="fw-aspect-ratio" data-fw-ratio="16:9"&gt;
+  &lt;img src="hero.jpg" alt="Product hero shot"&gt;
+&lt;/div&gt;
+
+&lt;div class="fw-aspect-ratio" data-fw-ratio="1:1" style="--fw-aspect-position: 30% 10%"&gt;
+  &lt;img src="portrait.jpg" alt="Team headshot"&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="aspect-ratio-panel-react" role="tabpanel" aria-labelledby="aspect-ratio-tab-react" hidden>
+<pre><code>function AspectRatio({ ratio = '16:9', objectFit = 'cover', children }) {
+  const preset = typeof ratio === 'string' ? { 'data-fw-ratio': ratio } : {};
+  const style = typeof ratio === 'number' ? { '--fw-aspect-ratio': ratio } : undefined;
+  return (
+    &lt;div className="fw-aspect-ratio" data-fw-fit={objectFit !== 'cover' ? objectFit : undefined} style={style} {...preset}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div class="fw-aspect-ratio" data-fw-ratio="16:9" style="max-width:320px">
+          <img src="https://picsum.photos/640/360" alt="Example landscape photo">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="layout" class="demo-component">
     <div class="kit-sec-head"><h2>Layout utilities</h2></div>
     <p class="sec-note">Structural helpers used throughout this page's own render panes above — no visual identity of their own, so they don't get a dedicated code/render section. See <code>src/css/components/layout.css</code>.</p>
@@ -1528,6 +1616,7 @@ function PlacementExamples() {
       <dt>.fw-wrap</dt><dd>Centers content with a max width and side padding.</dd>
       <dt>.fw-row</dt><dd>A wrapping flex row with a consistent gap — used for every inline button/control group on this page.</dd>
       <dt>.fw-grid-2</dt><dd>A two-column grid that collapses to one column under 640px.</dd>
+      <dt>.fw-spacer</dt><dd>A fixed-size empty box for manual gaps — size via <code>data-fw-size="1".."9"</code> (or <code>"auto"</code> to grow and fill remaining space), axis via <code>data-fw-axis="horizontal"</code>/<code>"both"</code> (default vertical). Add <code>aria-hidden="true"</code> since it's always presentation-only.</dd>
     </dl>
   </section>
 

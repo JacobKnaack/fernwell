@@ -3,6 +3,9 @@
 @import './base.css';
 
 @import './components/layout.css';
+@import './components/spacer.css';
+@import './components/divider.css';
+@import './components/aspect-ratio.css';
 @import './components/button.css';
 @import './components/icon.css';
 @import './components/card.css';
