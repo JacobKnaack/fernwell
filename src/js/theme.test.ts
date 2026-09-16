@@ -14,6 +14,7 @@ beforeEach(() => {
 
 afterEach(() => {
   document.documentElement.removeAttribute('data-theme');
+  document.documentElement.removeAttribute('data-fw-theme-init');
   window.localStorage.clear();
   theme.resetTokens();
   document.body.innerHTML = '';
@@ -62,6 +63,21 @@ describe('theme', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(btn.getAttribute('aria-pressed')).toBe('true');
     expect(btn.textContent).toBe('Light');
+  });
+
+  it('init() suppresses transitions for the first paint only', async () => {
+    theme.init();
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(true);
+
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(false);
+  });
+
+  it('toggle() does not suppress transitions', () => {
+    theme.set('light');
+    theme.toggle();
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(false);
   });
 
   it('clicking a toggle button flips the theme and re-syncs itself', () => {

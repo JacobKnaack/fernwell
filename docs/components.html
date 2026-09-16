@@ -1224,9 +1224,85 @@ function DeleteButton({ onClick }) {
     </div>
   </section>
 
+  <!-- TABS -->
+  <section id="tabs" class="demo-component">
+    <div class="kit-sec-head"><h2>Tabs</h2><span class="num">22</span></div>
+    <p class="sec-note">A single-selection tablist with roving-tabindex keyboard navigation — Left/Right (or Up/Down when <code>aria-orientation="vertical"</code>) move between tabs and select immediately, Home/End jump to the first/last, and a disabled tab (<code>aria-disabled="true"</code>) is skipped. Add <code>data-fw-tabs-activation="manual"</code> to switch to manual activation, where arrow keys only move focus and Space/Enter selects — useful when selecting a tab is expensive.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tabs usage">
+          <button type="button" class="demo-tab" id="tabs-tab-html" role="tab" aria-selected="true" aria-controls="tabs-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tabs-tab-react" role="tab" aria-selected="false" aria-controls="tabs-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tabs-panel-html" role="tabpanel" aria-labelledby="tabs-tab-html">
+<pre><code>&lt;div class="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile"&gt;Profile&lt;/button&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-billing" aria-selected="false" aria-controls="panel-billing" aria-disabled="true"&gt;Billing&lt;/button&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-archived" aria-selected="false" aria-controls="panel-archived"&gt;Archived&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0"&gt;
+  &lt;p&gt;Your profile details.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0"&gt;
+  &lt;p&gt;Billing is unavailable on the free plan.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-archived" aria-labelledby="tab-archived" tabindex="0"&gt;
+  &lt;p&gt;Archived items.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tabs-panel-react" role="tabpanel" aria-labelledby="tabs-tab-react" hidden>
+<pre><code>function AccountTabs() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.tabs.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;div className="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile"&gt;Profile&lt;/button&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-billing" aria-selected="false" aria-controls="panel-billing" aria-disabled="true"&gt;Billing&lt;/button&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-archived" aria-selected="false" aria-controls="panel-archived"&gt;Archived&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabIndex={0}&gt;
+        &lt;p&gt;Your profile details.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabIndex={0}&gt;
+        &lt;p&gt;Billing is unavailable on the free plan.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-archived" aria-labelledby="tab-archived" tabIndex={0}&gt;
+        &lt;p&gt;Archived items.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <div class="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-profile" aria-selected="true" aria-controls="demo-panel-profile">Profile</button>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-billing" aria-selected="false" aria-controls="demo-panel-billing" aria-disabled="true">Billing</button>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-archived" aria-selected="false" aria-controls="demo-panel-archived">Archived</button>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-profile" aria-labelledby="demo-tab-profile" tabindex="0">
+          <p>Your profile details.</p>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-billing" aria-labelledby="demo-tab-billing" tabindex="0">
+          <p>Billing is unavailable on the free plan.</p>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-archived" aria-labelledby="demo-tab-archived" tabindex="0">
+          <p>Archived items.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TAG -->
   <section id="tag" class="demo-component">
-    <div class="kit-sec-head"><h2>Tag</h2><span class="num">22</span></div>
+    <div class="kit-sec-head"><h2>Tag</h2><span class="num">23</span></div>
     <p class="sec-note">A slight, consistent tilt — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted, fully-round variant for table cells and dense rows.</p>
 
     <div class="demo-code">
@@ -1262,7 +1338,7 @@ function DeleteButton({ onClick }) {
 
   <!-- TOAST -->
   <section id="toast" class="demo-component">
-    <div class="kit-sec-head"><h2>Toast</h2><span class="num">23</span></div>
+    <div class="kit-sec-head"><h2>Toast</h2><span class="num">24</span></div>
     <p class="sec-note">A single, reused, bottom-right notice — there's no static markup to author, just call <code>Fernwell.toast.show()</code>. It's the one component where the ref+effect recipe used elsewhere on this page is unnecessary; call it directly from an event handler.</p>
 
     <div class="demo-code">
@@ -1308,7 +1384,7 @@ Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000
 
   <!-- TOOLTIP -->
   <section id="tooltip" class="demo-component">
-    <div class="kit-sec-head"><h2>Tooltip</h2><span class="num">24</span></div>
+    <div class="kit-sec-head"><h2>Tooltip</h2><span class="num">25</span></div>
     <p class="sec-note">A short hover/focus annotation. Content comes from the trigger's own <code>title</code> attribute — the enhancer moves it into the floating bubble and gives it a real no-JS fallback.</p>
 
     <div class="demo-code">

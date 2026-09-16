@@ -69,7 +69,7 @@ Set `data-theme="dark"` on `<html>` (or any ancestor) and every token flips. A `
         data-fw-theme-label-light="🌙 Dark" data-fw-theme-label-dark="☀️ Light">🌙 Dark</button>
 ```
 
-To avoid a flash of the wrong theme, inline this in `<head>` before the stylesheet:
+`init()` never animates the theme it applies on load (toggling and live OS changes still do), but to also avoid a flash of the *wrong* theme's colours before that script runs at all, inline this in `<head>` before the stylesheet:
 
 ```html
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>

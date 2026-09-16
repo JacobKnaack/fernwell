@@ -1,0 +1,92 @@
+/* ---- tabs: a single-selection tablist that switches between panels ----
+     <div class="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs>
+       <button class="fw-tab" role="tab" aria-selected="true" aria-controls="panel-profile" id="tab-profile">Profile</button>
+       <button class="fw-tab" role="tab" aria-selected="false" aria-controls="panel-billing" id="tab-billing">Billing</button>
+     </div>
+     <div class="fw-tabpanel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0">…</div>
+     <div class="fw-tabpanel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0" hidden>…</div>
+   Roving tabindex and `hidden` are set by tabs.ts; this file only handles
+   the visual chrome. `aria-orientation="vertical"` on the tablist switches
+   the indicator from the bottom edge to the leading edge. */
+.fw-tablist {
+  display: flex;
+  gap: var(--fw-sp-2);
+  border-bottom: var(--fw-border-w) solid var(--fw-bg-dim);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.fw-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.fw-tablist[aria-orientation='vertical'] {
+  flex-direction: column;
+  align-items: flex-start;
+  border-bottom: none;
+  border-right: var(--fw-border-w) solid var(--fw-bg-dim);
+  overflow-x: visible;
+  overflow-y: auto;
+}
+
+.fw-tab {
+  appearance: none;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  border-radius: var(--fw-r-sm) var(--fw-r-sm) 0 0;
+  font-family: var(--fw-font-body);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--fw-text-soft);
+  padding: var(--fw-sp-3) var(--fw-sp-4);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--fw-motion-fast) var(--fw-motion-ease), border-color var(--fw-motion-fast) var(--fw-motion-ease),
+    background var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-tablist[aria-orientation='vertical'] .fw-tab {
+  border-bottom: none;
+  border-right: 2px solid transparent;
+  border-radius: var(--fw-r-sm) 0 0 var(--fw-r-sm);
+  text-align: left;
+  width: 100%;
+}
+
+.fw-tab:hover:not([aria-selected='true']):not([aria-disabled='true']) {
+  color: var(--fw-text);
+  background: var(--fw-bg-dim);
+}
+
+.fw-tab[aria-selected='true'] {
+  color: var(--fw-text);
+  border-color: var(--fw-secondary);
+}
+
+.fw-tab:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-tab[aria-disabled='true'] {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.fw-tabpanel {
+  padding: var(--fw-sp-4) 0;
+}
+
+.fw-tabpanel:focus-visible {
+  outline: none;
+  border-radius: var(--fw-r-sm);
+  box-shadow: var(--fw-focus-ring);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-tab {
+    transition: none;
+  }
+}
