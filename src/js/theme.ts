@@ -8,15 +8,28 @@
  *   <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle
  *           data-fw-theme-label-dark="☀️ Light" data-fw-theme-label-light="🌙 Dark">🌙 Dark</button>
  *
- * To avoid a flash of the wrong theme on load, inline this before your CSS:
+ * For a real icon instead of an emoji, use `data-fw-theme-icon-dark` /
+ * `data-fw-theme-icon-light` (icon names from `icon.ts`) in place of the
+ * `-label-` attributes — optionally alongside a `-label-` pair, which is
+ * appended as text after the icon:
+ *
+ *   <button class="fw-nav-btn" data-fw-theme-toggle aria-label="Toggle theme"
+ *           data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon"></button>
+ *
+ * init() never animates the theme it applies on load (toggling and live OS
+ * changes still do) — but to also avoid a flash of the *wrong* theme's
+ * colours before this script runs at all, inline this before your CSS:
  *   <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
  */
+import { render as renderIcon } from './icon';
+
 export type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'fw-theme';
 const EVENT = 'fw:themechange';
 const TOKEN_PREFIX = '--fw-';
 const TOKEN_STYLE_ATTR = 'data-fw-tokens';
+const INIT_ATTR = 'data-fw-theme-init';
 
 function store(): Storage | null {
   try {
@@ -49,15 +62,33 @@ export function toggle(): Theme {
 
 function syncToggle(btn: HTMLElement, theme: Theme): void {
   btn.setAttribute('aria-pressed', String(theme === 'dark'));
+  const iconName = theme === 'dark' ? btn.dataset.fwThemeIconDark : btn.dataset.fwThemeIconLight;
   const label = theme === 'dark' ? btn.dataset.fwThemeLabelDark : btn.dataset.fwThemeLabelLight;
-  if (label !== undefined) btn.textContent = label;
+  if (iconName !== undefined) {
+    const icon = `<span class="fw-icon" aria-hidden="true">${renderIcon(iconName)}</span>`;
+    btn.innerHTML = label !== undefined ? `${icon} ${label}` : icon;
+  } else if (label !== undefined) {
+    btn.textContent = label;
+  }
+}
+
+/** Wait two animation frames — long enough for a `transition: none` frame to actually paint. */
+function afterPaint(cb: () => void): void {
+  const raf = typeof requestAnimationFrame === 'function' ? requestAnimationFrame : (fn: () => void) => setTimeout(fn, 16);
+  raf(() => raf(cb));
 }
 
 /** Apply the stored / system theme and wire every `[data-fw-theme-toggle]` under `root`. */
 export function init(root: ParentNode = document): void {
   const stored = store()?.getItem(STORAGE_KEY);
   const current: Theme = stored === 'dark' || stored === 'light' ? stored : get();
+
+  // Applying the initial theme should never animate — only a later toggle or
+  // OS change should. Suppress transitions for this one set() call.
+  const html = document.documentElement;
+  html.setAttribute(INIT_ATTR, '');
   set(current, { persist: false });
+  afterPaint(() => html.removeAttribute(INIT_ATTR));
 
   root.querySelectorAll<HTMLElement>('[data-fw-theme-toggle]').forEach((btn) => {
     if (btn.dataset.fwBound) return;

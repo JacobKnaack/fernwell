@@ -1,0 +1,65 @@
+/* ---- divider: thin rule separating content, horizontal or vertical ----
+   Decorative by default: <hr class="fw-divider">. For a divider that must
+   announce itself to assistive tech (e.g. separating two toolbar groups),
+   use role="separator" + aria-orientation explicitly on a <div> instead. */
+.fw-divider {
+  border: none;
+  margin: 0;
+  flex-shrink: 0;
+  background: var(--fw-bg-dim);
+}
+
+/* horizontal (default) */
+.fw-divider,
+.fw-divider[aria-orientation="horizontal"] {
+  width: 100%;
+  height: var(--fw-border-w);
+}
+
+/* vertical: aria-orientation="vertical" is both the semantic AND the visual
+   trigger — no separate modifier class, so they can't drift apart.
+   align-self: stretch so it doesn't collapse in a flex row without an
+   explicit parent height. */
+.fw-divider[aria-orientation="vertical"] {
+  width: var(--fw-border-w);
+  height: 100%;
+  align-self: stretch;
+}
+
+/* style variants: solid (default, no class), dashed, dotted */
+.fw-divider-dashed,
+.fw-divider-dotted {
+  background: none;
+  height: 0;
+}
+.fw-divider-dashed { border-top: var(--fw-border-w) dashed var(--fw-bg-dim); }
+.fw-divider-dotted { border-top: var(--fw-border-w) dotted var(--fw-bg-dim); }
+
+.fw-divider[aria-orientation="vertical"].fw-divider-dashed,
+.fw-divider[aria-orientation="vertical"].fw-divider-dotted {
+  width: 0;
+  border-top: none;
+}
+.fw-divider[aria-orientation="vertical"].fw-divider-dashed { border-left: var(--fw-border-w) dashed var(--fw-bg-dim); }
+.fw-divider[aria-orientation="vertical"].fw-divider-dotted { border-left: var(--fw-border-w) dotted var(--fw-bg-dim); }
+
+/* labeled / with-content divider: "---- text ----" (horizontal only) */
+.fw-divider-labeled {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-3);
+  width: 100%;
+  color: var(--fw-text-soft);
+  font-size: 13px;
+  font-family: var(--fw-font-body);
+}
+.fw-divider-labeled::before,
+.fw-divider-labeled::after {
+  content: '';
+  flex: 1;
+  height: var(--fw-border-w);
+  background: var(--fw-bg-dim);
+}
+/* alignment: default centers the label; -start/-end push the rule to one side */
+.fw-divider-labeled-start::before { flex: 0 0 var(--fw-sp-5); }
+.fw-divider-labeled-end::after { flex: 0 0 var(--fw-sp-5); }

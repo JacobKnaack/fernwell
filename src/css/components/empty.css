@@ -19,6 +19,7 @@
   margin: 0 auto var(--fw-sp-4);
   border-radius: 38% 62% 60% 40% / 48% 42% 58% 52%;
   background: linear-gradient(135deg, var(--fw-primary), var(--fw-primary-soft));
+  color: var(--fw-on-primary);
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,0 +1,34 @@
+/* ---- aspect-ratio: crops media/content to a fixed ratio ----
+   Wrap an <img>/<video>/<iframe> (or any content) in .fw-aspect-ratio; the
+   child fills the box via object-fit: cover by default. Use a preset
+   data-fw-ratio, or set --fw-aspect-ratio inline for an arbitrary ratio. */
+.fw-aspect-ratio {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  aspect-ratio: var(--fw-aspect-ratio, 16 / 9);
+}
+
+.fw-aspect-ratio > img,
+.fw-aspect-ratio > video,
+.fw-aspect-ratio > iframe,
+.fw-aspect-ratio > .fw-aspect-ratio-media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--fw-aspect-position, 50% 50%);
+}
+
+.fw-aspect-ratio[data-fw-ratio="1:1"]  { --fw-aspect-ratio: 1 / 1; }
+.fw-aspect-ratio[data-fw-ratio="4:3"]  { --fw-aspect-ratio: 4 / 3; }
+.fw-aspect-ratio[data-fw-ratio="16:9"] { --fw-aspect-ratio: 16 / 9; }
+.fw-aspect-ratio[data-fw-ratio="21:9"] { --fw-aspect-ratio: 21 / 9; }
+
+/* object-fit variants */
+.fw-aspect-ratio[data-fw-fit="contain"] > img,
+.fw-aspect-ratio[data-fw-fit="contain"] > video,
+.fw-aspect-ratio[data-fw-fit="contain"] > iframe,
+.fw-aspect-ratio[data-fw-fit="contain"] > .fw-aspect-ratio-media {
+  object-fit: contain;
+}

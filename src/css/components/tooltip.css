@@ -1,0 +1,87 @@
+/* ---- tooltip ----
+   A single shared bubble (tooltip.ts creates #fw-tooltip lazily and reuses it
+   for every trigger), positioned via JS-set `top`/`left` on a
+   `position: fixed` box, same as .fw-popover.
+
+   Deliberately NOT `pointer-events: none` while open — WCAG 2.1 SC 1.4.13
+   requires hover-revealed content to be "hoverable" (the pointer can move
+   onto it without it disappearing), which `pointer-events: none` would
+   defeat outright. tooltip.ts covers the trigger→bubble gap with a short
+   cancelable hide-grace timer instead. */
+.fw-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  max-width: 220px;
+  background: var(--fw-text);
+  color: var(--fw-bg);
+  font-family: var(--fw-font-body);
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  border-radius: var(--fw-r-sm);
+  padding: 6px 10px;
+  box-shadow: var(--fw-shadow-md);
+  opacity: 0;
+  transform: scale(0.96);
+  pointer-events: none;
+  transition: opacity var(--fw-motion-fast) var(--fw-motion-ease), transform var(--fw-motion-fast) var(--fw-motion-ease);
+  --fw-tooltip-arrow: 5px;
+}
+
+.fw-tooltip.is-open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.fw-tooltip::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: var(--fw-tooltip-arrow) solid transparent;
+}
+
+/* Horizontal position (top/bottom placements) and vertical position
+   (left/right placements) both come from `--fw-tooltip-arrow-pos`, set in
+   tooltip.ts to the anchor's own center — not a fixed 50%, so the arrow
+   still points at the anchor after a corner placement (`top-left`, etc.) or
+   a viewport-edge clamp shifts the bubble off-center. `^=` matches both a
+   bare side ("top") and its corner variants ("top-left", "top-right"). */
+.fw-tooltip[data-placement^='top']::after {
+  top: 100%;
+  left: var(--fw-tooltip-arrow-pos, 50%);
+  transform: translateX(-50%);
+  border-top-color: var(--fw-text);
+  border-bottom-width: 0;
+}
+
+.fw-tooltip[data-placement^='bottom']::after {
+  bottom: 100%;
+  left: var(--fw-tooltip-arrow-pos, 50%);
+  transform: translateX(-50%);
+  border-bottom-color: var(--fw-text);
+  border-top-width: 0;
+}
+
+.fw-tooltip[data-placement='left']::after {
+  left: 100%;
+  top: var(--fw-tooltip-arrow-pos, 50%);
+  transform: translateY(-50%);
+  border-left-color: var(--fw-text);
+  border-right-width: 0;
+}
+
+.fw-tooltip[data-placement='right']::after {
+  right: 100%;
+  top: var(--fw-tooltip-arrow-pos, 50%);
+  transform: translateY(-50%);
+  border-right-color: var(--fw-text);
+  border-left-width: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-tooltip { transform: none; }
+}

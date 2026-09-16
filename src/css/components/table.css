@@ -1,33 +1,41 @@
 /* ---- table: a native <table> inside a scrolling card ----
-     <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-cap">
-       <table class="fw-table fw-table-striped" data-fw-table>
-         <caption id="inv-cap">Invoices</caption>
-         <thead><tr>
-           <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
-           <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
-           <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
-           <th scope="col">Status</th>
-           <th scope="col" class="fw-table-actions"><span class="fw-sr-only">Actions</span></th>
-         </tr></thead>
-         <tbody>
-           <tr>
-             <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
-             <td>Bright Path</td>
-             <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
-             <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
-             <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit">…</button></td>
-           </tr>
-           <tr class="fw-table-empty"><td colspan="5">No invoices yet.</td></tr>
-         </tbody>
-       </table>
+     <div class="fw-table-wrap">
+       <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="inv-cap">
+         <table class="fw-table fw-table-striped" data-fw-table>
+           <caption id="inv-cap">Invoices</caption>
+           <thead><tr>
+             <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+             <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+             <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+             <th scope="col">Status</th>
+             <th scope="col" class="fw-table-actions"><span class="fw-sr-only">Actions</span></th>
+           </tr></thead>
+           <tbody>
+             <tr>
+               <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
+               <td>Bright Path</td>
+               <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
+               <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+               <td class="fw-table-actions"><button class="fw-icon-btn" aria-label="Edit">…</button></td>
+             </tr>
+             <tr class="fw-table-empty"><td colspan="5">No invoices yet.</td></tr>
+           </tbody>
+         </table>
+       </div>
      </div>
 
-   Modifiers: .fw-table-striped / .fw-table-compact on <table>; .fw-table-sticky on
-   .fw-table-wrap (bounded height via --fw-table-max-height). Loading: aria-busy="true"
-   on <table>. Sort indicators are driven purely by aria-sort on the <th>; the
-   `table` JS enhancer flips them (see src/js/table.ts). */
+   `.fw-table-wrap` only holds the rounded shape (radius/border/shadow/clip);
+   `.fw-table-scroll` is the actual scrolling region and carries the
+   keyboard-scroll affordance (tabindex/role="region"). Split so the
+   scrollbar is clipped to the rounded corners instead of cutting through
+   them. Modifiers: .fw-table-striped / .fw-table-compact on <table>;
+   .fw-table-sticky on .fw-table-wrap (bounded height via
+   --fw-table-max-height, applied to .fw-table-scroll). Loading:
+   aria-busy="true" on <table>. Sort indicators are driven purely by
+   aria-sort on the <th>; the `table` JS enhancer flips them (see
+   src/js/table.ts). */
 .fw-table-wrap {
-  overflow-x: auto;
+  overflow: hidden;
   background: var(--fw-surface);
   border: var(--fw-border-w) solid var(--fw-bg-dim);
   border-radius: var(--fw-r-lg);
@@ -36,13 +44,23 @@
   color: var(--fw-text);
 }
 
-.fw-table-wrap:focus-visible {
+.fw-table-scroll {
+  overflow-x: auto;
+}
+
+.fw-table-scroll:focus-visible {
   outline: none;
+}
+
+/* The ring paints on the outer (unclipped) box while the inner scroll
+   region holds focus — .fw-table-wrap's own overflow:hidden would clip a
+   ring drawn directly on .fw-table-scroll. */
+.fw-table-wrap:has(.fw-table-scroll:focus-visible) {
   box-shadow: var(--fw-focus-ring);
 }
 
 /* Sticky header needs a bounded scroll container to pin against. */
-.fw-table-wrap.fw-table-sticky {
+.fw-table-wrap.fw-table-sticky .fw-table-scroll {
   max-height: var(--fw-table-max-height, 460px);
   overflow: auto;
 }

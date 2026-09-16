@@ -3,7 +3,11 @@
 @import './base.css';
 
 @import './components/layout.css';
+@import './components/spacer.css';
+@import './components/divider.css';
+@import './components/aspect-ratio.css';
 @import './components/button.css';
+@import './components/icon.css';
 @import './components/card.css';
 @import './components/tag.css';
 @import './components/eyebrow.css';
@@ -18,9 +22,13 @@
 @import './components/empty.css';
 @import './components/modal.css';
 @import './components/drawer.css';
+@import './components/popover.css';
 @import './components/toast.css';
 @import './components/list-row.css';
 @import './components/disclosure.css';
 @import './components/menu.css';
 @import './components/pagination.css';
 @import './components/table.css';
+@import './components/tabs.css';
+@import './components/tooltip.css';
+@import './components/scrollbar.css';

@@ -50,6 +50,9 @@
   --fw-overlay: rgba(31, 36, 48, 0.55); /* modal backdrop */
   --fw-overlay-soft: rgba(31, 36, 48, 0.32); /* drawer backdrop */
   --fw-focus-ring: 0 0 0 4px color-mix(in srgb, var(--fw-primary) 25%, transparent); /* derived: box-shadow focus ring, primary wash */
+  --fw-scrollbar-thumb: var(--fw-text-soft); /* scrollbar thumb — reuses secondary-text so it recedes against content */
+  --fw-scrollbar-thumb-hover: color-mix(in srgb, var(--fw-text-soft), var(--fw-text) 15%); /* derived: darkens toward full-strength text on hover, same recipe as secondary-hover */
+  --fw-scrollbar-track: transparent; /* default track; Table overrides to bg-dim so its scrollbar reads as clearly present */
 
   /* ===== TYPE ===== */
   --fw-font-display: 'Plus Jakarta Sans', system-ui, sans-serif; /* anything that should feel like a voice — headlines, empty states, onboarding */
@@ -119,6 +122,9 @@
   --fw-overlay: rgba(0, 0, 0, 0.6); /* modal backdrop */
   --fw-overlay-soft: rgba(0, 0, 0, 0.4); /* drawer backdrop */
   --fw-focus-ring: 0 0 0 4px color-mix(in srgb, var(--fw-primary) 25%, transparent); /* derived: box-shadow focus ring, primary wash */
+  --fw-scrollbar-thumb: var(--fw-text-soft); /* scrollbar thumb — reuses secondary-text so it recedes against content */
+  --fw-scrollbar-thumb-hover: color-mix(in srgb, var(--fw-text-soft), var(--fw-text) 15%); /* derived: darkens toward full-strength text on hover, same recipe as secondary-hover */
+  --fw-scrollbar-track: transparent; /* default track; Table overrides to bg-dim so its scrollbar reads as clearly present */
 
   /* ===== ELEVATION ===== */
   --fw-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);

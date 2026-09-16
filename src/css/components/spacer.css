@@ -1,0 +1,40 @@
+/* ---- spacer: fixed-size empty box for manual gap control ----
+   Prefer gap on .fw-row/.fw-grid-2 where possible; .fw-spacer is for cases
+   needing an explicit inline gap element or a flex filler. */
+.fw-spacer {
+  display: block;
+  flex-shrink: 0;
+}
+
+.fw-spacer[data-fw-axis="horizontal"] {
+  display: inline-block;
+  width: var(--fw-spacer-size, var(--fw-sp-4));
+  height: 1px;
+}
+
+.fw-spacer:not([data-fw-axis="horizontal"]):not([data-fw-axis="both"]) {
+  width: 100%;
+  height: var(--fw-spacer-size, var(--fw-sp-4));
+}
+
+.fw-spacer[data-fw-axis="both"] {
+  width: var(--fw-spacer-size, var(--fw-sp-4));
+  height: var(--fw-spacer-size, var(--fw-sp-4));
+}
+
+.fw-spacer[data-fw-size="1"] { --fw-spacer-size: var(--fw-sp-1); }
+.fw-spacer[data-fw-size="2"] { --fw-spacer-size: var(--fw-sp-2); }
+.fw-spacer[data-fw-size="3"] { --fw-spacer-size: var(--fw-sp-3); }
+.fw-spacer[data-fw-size="4"] { --fw-spacer-size: var(--fw-sp-4); }
+.fw-spacer[data-fw-size="5"] { --fw-spacer-size: var(--fw-sp-5); }
+.fw-spacer[data-fw-size="6"] { --fw-spacer-size: var(--fw-sp-6); }
+.fw-spacer[data-fw-size="7"] { --fw-spacer-size: var(--fw-sp-7); }
+.fw-spacer[data-fw-size="8"] { --fw-spacer-size: var(--fw-sp-8); }
+.fw-spacer[data-fw-size="9"] { --fw-spacer-size: var(--fw-sp-9); }
+
+/* flexible/auto spacer: absorbs remaining space in a flex row */
+.fw-spacer[data-fw-size="auto"] {
+  flex: 1 1 auto;
+  width: auto;
+  height: auto;
+}

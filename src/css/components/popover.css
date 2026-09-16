@@ -1,0 +1,61 @@
+/* ---- popover ----
+   A non-modal floating panel anchored to its trigger. Positioned in JS
+   (popover.ts) via `top`/`left` inline styles on a `position: fixed` box —
+   this file only handles the visual chrome and open/closed transition.
+     <button data-fw-popover-trigger="settings-pop">Settings</button>
+     <div class="fw-popover" id="settings-pop">
+       <div class="fw-popover-head"><h3 class="fw-popover-title">Settings</h3>
+         <button class="fw-icon-btn" data-fw-popover-close aria-label="Close"><span data-fw-icon="close" aria-hidden="true"></span></button>
+       </div>
+       <div class="fw-popover-body">…</div>
+     </div> */
+.fw-popover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 40;
+  width: max-content;
+  max-width: min(320px, calc(100vw - 2 * var(--fw-sp-4)));
+  background: var(--fw-surface);
+  color: var(--fw-text);
+  font-family: var(--fw-font-body);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  border-radius: var(--fw-r-lg);
+  box-shadow: var(--fw-shadow-lg);
+  padding: var(--fw-sp-4);
+  opacity: 0;
+  transform: scale(0.98);
+  pointer-events: none;
+  transition: opacity var(--fw-motion-base) var(--fw-motion-ease), transform var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-popover.is-open {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+.fw-popover-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--fw-sp-3);
+  margin-bottom: var(--fw-sp-3);
+}
+
+.fw-popover-title {
+  font-family: var(--fw-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--fw-text);
+  margin: 0;
+}
+
+.fw-popover-body {
+  font-size: 13px;
+  color: var(--fw-text-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-popover { transform: none; }
+}

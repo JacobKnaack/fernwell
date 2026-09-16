@@ -31,7 +31,7 @@
     <h1>Component Reference</h1>
     <p class="lede">Every component in Fernwell, with the exact markup to copy — plain HTML/JS or a React usage recipe — next to what it actually renders. For tokens, theming and voice, see <a href="index.html">the overview</a>.</p>
     <div class="fw-row" style="margin-top:var(--fw-sp-5)">
-      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" data-fw-theme-label-dark="Preview light theme" data-fw-theme-label-light="Preview dark theme"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span> Preview dark theme</button>
     </div>
   </div>
 
@@ -361,7 +361,9 @@ Fernwell.loading.resetButtonLoading(btn);
         </div>
         <div class="demo-tabpanel" id="empty-panel-html" role="tabpanel" aria-labelledby="empty-tab-html">
 <pre><code>&lt;div class="fw-empty"&gt;
-  &lt;div class="fw-empty-blob"&gt;✉️&lt;/div&gt;
+  &lt;div class="fw-empty-blob"&gt;
+    &lt;span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/div&gt;
   &lt;h4 class="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
   &lt;p class="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
   &lt;button class="fw-btn fw-btn-primary" type="button"&gt;Create invoice&lt;/button&gt;
@@ -371,7 +373,9 @@ Fernwell.loading.resetButtonLoading(btn);
 <pre><code>function NoInvoicesYet({ onCreate }) {
   return (
     &lt;div className="fw-empty"&gt;
-      &lt;div className="fw-empty-blob"&gt;✉️&lt;/div&gt;
+      &lt;div className="fw-empty-blob"&gt;
+        &lt;span className="fw-icon" data-fw-icon="envelope" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/div&gt;
       &lt;h4 className="fw-empty-title"&gt;No invoices sent yet&lt;/h4&gt;
       &lt;p className="fw-empty-body"&gt;Create your first invoice to get paid faster.&lt;/p&gt;
       &lt;button className="fw-btn fw-btn-primary" type="button" onClick={onCreate}&gt;
@@ -388,7 +392,7 @@ Fernwell.loading.resetButtonLoading(btn);
       <p class="demo-render-label">Render</p>
       <div class="fw-card">
         <div class="fw-empty">
-          <div class="fw-empty-blob">✉️</div>
+          <div class="fw-empty-blob"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span></div>
           <h4 class="fw-empty-title">No invoices sent yet</h4>
           <p class="fw-empty-body">Create your first invoice to get paid faster.</p>
           <button class="fw-btn fw-btn-primary" type="button">Create invoice</button>
@@ -483,9 +487,56 @@ Fernwell.loading.resetButtonLoading(btn);
     </div>
   </section>
 
+  <!-- ICON -->
+  <section id="icon" class="demo-component">
+    <div class="kit-sec-head"><h2>Icon</h2><span class="num">10</span></div>
+    <p class="sec-note">Renders a named SVG into a <code>data-fw-icon</code> element. Decorative by default (<code>aria-hidden</code>) — give the accessible name to a wrapping control instead, e.g. <code>aria-label</code> on an icon button. Sized in <code>em</code> and colored via inherited <code>color</code>, so it always matches the text or button around it. See the full set on <a href="index.html#icons">the overview page</a>.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Icon usage">
+          <button type="button" class="demo-tab" id="icon-tab-html" role="tab" aria-selected="true" aria-controls="icon-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="icon-tab-react" role="tab" aria-selected="false" aria-controls="icon-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="icon-panel-html" role="tabpanel" aria-labelledby="icon-tab-html">
+<pre><code>&lt;span class="fw-icon" data-fw-icon="star" aria-hidden="true"&gt;&lt;/span&gt; Featured
+
+&lt;button class="fw-icon-btn" type="button" aria-label="Delete"&gt;
+  &lt;span data-fw-icon="trash" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="icon-panel-react" role="tabpanel" aria-labelledby="icon-tab-react" hidden>
+<pre><code>function Icon({ name }) {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.icon.init(ref.current); }, [name]);
+  return &lt;span className="fw-icon" data-fw-icon={name} aria-hidden="true" ref={ref} /&gt;;
+}
+
+function DeleteButton({ onClick }) {
+  return (
+    &lt;button className="fw-icon-btn" type="button" aria-label="Delete" onClick={onClick}&gt;
+      &lt;Icon name="trash" /&gt;
+    &lt;/button&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <span><span class="fw-icon" data-fw-icon="star" aria-hidden="true"></span> Featured</span>
+        <button class="fw-icon-btn" type="button" aria-label="Edit"><span data-fw-icon="edit" aria-hidden="true"></span></button>
+        <button class="fw-icon-btn" type="button" aria-label="Delete"><span data-fw-icon="trash" aria-hidden="true"></span></button>
+        <button class="fw-icon-btn" type="button" aria-label="More actions"><span data-fw-icon="more" aria-hidden="true"></span></button>
+      </div>
+    </div>
+  </section>
+
   <!-- LIST ROW -->
   <section id="list-row" class="demo-component">
-    <div class="kit-sec-head"><h2>List row</h2><span class="num">10</span></div>
+    <div class="kit-sec-head"><h2>List row</h2><span class="num">11</span></div>
     <p class="sec-note">A clickable resource card — checklists, invoices, clients. Static markup.</p>
 
     <div class="demo-code">
@@ -535,7 +586,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- MENU -->
   <section id="menu" class="demo-component">
-    <div class="kit-sec-head"><h2>Menu</h2><span class="num">11</span></div>
+    <div class="kit-sec-head"><h2>Menu</h2><span class="num">12</span></div>
     <p class="sec-note">A nestable collapsible menu built on native <code>&lt;details&gt;</code>/<code>&lt;summary&gt;</code> — works without JS; the enhancer adds keyboard nav and auto-reveal of the current page.</p>
 
     <div class="demo-code">
@@ -614,7 +665,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- MODAL -->
   <section id="modal" class="demo-component">
-    <div class="kit-sec-head"><h2>Modal</h2><span class="num">12</span></div>
+    <div class="kit-sec-head"><h2>Modal</h2><span class="num">13</span></div>
     <p class="sec-note">180ms fade + rise, closes on backdrop click, Escape, or a <code>data-fw-close-modal</code> button; focus returns to the opener.</p>
 
     <div class="demo-code">
@@ -628,15 +679,17 @@ Fernwell.loading.resetButtonLoading(btn);
 
 &lt;div class="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
   &lt;div class="fw-modal"&gt;
-    &lt;div class="fw-modal-head"&gt;
-      &lt;div&gt;
-        &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
-        &lt;p class="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+    &lt;div class="fw-modal-scroll"&gt;
+      &lt;div class="fw-modal-head"&gt;
+        &lt;div&gt;
+          &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+          &lt;p class="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+        &lt;/div&gt;
       &lt;/div&gt;
-    &lt;/div&gt;
-    &lt;div class="fw-modal-foot"&gt;
-      &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
-      &lt;button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+      &lt;div class="fw-modal-foot"&gt;
+        &lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+        &lt;button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;</code></pre>
@@ -652,15 +705,17 @@ Fernwell.loading.resetButtonLoading(btn);
       &lt;/button&gt;
       &lt;div className="fw-modal-overlay" id="confirm-delete" role="dialog" aria-modal="true" aria-labelledby="confirm-delete-title"&gt;
         &lt;div className="fw-modal"&gt;
-          &lt;div className="fw-modal-head"&gt;
-            &lt;div&gt;
-              &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
-              &lt;p className="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+          &lt;div className="fw-modal-scroll"&gt;
+            &lt;div className="fw-modal-head"&gt;
+              &lt;div&gt;
+                &lt;h2 id="confirm-delete-title"&gt;Delete invoice?&lt;/h2&gt;
+                &lt;p className="fw-modal-sub"&gt;This can't be undone.&lt;/p&gt;
+              &lt;/div&gt;
             &lt;/div&gt;
-          &lt;/div&gt;
-          &lt;div className="fw-modal-foot"&gt;
-            &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
-            &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+            &lt;div className="fw-modal-foot"&gt;
+              &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-close-modal&gt;Cancel&lt;/button&gt;
+              &lt;button className="fw-btn fw-btn-danger" type="button" data-fw-close-modal&gt;Delete&lt;/button&gt;
+            &lt;/div&gt;
           &lt;/div&gt;
         &lt;/div&gt;
       &lt;/div&gt;
@@ -678,15 +733,17 @@ Fernwell.loading.resetButtonLoading(btn);
       </div>
       <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
         <div class="fw-modal">
-          <div class="fw-modal-head">
-            <div>
-              <h2 id="demo-modal-title">Delete invoice?</h2>
-              <p class="fw-modal-sub">This can't be undone.</p>
+          <div class="fw-modal-scroll">
+            <div class="fw-modal-head">
+              <div>
+                <h2 id="demo-modal-title">Delete invoice?</h2>
+                <p class="fw-modal-sub">This can't be undone.</p>
+              </div>
             </div>
-          </div>
-          <div class="fw-modal-foot">
-            <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal>Cancel</button>
-            <button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal>Delete</button>
+            <div class="fw-modal-foot">
+              <button class="fw-btn fw-btn-ghost" type="button" data-fw-close-modal>Cancel</button>
+              <button class="fw-btn fw-btn-danger" type="button" data-fw-close-modal>Delete</button>
+            </div>
           </div>
         </div>
       </div>
@@ -695,7 +752,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- NAV -->
   <section id="nav" class="demo-component">
-    <div class="kit-sec-head"><h2>Nav</h2><span class="num">13</span></div>
+    <div class="kit-sec-head"><h2>Nav</h2><span class="num">14</span></div>
     <p class="sec-note">Below 600px the inline links hide and the hamburger toggle + dropdown take over. The dropdown enhancer closes on outside click and Escape.</p>
 
     <div class="demo-code">
@@ -763,7 +820,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- PAGINATION -->
   <section id="pagination" class="demo-component">
-    <div class="kit-sec-head"><h2>Pagination</h2><span class="num">14</span></div>
+    <div class="kit-sec-head"><h2>Pagination</h2><span class="num">15</span></div>
     <p class="sec-note">Static markup — wire <code>href</code>/<code>onClick</code> to your own paging logic.</p>
 
     <div class="demo-code">
@@ -820,9 +877,81 @@ Fernwell.loading.resetButtonLoading(btn);
     </div>
   </section>
 
+  <!-- POPOVER -->
+  <section id="popover" class="demo-component">
+    <div class="kit-sec-head"><h2>Popover</h2><span class="num">16</span></div>
+    <p class="sec-note">A non-modal floating panel anchored to its trigger — flips/shifts to stay in the viewport, dismisses on Escape, an outside click, or focus leaving it, and returns focus to the trigger on close. Defaults to centered above/below/beside the trigger; add <code>-placement="bottom-right"</code> (or <code>top-left</code> / <code>top-right</code> / <code>bottom-left</code>) to lean it toward a corner instead — this demo does that to clear the page's own nav toggle at the left edge.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Popover usage">
+          <button type="button" class="demo-tab" id="popover-tab-html" role="tab" aria-selected="true" aria-controls="popover-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="popover-tab-react" role="tab" aria-selected="false" aria-controls="popover-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="popover-panel-html" role="tabpanel" aria-labelledby="popover-tab-html">
+<pre><code>&lt;button class="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="settings-pop" data-fw-popover-placement="bottom-right"&gt;Settings&lt;/button&gt;
+
+&lt;div class="fw-popover" id="settings-pop"&gt;
+  &lt;div class="fw-popover-head"&gt;
+    &lt;h3 class="fw-popover-title"&gt;Settings&lt;/h3&gt;
+    &lt;button class="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close"&gt;
+      &lt;span data-fw-icon="close" aria-hidden="true"&gt;&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+  &lt;div class="fw-popover-body"&gt;
+    &lt;p&gt;Notification preferences live here.&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="popover-panel-react" role="tabpanel" aria-labelledby="popover-tab-react" hidden>
+<pre><code>function SettingsPopover() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="settings-pop" data-fw-popover-placement="bottom-right"&gt;
+        Settings
+      &lt;/button&gt;
+      &lt;div className="fw-popover" id="settings-pop"&gt;
+        &lt;div className="fw-popover-head"&gt;
+          &lt;h3 className="fw-popover-title"&gt;Settings&lt;/h3&gt;
+          &lt;button className="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close"&gt;
+            &lt;span data-fw-icon="close" aria-hidden="true"&gt;&lt;/span&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div className="fw-popover-body"&gt;
+          &lt;p&gt;Notification preferences live here.&lt;/p&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-btn fw-btn-ghost" type="button" data-fw-popover-trigger="demo-popover" data-fw-popover-placement="bottom-right">Settings</button>
+      </div>
+      <div class="fw-popover" id="demo-popover">
+        <div class="fw-popover-head">
+          <h3 class="fw-popover-title">Settings</h3>
+          <button class="fw-icon-btn" type="button" data-fw-popover-close aria-label="Close">
+            <span data-fw-icon="close" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div class="fw-popover-body">
+          <p>Notification preferences live here.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROGRESS -->
   <section id="progress" class="demo-component">
-    <div class="kit-sec-head"><h2>Progress</h2><span class="num">15</span></div>
+    <div class="kit-sec-head"><h2>Progress</h2><span class="num">17</span></div>
     <p class="sec-note">Determinate bars for anything with a known length; <code>.is-indeterminate</code> for an unknown duration; <code>.is-success</code> once complete.</p>
 
     <div class="demo-code">
@@ -870,7 +999,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- SELECTION -->
   <section id="selection" class="demo-component">
-    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">16</span></div>
+    <div class="kit-sec-head"><h2>Selection controls</h2><span class="num">18</span></div>
     <p class="sec-note">Native inputs stay in the DOM and fully keyboard/screen-reader operable — the styled box is a CSS-only sibling, never a replacement control.</p>
 
     <div class="demo-code">
@@ -917,7 +1046,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- SPINNER -->
   <section id="spinner" class="demo-component">
-    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">17</span></div>
+    <div class="kit-sec-head"><h2>Spinner</h2><span class="num">19</span></div>
     <p class="sec-note">Live inline — never a full-page takeover unless the whole screen is genuinely blocked. Colour comes from <code>currentColor</code>.</p>
 
     <div class="demo-code">
@@ -951,7 +1080,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- STAT -->
   <section id="stat" class="demo-component">
-    <div class="kit-sec-head"><h2>Stat</h2><span class="num">18</span></div>
+    <div class="kit-sec-head"><h2>Stat</h2><span class="num">20</span></div>
     <p class="sec-note">A card variant for a single headline number. Static markup.</p>
 
     <div class="demo-code">
@@ -995,7 +1124,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TABLE -->
   <section id="table" class="demo-component">
-    <div class="kit-sec-head"><h2>Table</h2><span class="num">19</span></div>
+    <div class="kit-sec-head"><h2>Table</h2><span class="num">21</span></div>
     <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. The enhancer adds client-side column sorting (<code>aria-sort</code>-driven) and row selection, emitting <code>fw:sort</code>/<code>fw:select</code>.</p>
 
     <div class="demo-code">
@@ -1005,26 +1134,28 @@ Fernwell.loading.resetButtonLoading(btn);
           <button type="button" class="demo-tab" id="table-tab-react" role="tab" aria-selected="false" aria-controls="table-panel-react" tabindex="-1">React</button>
         </div>
         <div class="demo-tabpanel" id="table-panel-html" role="tabpanel" aria-labelledby="table-tab-html">
-<pre><code>&lt;div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-cap"&gt;
-  &lt;table class="fw-table fw-table-striped" data-fw-table&gt;
-    &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
-    &lt;thead&gt;&lt;tr&gt;
-      &lt;th scope="col" class="fw-table-select"&gt;
-        &lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-all&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select all rows&lt;/span&gt;&lt;/label&gt;
-      &lt;/th&gt;
-      &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
-      &lt;th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
-      &lt;th scope="col"&gt;Status&lt;/th&gt;
-    &lt;/tr&gt;&lt;/thead&gt;
-    &lt;tbody&gt;
-      &lt;tr&gt;
-        &lt;td class="fw-table-select"&gt;&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-row&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select Bright Path&lt;/span&gt;&lt;/label&gt;&lt;/td&gt;
-        &lt;td&gt;Bright Path&lt;/td&gt;
-        &lt;td class="fw-table-num" data-fw-sort-value="1250"&gt;$1,250.00&lt;/td&gt;
-        &lt;td&gt;&lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Paid&lt;/span&gt;&lt;/td&gt;
-      &lt;/tr&gt;
-    &lt;/tbody&gt;
-  &lt;/table&gt;
+<pre><code>&lt;div class="fw-table-wrap"&gt;
+  &lt;div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="inv-cap"&gt;
+    &lt;table class="fw-table fw-table-striped" data-fw-table&gt;
+      &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+      &lt;thead&gt;&lt;tr&gt;
+        &lt;th scope="col" class="fw-table-select"&gt;
+          &lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-all&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select all rows&lt;/span&gt;&lt;/label&gt;
+        &lt;/th&gt;
+        &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+        &lt;th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" class="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+        &lt;th scope="col"&gt;Status&lt;/th&gt;
+      &lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td class="fw-table-select"&gt;&lt;label class="fw-checkbox"&gt;&lt;input type="checkbox" data-fw-select-row&gt;&lt;span class="fw-box"&gt;&lt;/span&gt;&lt;span class="fw-sr-only"&gt;Select Bright Path&lt;/span&gt;&lt;/label&gt;&lt;/td&gt;
+          &lt;td&gt;Bright Path&lt;/td&gt;
+          &lt;td class="fw-table-num" data-fw-sort-value="1250"&gt;$1,250.00&lt;/td&gt;
+          &lt;td&gt;&lt;span class="fw-tag fw-tag-pill fw-tag-live"&gt;Paid&lt;/span&gt;&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+  &lt;/div&gt;
 &lt;/div&gt;</code></pre>
         </div>
         <div class="demo-tabpanel" id="table-panel-react" role="tabpanel" aria-labelledby="table-tab-react" hidden>
@@ -1032,38 +1163,40 @@ Fernwell.loading.resetButtonLoading(btn);
   const ref = useRef(null);
   useEffect(() =&gt; { window.Fernwell.table.init(ref.current); }, []);
   return (
-    &lt;div className="fw-table-wrap" tabIndex={0} role="region" aria-labelledby="inv-cap" ref={ref}&gt;
-      &lt;table className="fw-table fw-table-striped" data-fw-table&gt;
-        &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
-        &lt;thead&gt;
-          &lt;tr&gt;
-            &lt;th scope="col" className="fw-table-select"&gt;
-              &lt;label className="fw-checkbox"&gt;
-                &lt;input type="checkbox" data-fw-select-all /&gt;&lt;span className="fw-box" /&gt;
-                &lt;span className="fw-sr-only"&gt;Select all rows&lt;/span&gt;
-              &lt;/label&gt;
-            &lt;/th&gt;
-            &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
-            &lt;th scope="col" className="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
-            &lt;th scope="col"&gt;Status&lt;/th&gt;
-          &lt;/tr&gt;
-        &lt;/thead&gt;
-        &lt;tbody&gt;
-          {rows.map((row) =&gt; (
-            &lt;tr key={row.id}&gt;
-              &lt;td className="fw-table-select"&gt;
+    &lt;div className="fw-table-wrap"&gt;
+      &lt;div className="fw-table-scroll" tabIndex={0} role="region" aria-labelledby="inv-cap" ref={ref}&gt;
+        &lt;table className="fw-table fw-table-striped" data-fw-table&gt;
+          &lt;caption id="inv-cap"&gt;Invoices&lt;/caption&gt;
+          &lt;thead&gt;
+            &lt;tr&gt;
+              &lt;th scope="col" className="fw-table-select"&gt;
                 &lt;label className="fw-checkbox"&gt;
-                  &lt;input type="checkbox" data-fw-select-row /&gt;&lt;span className="fw-box" /&gt;
-                  &lt;span className="fw-sr-only"&gt;Select {row.client}&lt;/span&gt;
+                  &lt;input type="checkbox" data-fw-select-all /&gt;&lt;span className="fw-box" /&gt;
+                  &lt;span className="fw-sr-only"&gt;Select all rows&lt;/span&gt;
                 &lt;/label&gt;
-              &lt;/td&gt;
-              &lt;td&gt;{row.client}&lt;/td&gt;
-              &lt;td className="fw-table-num" data-fw-sort-value={row.amount}&gt;${row.amount.toFixed(2)}&lt;/td&gt;
-              &lt;td&gt;&lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{row.status}&lt;/span&gt;&lt;/td&gt;
+              &lt;/th&gt;
+              &lt;th scope="col" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Client&lt;/button&gt;&lt;/th&gt;
+              &lt;th scope="col" className="fw-table-num" aria-sort="none" data-fw-sort&gt;&lt;button type="button" className="fw-table-sort"&gt;Amount&lt;/button&gt;&lt;/th&gt;
+              &lt;th scope="col"&gt;Status&lt;/th&gt;
             &lt;/tr&gt;
-          ))}
-        &lt;/tbody&gt;
-      &lt;/table&gt;
+          &lt;/thead&gt;
+          &lt;tbody&gt;
+            {rows.map((row) =&gt; (
+              &lt;tr key={row.id}&gt;
+                &lt;td className="fw-table-select"&gt;
+                  &lt;label className="fw-checkbox"&gt;
+                    &lt;input type="checkbox" data-fw-select-row /&gt;&lt;span className="fw-box" /&gt;
+                    &lt;span className="fw-sr-only"&gt;Select {row.client}&lt;/span&gt;
+                  &lt;/label&gt;
+                &lt;/td&gt;
+                &lt;td&gt;{row.client}&lt;/td&gt;
+                &lt;td className="fw-table-num" data-fw-sort-value={row.amount}&gt;${row.amount.toFixed(2)}&lt;/td&gt;
+                &lt;td&gt;&lt;span className="fw-tag fw-tag-pill fw-tag-live"&gt;{row.status}&lt;/span&gt;&lt;/td&gt;
+              &lt;/tr&gt;
+            ))}
+          &lt;/tbody&gt;
+        &lt;/table&gt;
+      &lt;/div&gt;
     &lt;/div&gt;
   );
 }</code></pre>
@@ -1074,32 +1207,110 @@ Fernwell.loading.resetButtonLoading(btn);
     <div class="demo-render">
       <p class="demo-render-label">Render</p>
       <div class="fw-card">
-        <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="demo-table-caption">
-          <table class="fw-table fw-table-striped" data-fw-table>
-            <caption id="demo-table-caption">Invoices</caption>
-            <thead>
-              <tr>
-                <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
-                <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
-                <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
-                <th scope="col">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
-                <td>Bright Path</td>
-                <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
-                <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
-              </tr>
-              <tr>
-                <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Meadow Co</span></label></td>
-                <td>Meadow Co</td>
-                <td class="fw-table-num" data-fw-sort-value="420">$420.00</td>
-                <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
-              </tr>
-            </tbody>
-          </table>
+        <div class="fw-table-wrap">
+          <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="demo-table-caption">
+            <table class="fw-table fw-table-striped" data-fw-table>
+              <caption id="demo-table-caption">Invoices</caption>
+              <thead>
+                <tr>
+                  <th scope="col" class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-all><span class="fw-box"></span><span class="fw-sr-only">Select all rows</span></label></th>
+                  <th scope="col" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Client</button></th>
+                  <th scope="col" class="fw-table-num" aria-sort="none" data-fw-sort><button type="button" class="fw-table-sort">Amount</button></th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Bright Path</span></label></td>
+                  <td>Bright Path</td>
+                  <td class="fw-table-num" data-fw-sort-value="1250">$1,250.00</td>
+                  <td><span class="fw-tag fw-tag-pill fw-tag-live">Paid</span></td>
+                </tr>
+                <tr>
+                  <td class="fw-table-select"><label class="fw-checkbox"><input type="checkbox" data-fw-select-row><span class="fw-box"></span><span class="fw-sr-only">Select Meadow Co</span></label></td>
+                  <td>Meadow Co</td>
+                  <td class="fw-table-num" data-fw-sort-value="420">$420.00</td>
+                  <td><span class="fw-tag fw-tag-pill fw-tag-pending">Pending</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TABS -->
+  <section id="tabs" class="demo-component">
+    <div class="kit-sec-head"><h2>Tabs</h2><span class="num">22</span></div>
+    <p class="sec-note">A single-selection tablist with roving-tabindex keyboard navigation — Left/Right (or Up/Down when <code>aria-orientation="vertical"</code>) move between tabs and select immediately, Home/End jump to the first/last, and a disabled tab (<code>aria-disabled="true"</code>) is skipped. Add <code>data-fw-tabs-activation="manual"</code> to switch to manual activation, where arrow keys only move focus and Space/Enter selects — useful when selecting a tab is expensive.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tabs usage">
+          <button type="button" class="demo-tab" id="tabs-tab-html" role="tab" aria-selected="true" aria-controls="tabs-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tabs-tab-react" role="tab" aria-selected="false" aria-controls="tabs-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tabs-panel-html" role="tabpanel" aria-labelledby="tabs-tab-html">
+<pre><code>&lt;div class="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile"&gt;Profile&lt;/button&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-billing" aria-selected="false" aria-controls="panel-billing" aria-disabled="true"&gt;Billing&lt;/button&gt;
+  &lt;button type="button" class="fw-tab" role="tab" id="tab-archived" aria-selected="false" aria-controls="panel-archived"&gt;Archived&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabindex="0"&gt;
+  &lt;p&gt;Your profile details.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabindex="0"&gt;
+  &lt;p&gt;Billing is unavailable on the free plan.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="fw-tabpanel" role="tabpanel" id="panel-archived" aria-labelledby="tab-archived" tabindex="0"&gt;
+  &lt;p&gt;Archived items.&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tabs-panel-react" role="tabpanel" aria-labelledby="tabs-tab-react" hidden>
+<pre><code>function AccountTabs() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.tabs.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;div className="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-profile" aria-selected="true" aria-controls="panel-profile"&gt;Profile&lt;/button&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-billing" aria-selected="false" aria-controls="panel-billing" aria-disabled="true"&gt;Billing&lt;/button&gt;
+        &lt;button type="button" className="fw-tab" role="tab" id="tab-archived" aria-selected="false" aria-controls="panel-archived"&gt;Archived&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-profile" aria-labelledby="tab-profile" tabIndex={0}&gt;
+        &lt;p&gt;Your profile details.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-billing" aria-labelledby="tab-billing" tabIndex={0}&gt;
+        &lt;p&gt;Billing is unavailable on the free plan.&lt;/p&gt;
+      &lt;/div&gt;
+      &lt;div className="fw-tabpanel" role="tabpanel" id="panel-archived" aria-labelledby="tab-archived" tabIndex={0}&gt;
+        &lt;p&gt;Archived items.&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card">
+        <div class="fw-tablist" role="tablist" aria-label="Account settings" data-fw-tabs>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-profile" aria-selected="true" aria-controls="demo-panel-profile">Profile</button>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-billing" aria-selected="false" aria-controls="demo-panel-billing" aria-disabled="true">Billing</button>
+          <button type="button" class="fw-tab" role="tab" id="demo-tab-archived" aria-selected="false" aria-controls="demo-panel-archived">Archived</button>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-profile" aria-labelledby="demo-tab-profile" tabindex="0">
+          <p>Your profile details.</p>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-billing" aria-labelledby="demo-tab-billing" tabindex="0">
+          <p>Billing is unavailable on the free plan.</p>
+        </div>
+        <div class="fw-tabpanel" role="tabpanel" id="demo-panel-archived" aria-labelledby="demo-tab-archived" tabindex="0">
+          <p>Archived items.</p>
         </div>
       </div>
     </div>
@@ -1107,7 +1318,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TAG -->
   <section id="tag" class="demo-component">
-    <div class="kit-sec-head"><h2>Tag</h2><span class="num">20</span></div>
+    <div class="kit-sec-head"><h2>Tag</h2><span class="num">23</span></div>
     <p class="sec-note">A slight, consistent tilt — the one place the system allows itself to feel hand-placed. <code>.fw-tag-pill</code> is the compact, untilted, fully-round variant for table cells and dense rows.</p>
 
     <div class="demo-code">
@@ -1143,7 +1354,7 @@ Fernwell.loading.resetButtonLoading(btn);
 
   <!-- TOAST -->
   <section id="toast" class="demo-component">
-    <div class="kit-sec-head"><h2>Toast</h2><span class="num">21</span></div>
+    <div class="kit-sec-head"><h2>Toast</h2><span class="num">24</span></div>
     <p class="sec-note">A single, reused, bottom-right notice — there's no static markup to author, just call <code>Fernwell.toast.show()</code>. It's the one component where the ref+effect recipe used elsewhere on this page is unnecessary; call it directly from an event handler.</p>
 
     <div class="demo-code">
@@ -1187,7 +1398,229 @@ Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000
     </div>
   </section>
 
+  <!-- TOOLTIP -->
+  <section id="tooltip" class="demo-component">
+    <div class="kit-sec-head"><h2>Tooltip</h2><span class="num">25</span></div>
+    <p class="sec-note">A short hover/focus annotation. Content comes from the trigger's own <code>title</code> attribute — the enhancer moves it into the floating bubble and gives it a real no-JS fallback.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tooltip usage">
+          <button type="button" class="demo-tab" id="tooltip-tab-html" role="tab" aria-selected="true" aria-controls="tooltip-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tooltip-tab-react" role="tab" aria-selected="false" aria-controls="tooltip-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-panel-html" role="tabpanel" aria-labelledby="tooltip-tab-html">
+<pre><code>&lt;button class="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip&gt;
+  &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;/button&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-panel-react" role="tabpanel" aria-labelledby="tooltip-tab-react" hidden>
+<pre><code>function CopyButton() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div ref={ref}&gt;
+      &lt;button className="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip&gt;
+        &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <button class="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip>
+          <span data-fw-icon="copy" aria-hidden="true"></span>
+        </button>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top: var(--fw-sp-2);">Every side is centered on the trigger by default: <code>data-fw-tooltip-placement</code> takes <code>top</code> (default) / <code>bottom</code> / <code>left</code> / <code>right</code>, or a corner variant that leans the bubble toward that corner instead of centering it: <code>top-left</code> / <code>top-right</code> / <code>bottom-left</code> / <code>bottom-right</code>.</p>
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Tooltip placement usage">
+          <button type="button" class="demo-tab" id="tooltip-placement-tab-html" role="tab" aria-selected="true" aria-controls="tooltip-placement-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="tooltip-placement-tab-react" role="tab" aria-selected="false" aria-controls="tooltip-placement-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-placement-panel-html" role="tabpanel" aria-labelledby="tooltip-placement-tab-html">
+<pre><code>&lt;div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)"&gt;
+  &lt;span class="fw-stat-label"&gt;top&lt;/span&gt;
+  &lt;button class="fw-icon-btn" type="button" title="Appears above, centered" data-fw-tooltip data-fw-tooltip-placement="top"&gt;
+    &lt;span data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;
+&lt;!-- repeat per placement: bottom, left, right, top-left, top-right, bottom-left, bottom-right --&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="tooltip-placement-panel-react" role="tabpanel" aria-labelledby="tooltip-placement-tab-react" hidden>
+<pre><code>const PLACEMENTS = ['top', 'bottom', 'left', 'right', 'top-left', 'top-right', 'bottom-left', 'bottom-right'];
+
+function PlacementExamples() {
+  const ref = useRef(null);
+  useEffect(() =&gt; { window.Fernwell.init(ref.current); }, []);
+  return (
+    &lt;div className="fw-row" ref={ref}&gt;
+      {PLACEMENTS.map((placement) =&gt; (
+        &lt;div key={placement} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 'var(--fw-sp-2)' }}&gt;
+          &lt;span className="fw-stat-label"&gt;{placement}&lt;/span&gt;
+          &lt;button className="fw-icon-btn" type="button" title="Copy to clipboard" data-fw-tooltip data-fw-tooltip-placement={placement}&gt;
+            &lt;span data-fw-icon="copy" aria-hidden="true" /&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top</span>
+          <button class="fw-icon-btn" type="button" title="Appears above, centered" data-fw-tooltip data-fw-tooltip-placement="top">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom</span>
+          <button class="fw-icon-btn" type="button" title="Appears below, centered" data-fw-tooltip data-fw-tooltip-placement="bottom">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">left</span>
+          <button class="fw-icon-btn" type="button" title="Appears to the left, centered" data-fw-tooltip data-fw-tooltip-placement="left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">right</span>
+          <button class="fw-icon-btn" type="button" title="Appears to the right, centered" data-fw-tooltip data-fw-tooltip-placement="right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top-left</span>
+          <button class="fw-icon-btn" type="button" title="Above, leaning left" data-fw-tooltip data-fw-tooltip-placement="top-left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">top-right</span>
+          <button class="fw-icon-btn" type="button" title="Above, leaning right" data-fw-tooltip data-fw-tooltip-placement="top-right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom-left</span>
+          <button class="fw-icon-btn" type="button" title="Below, leaning left" data-fw-tooltip data-fw-tooltip-placement="bottom-left">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:var(--fw-sp-2)">
+          <span class="fw-stat-label">bottom-right</span>
+          <button class="fw-icon-btn" type="button" title="Below, leaning right" data-fw-tooltip data-fw-tooltip-placement="bottom-right">
+            <span data-fw-icon="copy" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LAYOUT (no code/render template — pure structural utility) -->
+  <!-- DIVIDER -->
+  <section id="divider" class="demo-component">
+    <div class="kit-sec-head"><h2>Divider</h2><span class="num">26</span></div>
+    <p class="sec-note">A thin rule separating content. Decorative by default (a plain <code>&lt;hr&gt;</code>) — for a divider that must be announced to assistive tech, use <code>role="separator"</code> with <code>aria-orientation</code> on a <code>&lt;div&gt;</code> instead. Variants: <code>.fw-divider-dashed</code>, <code>-dotted</code>, <code>-labeled</code> (with <code>-start</code>/<code>-end</code> alignment). Static markup — no JS enhancer.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Divider usage">
+          <button type="button" class="demo-tab" id="divider-tab-html" role="tab" aria-selected="true" aria-controls="divider-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="divider-tab-react" role="tab" aria-selected="false" aria-controls="divider-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="divider-panel-html" role="tabpanel" aria-labelledby="divider-tab-html">
+<pre><code>&lt;hr class="fw-divider"&gt;
+&lt;hr class="fw-divider fw-divider-dashed"&gt;
+&lt;div class="fw-divider-labeled"&gt;or continue with&lt;/div&gt;
+&lt;div class="fw-divider" role="separator" aria-orientation="vertical"&gt;&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="divider-panel-react" role="tabpanel" aria-labelledby="divider-tab-react" hidden>
+<pre><code>function Divider({ orientation = 'horizontal', variant = 'solid', decorative = true, label }) {
+  if (label) return &lt;div className="fw-divider-labeled"&gt;{label}&lt;/div&gt;;
+  const className = `fw-divider${variant !== 'solid' ? ` fw-divider-${variant}` : ''}`;
+  if (decorative) return &lt;hr className={className} /&gt;;
+  return &lt;div className={className} role="separator" aria-orientation={orientation} /&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface is-stack">
+        <p>Above the rule</p>
+        <hr class="fw-divider">
+        <p>Below the rule</p>
+        <div class="fw-divider-labeled">or continue with</div>
+        <div class="fw-row" style="height:48px">
+          <span>Left</span>
+          <div class="fw-divider" role="separator" aria-orientation="vertical"></div>
+          <span>Right</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ASPECT RATIO -->
+  <section id="aspect-ratio" class="demo-component">
+    <div class="kit-sec-head"><h2>Aspect ratio</h2><span class="num">27</span></div>
+    <p class="sec-note">Crops media (or any content) to a fixed ratio using the native CSS <code>aspect-ratio</code> property, reserving space up front to prevent layout shift while images load. Use a preset via <code>data-fw-ratio</code>, or set <code>--fw-aspect-ratio</code> inline for an arbitrary ratio. Children fill the box with <code>object-fit: cover</code> by default — use <code>data-fw-fit="contain"</code> to change that, and <code>--fw-aspect-position</code> inline to set a focal point. Static markup — no JS enhancer.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Aspect ratio usage">
+          <button type="button" class="demo-tab" id="aspect-ratio-tab-html" role="tab" aria-selected="true" aria-controls="aspect-ratio-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="aspect-ratio-tab-react" role="tab" aria-selected="false" aria-controls="aspect-ratio-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="aspect-ratio-panel-html" role="tabpanel" aria-labelledby="aspect-ratio-tab-html">
+<pre><code>&lt;div class="fw-aspect-ratio" data-fw-ratio="16:9"&gt;
+  &lt;img src="hero.jpg" alt="Product hero shot"&gt;
+&lt;/div&gt;
+
+&lt;div class="fw-aspect-ratio" data-fw-ratio="1:1" style="--fw-aspect-position: 30% 10%"&gt;
+  &lt;img src="portrait.jpg" alt="Team headshot"&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="aspect-ratio-panel-react" role="tabpanel" aria-labelledby="aspect-ratio-tab-react" hidden>
+<pre><code>function AspectRatio({ ratio = '16:9', objectFit = 'cover', children }) {
+  const preset = typeof ratio === 'string' ? { 'data-fw-ratio': ratio } : {};
+  const style = typeof ratio === 'number' ? { '--fw-aspect-ratio': ratio } : undefined;
+  return (
+    &lt;div className="fw-aspect-ratio" data-fw-fit={objectFit !== 'cover' ? objectFit : undefined} style={style} {...preset}&gt;
+      {children}
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div class="fw-aspect-ratio" data-fw-ratio="16:9" style="max-width:320px">
+          <img src="https://picsum.photos/640/360" alt="Example landscape photo">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="layout" class="demo-component">
     <div class="kit-sec-head"><h2>Layout utilities</h2></div>
     <p class="sec-note">Structural helpers used throughout this page's own render panes above — no visual identity of their own, so they don't get a dedicated code/render section. See <code>src/css/components/layout.css</code>.</p>
@@ -1195,6 +1628,7 @@ Fernwell.toast.show('That card was declined', { variant: 'error', duration: 6000
       <dt>.fw-wrap</dt><dd>Centers content with a max width and side padding.</dd>
       <dt>.fw-row</dt><dd>A wrapping flex row with a consistent gap — used for every inline button/control group on this page.</dd>
       <dt>.fw-grid-2</dt><dd>A two-column grid that collapses to one column under 640px.</dd>
+      <dt>.fw-spacer</dt><dd>A fixed-size empty box for manual gaps — size via <code>data-fw-size="1".."9"</code> (or <code>"auto"</code> to grow and fill remaining space), axis via <code>data-fw-axis="horizontal"</code>/<code>"both"</code> (default vertical). Add <code>aria-hidden="true"</code> since it's always presentation-only.</dd>
     </dl>
   </section>
 

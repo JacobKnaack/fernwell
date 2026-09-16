@@ -14,6 +14,7 @@ beforeEach(() => {
 
 afterEach(() => {
   document.documentElement.removeAttribute('data-theme');
+  document.documentElement.removeAttribute('data-fw-theme-init');
   window.localStorage.clear();
   theme.resetTokens();
   document.body.innerHTML = '';
@@ -64,6 +65,21 @@ describe('theme', () => {
     expect(btn.textContent).toBe('Light');
   });
 
+  it('init() suppresses transitions for the first paint only', async () => {
+    theme.init();
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(true);
+
+    await new Promise<void>((resolve) => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(false);
+  });
+
+  it('toggle() does not suppress transitions', () => {
+    theme.set('light');
+    theme.toggle();
+    expect(document.documentElement.hasAttribute('data-fw-theme-init')).toBe(false);
+  });
+
   it('clicking a toggle button flips the theme and re-syncs itself', () => {
     document.body.innerHTML = `
       <button data-fw-theme-toggle
@@ -78,6 +94,19 @@ describe('theme', () => {
     expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
     expect(btn.getAttribute('aria-pressed')).toBe('true');
     expect(btn.textContent).toBe('Light');
+  });
+
+  it('init() renders an icon for a data-fw-theme-icon toggle instead of text', () => {
+    document.body.innerHTML = `
+      <button data-fw-theme-toggle aria-label="Toggle theme"
+        data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon"></button>
+    `;
+
+    theme.init();
+
+    const btn = document.querySelector('[data-fw-theme-toggle]') as HTMLElement;
+    expect(btn.querySelector('svg')).not.toBeNull();
+    expect(btn.textContent?.trim()).toBe('');
   });
 
   it('setTokens() renders a <style data-fw-tokens> in <head>; resetTokens() removes it', () => {

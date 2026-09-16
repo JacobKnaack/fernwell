@@ -28,9 +28,11 @@
   <div class="intro">
     <span class="fw-eyebrow">Design System · v<span id="fw-version-hero"></span></span>
     <h1>Fernwell UI System</h1>
-    <p class="lede">Warm, rounded, and legible — built to feel approachable to a first-time consumer trial and sturdy enough for the team running their business through it every day.</p>
+    <p class="lede">Simple and Extensible.  Built to handle all your web design needs from a simple static website to a complex dynamic web application.</p>
     <div class="fw-row" style="margin-top:var(--fw-sp-5)">
-      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-label-dark="☀️ Preview light theme" data-fw-theme-label-light="🌙 Preview dark theme">🌙 Preview dark theme</button>
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" data-fw-theme-label-dark="Preview light theme" data-fw-theme-label-light="Preview dark theme">
+        <span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span>Preview dark theme
+      </button>
       <a class="fw-btn fw-btn-ghost" href="https://www.npmjs.com/package/fernwell">npm ↗</a>
     </div>
   </div>
@@ -337,7 +339,8 @@ toast.show('Invoice sent');</code></pre>
   <section>
     <div class="kit-sec-head"><h2>Table</h2><span class="num">07d</span></div>
     <p class="sec-note">A native <code>&lt;table&gt;</code> inside a scrolling card. Inter for the cells, Plex Mono for money, IDs and dates. Click a header to sort; the checkbox column drives select-all. Shrink the window to scroll it sideways.</p>
-    <div class="fw-table-wrap" tabindex="0" role="region" aria-labelledby="inv-caption">
+    <div class="fw-table-wrap">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="inv-caption">
       <table class="fw-table fw-table-striped" id="invoices-table" data-fw-table>
         <caption id="inv-caption" class="fw-sr-only">Invoices</caption>
         <thead>
@@ -408,6 +411,7 @@ toast.show('Invoice sent');</code></pre>
         </tr>
         </tbody>
       </table>
+      </div>
     </div>
     <nav class="fw-pagination" aria-label="Invoices pagination" style="margin-top:var(--fw-sp-4)">
       <span class="fw-pag-info" id="inv-selected">Showing 1–6 of 84</span>
@@ -415,7 +419,8 @@ toast.show('Invoice sent');</code></pre>
     </nav>
 
     <p class="sec-note" style="margin-top:var(--fw-sp-6)">Compact density with a sticky header. Add <code>.fw-table-sticky</code> to the wrapper and bound its height with <code>--fw-table-max-height</code>.</p>
-    <div class="fw-table-wrap fw-table-sticky" tabindex="0" role="region" aria-labelledby="pay-caption" style="--fw-table-max-height:220px">
+    <div class="fw-table-wrap fw-table-sticky" style="--fw-table-max-height:220px">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="pay-caption">
       <table class="fw-table fw-table-compact" data-fw-table>
         <caption id="pay-caption" class="fw-sr-only">Recent payments</caption>
         <thead>
@@ -439,15 +444,18 @@ toast.show('Invoice sent');</code></pre>
           <tr><td class="fw-table-num">2026-08-25</td><td>Maple & Co</td><td>Check</td><td class="fw-table-num" data-fw-sort-value="490.0">$490.00</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
 
     <p class="sec-note" style="margin-top:var(--fw-sp-6)">Empty and loading rows span the table; <code>aria-busy="true"</code> on the table dims the body while data is in flight.</p>
     <div class="fw-table-wrap">
+      <div class="fw-table-scroll">
       <table class="fw-table">
         <caption class="fw-sr-only">Clients (empty)</caption>
         <thead><tr><th scope="col">Client</th><th scope="col">Email</th><th scope="col" class="fw-table-num">Balance</th></tr></thead>
         <tbody><tr class="fw-table-empty"><td colspan="3">No clients yet — add one and they'll show up here.</td></tr></tbody>
       </table>
+      </div>
     </div>
   </section>
 
@@ -532,7 +540,7 @@ toast.show('Invoice sent');</code></pre>
       <a class="fw-nav-brand" href="#"><span class="fw-nav-dot"></span>Fernwell</a>
       <div class="fw-nav-links"><a href="#" class="is-active">Invoices</a><a href="#">Clients</a><a href="#">Reports</a></div>
       <div class="fw-nav-right">
-        <button class="fw-nav-btn" data-fw-theme-toggle data-fw-theme-label-dark="☀️" data-fw-theme-label-light="🌙" aria-label="Toggle theme">🌙</button>
+        <button class="fw-nav-btn" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" aria-label="Toggle theme" style="padding: var(--fw-sp-2);"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span></button>
         <button class="fw-nav-toggle" data-fw-nav-toggle aria-controls="nav-menu" aria-expanded="false" aria-label="Open navigation menu"><span></span><span></span><span></span></button>
         <div class="fw-nav-avatar">JM</div>
       </div>
@@ -547,7 +555,7 @@ toast.show('Invoice sent');</code></pre>
       </div>
       <div class="fw-card">
         <div class="fw-empty">
-          <div class="fw-empty-blob">✉️</div>
+          <div class="fw-empty-blob"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span></div>
           <h4 class="fw-empty-title">No invoices sent yet</h4>
           <p class="fw-empty-body">Create your first invoice and Fernwell will handle the reminders.</p>
           <button class="fw-btn fw-btn-primary">Create invoice</button>
@@ -585,6 +593,56 @@ toast.show('Invoice sent');</code></pre>
       <dt>Style</dt><dd>Outline only, 16–20px box, 1.3–1.4px stroke, round caps and joins, <code>currentColor</code>.</dd>
       <dt>The one exception</dt><dd>No fills, except a checkmark on a completed item — the one place a filled icon carries meaning instead of decoration.</dd>
     </dl>
+    <div class="icon-grid">
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="add" aria-hidden="true"></span><span class="lbl">add</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="close" aria-hidden="true"></span><span class="lbl">close</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span class="lbl">check</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="edit" aria-hidden="true"></span><span class="lbl">edit</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="trash" aria-hidden="true"></span><span class="lbl">trash</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="save" aria-hidden="true"></span><span class="lbl">save</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="copy" aria-hidden="true"></span><span class="lbl">copy</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="refresh" aria-hidden="true"></span><span class="lbl">refresh</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="menu" aria-hidden="true"></span><span class="lbl">menu</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="more" aria-hidden="true"></span><span class="lbl">more</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="kebab" aria-hidden="true"></span><span class="lbl">kebab</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-up" aria-hidden="true"></span><span class="lbl">chevron-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-down" aria-hidden="true"></span><span class="lbl">chevron-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-left" aria-hidden="true"></span><span class="lbl">chevron-left</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chevron-right" aria-hidden="true"></span><span class="lbl">chevron-right</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-up" aria-hidden="true"></span><span class="lbl">arrow-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-down" aria-hidden="true"></span><span class="lbl">arrow-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-left" aria-hidden="true"></span><span class="lbl">arrow-left</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="arrow-right" aria-hidden="true"></span><span class="lbl">arrow-right</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="eye" aria-hidden="true"></span><span class="lbl">eye</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="eye-closed" aria-hidden="true"></span><span class="lbl">eye-closed</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="lock" aria-hidden="true"></span><span class="lbl">lock</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="unlock" aria-hidden="true"></span><span class="lbl">unlock</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="search" aria-hidden="true"></span><span class="lbl">search</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="filter" aria-hidden="true"></span><span class="lbl">filter</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bell" aria-hidden="true"></span><span class="lbl">bell</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="envelope" aria-hidden="true"></span><span class="lbl">envelope</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="chat" aria-hidden="true"></span><span class="lbl">chat</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="thumbs-up" aria-hidden="true"></span><span class="lbl">thumbs-up</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="thumbs-down" aria-hidden="true"></span><span class="lbl">thumbs-down</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="heart" aria-hidden="true"></span><span class="lbl">heart</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="star" aria-hidden="true"></span><span class="lbl">star</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="folder" aria-hidden="true"></span><span class="lbl">folder</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="bookmark" aria-hidden="true"></span><span class="lbl">bookmark</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="paperclip" aria-hidden="true"></span><span class="lbl">paperclip</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="download" aria-hidden="true"></span><span class="lbl">download</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="upload" aria-hidden="true"></span><span class="lbl">upload</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="share" aria-hidden="true"></span><span class="lbl">share</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="info" aria-hidden="true"></span><span class="lbl">info</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="warning" aria-hidden="true"></span><span class="lbl">warning</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="help-circle" aria-hidden="true"></span><span class="lbl">help-circle</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="sun" aria-hidden="true"></span><span class="lbl">sun</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span><span class="lbl">moon</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="user" aria-hidden="true"></span><span class="lbl">user</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="settings" aria-hidden="true"></span><span class="lbl">settings</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="home" aria-hidden="true"></span><span class="lbl">home</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="calendar" aria-hidden="true"></span><span class="lbl">calendar</span></div>
+      <div class="icon-demo"><span class="fw-icon" data-fw-icon="logout" aria-hidden="true"></span><span class="lbl">logout</span></div>
+    </div>
   </section>
 
   <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet, or at runtime with <code>Fernwell.theme.setTokens()</code> — see <a href="#theming">Theming</a>. Never fork the CSS.</p>
@@ -593,11 +651,13 @@ toast.show('Invoice sent');</code></pre>
 <!-- modal -->
 <div class="fw-modal-overlay" id="demo-modal" role="dialog" aria-modal="true" aria-labelledby="demo-modal-title">
   <div class="fw-modal">
-    <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
-    <p style="font-size:14px; color:var(--fw-text-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
-    <div class="fw-modal-foot">
-      <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
-      <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
+    <div class="fw-modal-scroll">
+      <div class="fw-modal-head"><div><h2 id="demo-modal-title">Delete this invoice?</h2><p class="fw-modal-sub">INV-04821 · $1,240.00 · Bright Path Co.</p></div></div>
+      <p style="font-size:14px; color:var(--fw-text-soft)">The client's link will stop working immediately. Select this text and drag onto the backdrop — the modal stays open.</p>
+      <div class="fw-modal-foot">
+        <button class="fw-btn fw-btn-ghost" data-fw-close-modal type="button">Keep invoice</button>
+        <button class="fw-btn fw-btn-danger" data-fw-close-modal type="button">Delete invoice</button>
+      </div>
     </div>
   </div>
 </div>

@@ -14,13 +14,21 @@ import * as loading from './loading';
 import * as toast from './toast';
 import * as table from './table';
 import * as menu from './menu';
+import * as icon from './icon';
+import * as popover from './popover';
+import * as tooltip from './tooltip';
+import * as tabs from './tabs';
 
-export { theme, combobox, modal, nav, loading, toast, table, menu };
+export { theme, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
 export type { Theme, TokenOverrides, TokenThemeOverrides } from './theme';
 export type { ComboboxOptions, ComboboxInstance } from './combobox';
 export type { ToastVariant, ToastOptions } from './toast';
 export type { SortDirection, SortDetail, SelectDetail } from './table';
 export type { ToggleDetail } from './menu';
+export type { IconName } from './icon';
+export type { PopoverOptions, PopoverInstance } from './popover';
+export type { TooltipOptions, TooltipInstance } from './tooltip';
+export type { TabsOptions, TabsInstance, TabsActivation, TabsChangeDetail } from './tabs';
 
 export const version = '__FW_VERSION__';
 
@@ -37,7 +45,26 @@ export function init(root: ParentNode = document): void {
   loading.init(root);
   table.init(root);
   menu.init(root);
+  icon.init(root);
+  popover.init(root);
+  tooltip.init(root);
+  tabs.init(root);
 }
 
-const Fernwell = { version, init, theme, combobox, modal, nav, loading, toast, table, menu };
+const Fernwell = {
+  version,
+  init,
+  theme,
+  combobox,
+  modal,
+  nav,
+  loading,
+  toast,
+  table,
+  menu,
+  icon,
+  popover,
+  tooltip,
+  tabs,
+};
 export default Fernwell;

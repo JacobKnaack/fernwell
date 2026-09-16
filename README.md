@@ -69,7 +69,7 @@ Set `data-theme="dark"` on `<html>` (or any ancestor) and every token flips. A `
         data-fw-theme-label-light="🌙 Dark" data-fw-theme-label-dark="☀️ Light">🌙 Dark</button>
 ```
 
-To avoid a flash of the wrong theme, inline this in `<head>` before the stylesheet:
+`init()` never animates the theme it applies on load (toggling and live OS changes still do), but to also avoid a flash of the *wrong* theme's colours before that script runs at all, inline this in `<head>` before the stylesheet:
 
 ```html
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
@@ -175,13 +175,15 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Nav | `.fw-nav` (`-sticky`), `-brand`, `-dot` / `-hex`, `-links`, `-right`, `-avatar`, `-btn`, `-toggle`, `-dropdown` (`-menu`) |
 | Stat | `.fw-stat-label` `-value` (`-unit`) `-delta` (`.is-up` / `.is-down`) |
 | Empty state | `.fw-empty`, `-blob`, `-title`, `-body` |
-| Modal | `.fw-modal-overlay` > `.fw-modal` (`-wide`); `-head`, `-title`, `-sub`, `-foot` |
+| Modal | `.fw-modal-overlay` > `.fw-modal` (`-wide`) > `.fw-modal-scroll` (the scrolling region — keeps the scrollbar clipped to the panel's rounded corners) > `-head`, `-title`, `-sub`, `-foot` |
 | Drawer | `.fw-drawer-overlay` + `.fw-drawer`; `-head`, `-eyebrow`, `-title`, `-body`, `-foot` |
+| Popover | `.fw-popover` (`role="dialog"`, non-modal); `-head`, `-title`, `-body` |
+| Tooltip | `.fw-tooltip` (`role="tooltip"`, singleton, created on first show) |
 | Toast | `.fw-toast` + `-error` `-info` `-pending` (created by `toast.show`) |
 | List row | `.fw-list-row` (`.is-locked`), `-main`, `-title`, `-meta`; `.fw-sub-list` |
 | Disclosure | `details.fw-disclosure`, `-chevron`, `-count`, `-body` |
 | Pagination | `.fw-pagination`, `.fw-pag-info`, `.fw-pag-controls`, `.fw-pag-label`, `.fw-btn-page` |
-| Table | `.fw-table-wrap` (`.fw-table-sticky` + `--fw-table-max-height`) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
+| Table | `.fw-table-wrap` (`.fw-table-sticky`) > `.fw-table-scroll` (the scrolling region — carries `tabindex="0" role="region"`, bounded by `--fw-table-max-height` when sticky, kept separate from `.fw-table-wrap` so the scrollbar stays clipped to the card's rounded corners) > `.fw-table` (`-striped`, `-compact`); cells `.fw-table-num`, `.fw-table-actions`, `.fw-table-select`; `th[aria-sort] > .fw-table-sort`; rows `.fw-table-empty`, `.fw-table-loading`, `.is-selected`; `[aria-busy="true"]` dims the body |
 | Collapsible menu | `.fw-menu` (`-accordion`) > `.fw-menu-list` > `.fw-menu-item` (`.fw-menu-split`) > `.fw-menu-link` or `details.fw-menu-group` > `.fw-menu-summary` (`-icon`, `.is-current`) + nested `.fw-menu-list` or `.fw-menu-panel`; `[aria-current="page"]` marks the current link; `--fw-menu-indent`, `--fw-menu-row-h` |
 | Layout | `.fw-wrap`, `.fw-row`, `.fw-grid-2`, `.fw-sr-only` |
 
@@ -195,6 +197,8 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 | `input[data-fw-combobox]` | typeahead over the `<datalist>` in `list=` (↑ ↓ Enter Esc, `aria-activedescendant`) |
 | `[data-fw-open-modal="id"]` / `[data-fw-close-modal]` | modal with backdrop-click (drag-safe), Escape, focus return, scroll lock |
 | `[data-fw-open-drawer="id"]` / `[data-fw-close-drawer]` / `[data-fw-drawer-overlay="id"]` | same for drawers |
+| `[data-fw-popover-trigger="id"]` (+ `-placement`, `-offset`) / `[data-fw-popover-close]` | non-modal floating panel: flip/shift to stay in the viewport, Escape, outside-click, focus-out, and close-button dismissal, focus return to trigger |
+| `[data-fw-tooltip]` (+ `-placement`, `-offset`, `-delay`) | hover (with delay) or focus (instant) tooltip sourced from the trigger's `title`; hoverable per WCAG 1.4.13, dismisses on Escape |
 | `[data-fw-nav-toggle][aria-controls]` | dropdown open/close, outside-click and Escape |
 | `form[data-fw-loading]` | submit button gets a spinner + `data-fw-loading-text` label on submit |
 | `table[data-fw-table]` with `th[data-fw-sort]`, `input[data-fw-select-all]` / `[data-fw-select-row]` | client-side column sort (cycles `aria-sort`, honours `td[data-fw-sort-value]`), row selection with select-all + indeterminate, `.is-selected` / `aria-selected` on rows |
@@ -203,7 +207,7 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 Programmatic API:
 
 ```js
-import { theme, combobox, modal, nav, loading, toast, table, menu } from 'fernwell';
+import { theme, combobox, modal, nav, loading, toast, table, menu, popover, tooltip } from 'fernwell';
 
 theme.get();
 theme.set('dark');
@@ -229,9 +233,13 @@ table.selectAll(tableEl, false);
 menu.open(groupEl); menu.close(groupEl); menu.toggle(groupEl);   // groupEl = details.fw-menu-group
 menu.reveal(linkEl);                    // open every ancestor group of an element
 menu.expandAll(menuEl); menu.collapseAll(menuEl);
+const pop = popover(triggerEl, panelEl, { placement: 'bottom', offset: 8 });
+pop.open(); pop.close(); pop.toggle(); pop.destroy();
+const tip = tooltip(triggerEl, { placement: 'top', delay: 400 });
+tip.show(); tip.hide(); tip.destroy();
 ```
 
-Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal or drawer, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
+Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal, drawer, or popover, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
 
 ## Principles
 

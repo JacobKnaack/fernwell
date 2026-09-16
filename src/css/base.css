@@ -13,6 +13,16 @@
   transition: background var(--fw-motion-base) var(--fw-motion-ease), color var(--fw-motion-base) var(--fw-motion-ease);
 }
 
+/* Suppress every transition while theme.init() applies the stored/system
+   theme on load, so the very first data-theme write never visibly animates —
+   only a later user-triggered change (toggle click, live OS
+   prefers-color-scheme change) should glide. theme.ts sets/removes this
+   attribute on <html> around that first set() call. */
+[data-fw-theme-init],
+[data-fw-theme-init] * {
+  transition: none !important;
+}
+
 .fw-root,
 .fw-root *,
 .fw-root *::before,
@@ -55,6 +65,19 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* Reserves the page scrollbar's width the instant a modal/drawer locks
+   scroll (below), so removing the native scrollbar never changes available
+   content width — eliminates the "page jumps right when a modal opens" CLS.
+   Scoped via :has() so a page with .fw-scroll-lock inactive today has zero
+   footprint — no permanent global gutter reservation. Progressive
+   enhancement only: no Safari support for scrollbar-gutter, and :has()
+   itself needs Firefox 121+ (above this repo's own stated 113+ floor), so
+   older Firefox and all Safari versions keep today's behavior (jump still
+   happens) rather than gaining a broken partial fix. */
+html:has(body.fw-scroll-lock) {
+  scrollbar-gutter: stable;
 }
 
 /* Applied to <body> by the modal/drawer enhancers while an overlay is open. */

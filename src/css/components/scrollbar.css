@@ -1,0 +1,68 @@
+/* ---- scrollbar: token-colored, thin custom scrollbars for fernwell's
+   internal scroll regions (Modal, Drawer, Table). Each selector states its
+   own rule, same as every other .fw-* component — nothing here depends on
+   a global html-level default (see base.css's .fw-root note). .fw-root
+   additionally opts a whole page into the same treatment for its own
+   overflow areas, exactly like it already opts into background/text/font.
+   Firefox/modern Chromium: scrollbar-width + scrollbar-color. Older
+   WebKit/Chromium (below the scrollbar-color floor but still within this
+   repo's own README-stated baseline): the ::-webkit-scrollbar-* fallback
+   below covers the gap. */
+.fw-root,
+.fw-modal-scroll,
+.fw-drawer-body,
+.fw-table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--fw-scrollbar-thumb) var(--fw-scrollbar-track);
+}
+
+.fw-root::-webkit-scrollbar,
+.fw-modal-scroll::-webkit-scrollbar,
+.fw-drawer-body::-webkit-scrollbar,
+.fw-table-scroll::-webkit-scrollbar {
+  width: var(--fw-sp-2);
+  height: var(--fw-sp-2);
+}
+
+.fw-root::-webkit-scrollbar-track,
+.fw-modal-scroll::-webkit-scrollbar-track,
+.fw-drawer-body::-webkit-scrollbar-track {
+  background: var(--fw-scrollbar-track);
+}
+
+.fw-root::-webkit-scrollbar-thumb,
+.fw-modal-scroll::-webkit-scrollbar-thumb,
+.fw-drawer-body::-webkit-scrollbar-thumb,
+.fw-table-scroll::-webkit-scrollbar-thumb {
+  background-color: var(--fw-scrollbar-thumb);
+  border-radius: var(--fw-r-full);
+  border: 2px solid var(--fw-surface);
+}
+
+.fw-root::-webkit-scrollbar-thumb:hover,
+.fw-modal-scroll::-webkit-scrollbar-thumb:hover,
+.fw-drawer-body::-webkit-scrollbar-thumb:hover,
+.fw-table-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--fw-scrollbar-thumb-hover);
+}
+
+/* Table: force the track visible — tabular data must show there's more to
+   scroll; an invisible track (fine for Modal/Drawer) would hide that cue. */
+.fw-table-scroll {
+  scrollbar-color: var(--fw-scrollbar-thumb) var(--fw-bg-dim);
+}
+.fw-table-scroll::-webkit-scrollbar-track {
+  background: var(--fw-bg-dim);
+}
+
+/* Tabs: both orientations already hide their native scrollbar (tabs.css) —
+   unchanged here. Add a fade mask on each axis so there's a discoverability
+   cue where none exists today. Static two-edge mask only; no JS. */
+.fw-tablist:not([aria-orientation='vertical']) {
+  mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 24px, black calc(100% - 24px), transparent);
+}
+.fw-tablist[aria-orientation='vertical'] {
+  mask-image: linear-gradient(to bottom, transparent, black 24px, black calc(100% - 24px), transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 24px, black calc(100% - 24px), transparent);
+}
