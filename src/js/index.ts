@@ -7,6 +7,7 @@
  *                (add data-fw-no-init to the <script> tag to opt out).
  */
 import * as theme from './theme.js';
+import * as tokens from './tokens.js';
 import * as combobox from './combobox.js';
 import * as modal from './modal.js';
 import * as nav from './nav.js';
@@ -19,8 +20,16 @@ import * as popover from './popover.js';
 import * as tooltip from './tooltip.js';
 import * as tabs from './tabs.js';
 
-export { theme, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
-export type { Theme, TokenOverrides, TokenThemeOverrides } from './theme.js';
+export { theme, tokens, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
+export type { Theme } from './theme.js';
+export type { TokenName } from './_tokenData.js';
+export type {
+  TokenKey,
+  TokenOverrides,
+  TokenThemeOverrides,
+  SetTokensOptions,
+  TokensChangeDetail,
+} from './tokens.js';
 export type { ComboboxOptions, ComboboxInstance } from './combobox.js';
 export type { ToastVariant, ToastOptions } from './toast.js';
 export type { SortDirection, SortDetail, SelectDetail } from './table.js';
@@ -39,6 +48,7 @@ export const version = '__FW_VERSION__';
  */
 export function init(root: ParentNode = document): void {
   theme.init(root);
+  tokens.init(root);
   combobox.init(root);
   modal.init(root);
   nav.init(root);
@@ -55,6 +65,7 @@ const Fernwell = {
   version,
   init,
   theme,
+  tokens,
   combobox,
   modal,
   nav,

@@ -6,6 +6,7 @@
 <title>Fernwell — API usage</title>
 <meta name="description" content="Fernwell API usage: install the package, initialise its enhancers, and build your own components on the design system's tokens, classes and JavaScript API.">
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<script>try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -559,8 +560,10 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <tr><td><code>core</code></td><td><code>init(root?)</code></td><td>Wire every <code>data-fw-*</code> hook under <code>root</code> (default <code>document</code>). Idempotent.</td></tr>
           <tr><td><code>core</code></td><td><code>version</code></td><td>The installed version string.</td></tr>
           <tr><td><code>theme</code></td><td><code>get()</code><br><code>set(theme, { persist? })</code><br><code>toggle()</code></td><td>Read or apply <code>'light'</code> / <code>'dark'</code>; <code>set</code> persists to <code>localStorage['fw-theme']</code> unless <code>persist: false</code>.</td></tr>
-          <tr><td><code>theme</code></td><td><code>setTokens(tokens, { scope? })</code></td><td>Override seed tokens at runtime. Accepts <code>{ light, dark }</code> to split by theme; calls merge.</td></tr>
-          <tr><td><code>theme</code></td><td><code>resetTokens(scope?)</code><br><code>getToken(name, el?)</code></td><td>Clear runtime overrides (one scope or all); read a live, resolved value.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>setTokens(tokens, { scope?, persist? })</code><br><code>→ undo()</code></td><td>Override seed tokens at runtime; derived tokens follow, at <code>:root</code> and inside a <code>scope</code>. Accepts <code>{ light, dark }</code> to split by theme; calls merge. <code>persist: true</code> keeps the scope in <code>localStorage</code> for every page; the returned <code>undo()</code> reverts just this call.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>resetTokens(scope?)</code><br><code>getToken(name, el?)</code></td><td>Clear runtime overrides (one scope or all, persisted ones included); read a live, resolved value.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>restoreTokens()</code><br><code>init(root?)</code></td><td>Reload persisted overrides; <code>init</code> does that once, then wires the <code>data-fw-theme-tokens</code> / <code>data-fw-theme-scope</code> hooks.</td></tr>
+          <tr><td><code>theme</code></td><td><code>setTokens</code> · <code>resetTokens</code> · <code>getToken</code></td><td>Aliases of the <code>tokens</code> functions above, kept for existing code.</td></tr>
           <tr><td><code>toast</code></td><td><code>show(message, { variant?, duration? })</code><br><code>hide()</code></td><td>One reused bottom-right notice. Variants <code>success</code> <code>error</code> <code>info</code> <code>pending</code>; <code>duration: 0</code> keeps it up.</td></tr>
           <tr><td><code>modal</code></td><td><code>open(target, opener?)</code><br><code>close(target)</code><br><code>toggle(target)</code></td><td>Modals and drawers by id or element. Focus returns to <code>opener</code>.</td></tr>
           <tr><td><code>loading</code></td><td><code>setButtonLoading(btn, text?)</code><br><code>resetButtonLoading(btn)</code><br><code>resetAll(root?)</code></td><td>Spinner + label swap on a button; <code>resetAll</code> after a bfcache restore.</td></tr>
@@ -576,6 +579,8 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
         </table>
       </div>
     </div>
+    <p class="sec-note" style="margin-top:var(--fw-sp-5)">Persisted token overrides (<code>persist: true</code>) are applied by <code>init()</code>, which runs after your CSS. To apply them before first paint, inline this in <code>&lt;head&gt;</code> ahead of your stylesheet, next to the theme snippet:</p>
+    <pre><code>&lt;script&gt;try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}&lt;/script&gt;</code></pre>
   </section>
 
   <!-- HOOKS -->
@@ -589,6 +594,8 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <thead><tr><th scope="col">Attribute</th><th scope="col">Behaviour</th></tr></thead>
           <tbody>
           <tr><td><code>[data-fw-theme-toggle]</code></td><td>Flips <code>data-theme</code>, persists it, sets <code>aria-pressed</code>. Label and icon swap per theme via <code>data-fw-theme-label-light</code> / <code>-dark</code> and <code>data-fw-theme-icon-light</code> / <code>-dark</code>.</td></tr>
+          <tr><td><code>script[type=&quot;application/json&quot;][data-fw-theme-tokens]</code></td><td>Overrides tokens from a JSON object (flat, or <code>{ "light": {…}, "dark": {…} }</code>) — for this page only unless <code>data-fw-persist</code> is set, when it applies app-wide. <code>data-fw-scope="selector"</code> themes a subtree instead of the page.</td></tr>
+          <tr><td><code>[data-fw-theme-scope='{…}']</code></td><td>Themes just this element's subtree from a JSON object of tokens. Never persisted.</td></tr>
           <tr><td><code>[data-fw-icon=&quot;name&quot;]</code></td><td>Renders a built-in outline icon, sized in <code>em</code>, coloured by <code>currentColor</code>.</td></tr>
           <tr><td><code>[data-fw-open-modal=&quot;id&quot;]</code><br><code>[data-fw-close-modal]</code></td><td>Modal with drag-safe backdrop click, Escape, focus return and scroll lock.</td></tr>
           <tr><td><code>[data-fw-open-drawer=&quot;id&quot;]</code><br><code>[data-fw-close-drawer]</code></td><td>Same for drawers.</td></tr>
@@ -617,6 +624,7 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <thead><tr><th scope="col">Event</th><th scope="col">Dispatched from</th><th scope="col">detail</th></tr></thead>
           <tbody>
           <tr><td><code>fw:themechange</code></td><td>document</td><td><code>'light' | 'dark'</code></td></tr>
+          <tr><td><code>fw:tokenschange</code></td><td>document</td><td><code>{ scope? }</code> — absent when every scope changed</td></tr>
           <tr><td><code>fw:open · fw:close</code></td><td>modal, drawer, popover</td><td>—</td></tr>
           <tr><td><code>fw:sort</code></td><td>table</td><td><code>{ column, direction, th }</code></td></tr>
           <tr><td><code>fw:select</code></td><td>table</td><td><code>{ rows, all }</code></td></tr>

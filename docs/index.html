@@ -6,6 +6,7 @@
 <title>Fernwell — UI Design System</title>
 <meta name="description" content="Fernwell: the design system behind HunnyDo — tokens, components, motion, and voice, published as a standalone package.">
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<script>try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -105,8 +106,10 @@ toast.show('Invoice sent');</code></pre>
     </div>
     <dl class="kv" style="margin-top:var(--fw-sp-5)">
       <dt>CSS — static</dt><dd>Redeclare any seed after the stylesheet — it wins over both themes, no need to repeat it for <code>[data-theme="dark"]</code>: <code>:root { --fw-primary: #2266ff; }</code>. Set <code>[data-theme="dark"] { --fw-primary: #5c9dff; }</code> too if you want a different value in dark.</dd>
-      <dt>JS — runtime</dt><dd><code>Fernwell.theme.setTokens({ primary: '#2266ff' })</code> — same effect, applied on the fly. Pass <code>{ light: {…}, dark: {…} }</code> to split by theme, and <code>{ scope: '.tenant-acme' }</code> to theme one subtree instead of the whole page. <code>Fernwell.theme.resetTokens()</code> clears every runtime override; <code>Fernwell.theme.getToken('primary')</code> reads the live, resolved value.</dd>
-      <dt>Scoped example</dt><dd><code>Fernwell.theme.setTokens({ primary: '#a33' }, { scope: '.tenant-acme' })</code> retints just <code>.tenant-acme</code> — everything outside it keeps the default palette.</dd>
+      <dt>JS — runtime</dt><dd><code>Fernwell.tokens.setTokens({ primary: '#2266ff' })</code> — same effect, applied on the fly. Pass <code>{ light: {…}, dark: {…} }</code> to split by theme, and <code>{ scope: '.tenant-acme' }</code> to theme one subtree instead of the whole page. <code>Fernwell.tokens.resetTokens()</code> clears every runtime override; <code>Fernwell.tokens.getToken('primary')</code> reads the live, resolved value. (<code>Fernwell.theme.setTokens</code> and friends still work as aliases.)</dd>
+      <dt>Scoped example</dt><dd><code>Fernwell.tokens.setTokens({ primary: '#a33' }, { scope: '.tenant-acme' })</code> retints just <code>.tenant-acme</code> — hovers, tints and the focus ring included — and everything outside it keeps the default palette. It returns a function that undoes just that call, handy when a route unmounts.</dd>
+      <dt>Whole app</dt><dd>Add <code>{ persist: true }</code> and the overrides are saved to <code>localStorage</code> and applied on every page and reload: <code>Fernwell.tokens.setTokens({ primary: '#2266ff' }, { persist: true })</code>. To avoid a flash of the default palette, inline the pre-paint snippet from the <a href="api.html#javascript-api">API page</a> next to the theme one in your <code>&lt;head&gt;</code>.</dd>
+      <dt>This page only</dt><dd>Without <code>persist</code> an override lasts for the current page load. Declaratively: <code>&lt;script type="application/json" data-fw-theme-tokens&gt;{"primary":"#2266ff"}&lt;/script&gt;</code> themes that page; <code>&lt;section data-fw-theme-scope='{"secondary":"#a33"}'&gt;</code> themes just that section.</dd>
     </dl>
   </section>
 
