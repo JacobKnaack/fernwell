@@ -4,6 +4,11 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Fixed
+
+- **`import 'fernwell/css'` no longer fails type-checking** with "Cannot find module or type declarations for side-effect import". The `./css`, `./css/min`, and `./tokens.css` entries in the `exports` map now carry a `types` condition pointing at a new `dist/css.d.ts` stub, and a matching `typesVersions` map covers projects still on `moduleResolution: "node10"` (which ignores `exports`). The runtime target of each entry is unchanged.
+- **The main `fernwell` entry now type-checks under `moduleResolution: "node16"` / `"nodenext"`.** The generated `dist/index.d.ts` (and the other declaration files) re-exported components through extensionless relative paths such as `./modal`, which strict ESM resolution rejects with TS2834. Relative imports in `src/js` now use explicit `.js` extensions, so the emitted declarations resolve in every `moduleResolution` mode. No change for `bundler` or `node10` consumers.
+
 ## [0.4.0] — 2026-09-16
 
 ### Changed (breaking)

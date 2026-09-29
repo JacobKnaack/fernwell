@@ -37,11 +37,27 @@
       "import": "./dist/fernwell.esm.js",
       "require": "./dist/fernwell.cjs"
     },
-    "./css": "./dist/fernwell.css",
-    "./css/min": "./dist/fernwell.min.css",
-    "./tokens.css": "./dist/fernwell.tokens.css",
+    "./css": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.css"
+    },
+    "./css/min": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.min.css"
+    },
+    "./tokens.css": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.tokens.css"
+    },
     "./tokens.json": "./dist/tokens.json",
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "css": ["./dist/css.d.ts"],
+      "css/min": ["./dist/css.d.ts"],
+      "tokens.css": ["./dist/css.d.ts"]
+    }
   },
   "scripts": {
     "dev": "node scripts/dev.mjs",

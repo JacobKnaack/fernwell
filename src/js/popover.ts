@@ -32,7 +32,7 @@
  *
  * Events (bubbling, from the panel): `fw:open`, `fw:close`.
  */
-import { computePosition, bindOutsideDismiss, type Placement } from './_position';
+import { computePosition, bindOutsideDismiss, type Placement } from './_position.js';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';

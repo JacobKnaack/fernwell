@@ -48,6 +48,7 @@ await Promise.all([
 ]);
 
 copyFileSync(join(root, 'src/tokens/tokens.json'), join(dist, 'tokens.json'));
+copyFileSync(join(root, 'src/types/css.d.ts'), join(dist, 'css.d.ts'));
 
 // docs/ is served (and deployed) standalone, so it carries its own copy of dist/.
 const docsDist = join(root, 'docs/dist');

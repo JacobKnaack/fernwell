@@ -21,7 +21,7 @@
  * colours before this script runs at all, inline this before your CSS:
  *   <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
  */
-import { render as renderIcon } from './icon';
+import { render as renderIcon } from './icon.js';
 
 export type Theme = 'light' | 'dark';
 

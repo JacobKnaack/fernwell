@@ -35,7 +35,7 @@
  * mouseenter/mouseleave, and a short cancelable hide-grace timer covers the
  * gap while the pointer travels from trigger to bubble.
  */
-import { computePosition, type Placement } from './_position';
+import { computePosition, type Placement } from './_position.js';
 
 const SHOW_DELAY_DEFAULT = 400;
 const SKIP_DELAY_WINDOW = 300; // ms — adjacent-trigger instant-reopen window
