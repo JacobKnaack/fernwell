@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fernwell — API usage</title>
+<meta name="description" content="Fernwell API usage: install the package, initialise its enhancers, and build your own components on the design system's tokens, classes and JavaScript API.">
+<script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<script>try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="dist/fernwell.css">
+<link rel="stylesheet" href="styles/index.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/api.css">
+</head>
+<body class="fw-root">
+<div class="kit-toc-wrap">
+  <button type="button" class="kit-toc-toggle" data-fw-nav-toggle aria-controls="kit-toc" aria-expanded="false" aria-label="Toggle page navigation"></button>
+  <nav class="fw-menu kit-toc" aria-label="Docs navigation" data-fw-menu id="kit-toc">
+    <ul class="fw-menu-list kit-toc-pages">
+      <li class="fw-menu-item"><a class="fw-menu-link" href="index.html">Overview</a></li>
+      <li class="fw-menu-item"><a class="fw-menu-link" href="api.html" aria-current="page">API Usage</a></li>
+      <li class="fw-menu-item"><a class="fw-menu-link" href="components.html">Components</a></li>
+    </ul>
+    <p class="fw-eyebrow">On this page</p>
+  </nav>
+</div>
+<div class="kit-wrap demo-wrap">
+
+  <div class="intro">
+    <span class="fw-eyebrow">Design System · v<span id="fw-version-hero"></span></span>
+    <h1>API Usage</h1>
+    <p class="lede">Install Fernwell, wire up its enhancers, and build your own components from the same tokens, classes and JavaScript API the built-in ones use.</p>
+    <div class="fw-row api-hero-actions">
+      <button class="fw-btn fw-btn-ghost" data-fw-theme-toggle data-fw-theme-icon-dark="sun" data-fw-theme-icon-light="moon" data-fw-theme-label-dark="Preview light theme" data-fw-theme-label-light="Preview dark theme"><span class="fw-icon" data-fw-icon="moon" aria-hidden="true"></span>Preview dark theme</button>
+      <a class="fw-btn fw-btn-ghost" href="components.html">Component reference</a>
+    </div>
+  </div>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="kit-sec-head"><h2>Install</h2><span class="num">00</span></div>
+    <p class="sec-note">One package: design tokens, CSS components and a few small vanilla-JS enhancers. Pick whichever way of loading it fits your project — they all ship the same classes and the same API.</p>
+
+    <div class="install-grid">
+      <div class="install-block">
+        <h3>Script tag / CDN</h3>
+        <p>No build step. Exposes <code>window.Fernwell</code> and runs <code>Fernwell.init()</code> on <code>DOMContentLoaded</code>. Fernwell is <code>0.x</code>, so minors can break — pin the version in production.</p>
+        <pre><code>&lt;link rel="stylesheet" href="https://unpkg.com/fernwell@<span data-docs-version>latest</span>/dist/fernwell.min.css"&gt;
+&lt;script src="https://unpkg.com/fernwell@<span data-docs-version>latest</span>/dist/fernwell.iife.js"&gt;&lt;/script&gt;</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>npm + bundler</h3>
+        <p>ESM and CommonJS builds with TypeScript types. Nothing runs until you call <code>init()</code>.</p>
+        <pre><code>npm install fernwell</code></pre>
+        <pre><code>import 'fernwell/css';               // or 'fernwell/css/min'
+import { init, toast } from 'fernwell';
+
+init();                              // wires every data-fw-* hook on the page
+toast.show('Invoice sent');</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>CSS only</h3>
+        <p>Every component is plain CSS and custom properties; the JavaScript only adds behaviour. Import just the tokens if you only want the palette and scales.</p>
+        <pre><code>@import 'fernwell/css';          /* tokens + base + every component */
+@import 'fernwell/tokens.css';   /* just the custom properties */</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>Fonts</h3>
+        <p>Fonts aren't bundled. Add the three faces from Google Fonts (or self-host them) — each font token carries a system fallback stack either way.</p>
+        <pre><code>&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://fonts.gstatic.com" crossorigin&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@500;600&amp;display=swap" rel="stylesheet"&gt;</code></pre>
+      </div>
+
+      <div class="install-block">
+        <h3>Page setup</h3>
+        <p>Both optional. The inline script applies the saved or OS theme before first paint. <code>fw-root</code> opts the page into Fernwell's defaults; its resets use <code>:where()</code>, so any rule of yours wins.</p>
+        <pre><code>&lt;!-- in &lt;head&gt;, before the stylesheet: no flash of the wrong theme --&gt;
+&lt;script&gt;document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')&lt;/script&gt;
+
+&lt;!-- optional page defaults: Background, Text, Inter body, display headings --&gt;
+&lt;body class="fw-root"&gt;</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- INITIALISE -->
+  <section id="initialise">
+    <div class="kit-sec-head"><h2>Initialise</h2><span class="num">01</span></div>
+    <p class="sec-note">Everything interactive is progressive enhancement over plain HTML: mark it up with <code>data-fw-*</code> attributes and <code>init()</code> binds the behaviour. It only binds elements it hasn't seen, so it's safe to call as often as you like.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Initialisation patterns">
+          <button type="button" class="demo-tab" id="init-tab-after-injecting-markup" role="tab" aria-selected="true" aria-controls="init-panel-after-injecting-markup">After injecting markup</button>
+          <button type="button" class="demo-tab" id="init-tab-manual-start-cdn" role="tab" aria-selected="false" aria-controls="init-panel-manual-start-cdn" tabindex="-1">Manual start (CDN)</button>
+          <button type="button" class="demo-tab" id="init-tab-react" role="tab" aria-selected="false" aria-controls="init-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="init-panel-after-injecting-markup" role="tabpanel" aria-labelledby="init-tab-after-injecting-markup">
+<pre><code>// HTMX, Turbo, or a plain fetch-and-insert:
+const panel = document.querySelector('#client-panel');
+panel.innerHTML = await (await fetch('/clients/42')).text();
+
+Fernwell.init(panel);   // only the new elements get bound</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="init-panel-manual-start-cdn" role="tabpanel" aria-labelledby="init-tab-manual-start-cdn" hidden>
+<pre><code>&lt;script src="https://unpkg.com/fernwell@<span data-docs-version>latest</span>/dist/fernwell.iife.js" data-fw-no-init&gt;&lt;/script&gt;
+&lt;script&gt;
+  document.addEventListener('DOMContentLoaded', () =&gt; {
+    Fernwell.theme.set('light', { persist: false });  // your own setup first…
+    Fernwell.init();                                   // …then wire the hooks
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="init-panel-react" role="tabpanel" aria-labelledby="init-tab-react" hidden>
+<pre><code>import { useEffect, useRef } from 'react';
+import { init } from 'fernwell';
+
+// Wrap any subtree that uses data-fw-* hooks.
+export function Fernwelled({ children }) {
+  const ref = useRef(null);
+  useEffect(() =&gt; { init(ref.current); }, []);
+  return &lt;div ref={ref}&gt;{children}&lt;/div&gt;;
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <dl class="kv">
+      <dt>init(root?)</dt><dd>Runs every module's initialiser under <code>root</code>. Scope it to the element you just inserted rather than re-scanning the whole document.</dd>
+      <dt>Per-module init</dt><dd>Only need one enhancer? Each module has its own — <code>tabs.init(el)</code>, <code>menu.init(el)</code>, <code>icon.init(el)</code> — so a bundler can drop the rest.</dd>
+      <dt>data-fw-no-init</dt><dd>On the CDN script tag, skips the automatic <code>DOMContentLoaded</code> call so you can run setup first.</dd>
+    </dl>
+  </section>
+
+  <!-- BUILD YOUR OWN -->
+  <section id="build-your-own">
+    <div class="kit-sec-head"><h2>Build your own components</h2><span class="num">02</span></div>
+    <p class="sec-note">Fernwell is meant to be extended, not forked. A custom component that follows the rules below inherits dark mode, retheming and the system's shape and motion for free — and keeps working when you upgrade.</p>
+
+    <div class="fw-card api-rules">
+      <dl class="kv">
+        <dt>Use your own prefix</dt><dd>Name classes and hooks <code>acme-*</code> / <code>data-acme-*</code>. The <code>fw-</code> namespace belongs to the package, and any rename there is a semver change you'd collide with.</dd>
+        <dt>Compose first</dt><dd>Start from <code>.fw-card</code>, <code>.fw-btn</code>, <code>.fw-tag</code>, <code>.fw-icon</code>… and add only what's missing. Never restyle an <code>fw-</code> class globally.</dd>
+        <dt>Tokens, never values</dt><dd>Every colour, space, radius, font, shadow and duration is a <code>--fw-*</code> property. A raw hex is the one thing that won't follow dark mode or a retheme.</dd>
+        <dt>Seeds, not derived</dt><dd>Read any token, but only override seeds (<code>--fw-primary</code>, not <code>--fw-primary-hover</code>).</dd>
+        <dt>Shape by size</dt><dd>Inputs <code>--fw-r-sm</code>, buttons <code>-md</code>, cards <code>-lg</code>, modals <code>-xl</code>. Borders are always <code>--fw-border-w</code>.</dd>
+        <dt>State is visible</dt><dd>Use <code>is-*</code> classes and ARIA attributes for state, and emit bubbling <code>acme:*</code> events the way Fernwell emits <code>fw:*</code>.</dd>
+      </dl>
+    </div>
+
+    <div class="api-steps">
+
+      <div class="api-step">
+        <h3>Compose with tokens</h3>
+        <p>A pricing card built entirely from <code>.fw-card</code>, <code>.fw-tag</code>, <code>.fw-btn</code> and the icon set, plus about forty lines of token-only CSS. No JavaScript beyond the <code>init()</code> that renders the icons. Toggle the theme above — nothing here needed a dark-mode rule.</p>
+        <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Plan card source">
+          <button type="button" class="demo-tab" id="plan-tab-html" role="tab" aria-selected="true" aria-controls="plan-panel-html">HTML</button>
+          <button type="button" class="demo-tab" id="plan-tab-css" role="tab" aria-selected="false" aria-controls="plan-panel-css" tabindex="-1">CSS</button>
+          <button type="button" class="demo-tab" id="plan-tab-react" role="tab" aria-selected="false" aria-controls="plan-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="plan-panel-html" role="tabpanel" aria-labelledby="plan-tab-html">
+<pre><code>&lt;div class="acme-plans"&gt;
+  &lt;article class="fw-card acme-plan"&gt;
+    &lt;header class="acme-plan-head"&gt;
+      &lt;h4 class="acme-plan-name"&gt;Starter&lt;/h4&gt;
+    &lt;/header&gt;
+    &lt;p class="acme-plan-price"&gt;&lt;span class="acme-plan-amount"&gt;$0&lt;/span&gt; / month&lt;/p&gt;
+    &lt;ul class="acme-plan-features"&gt;
+      &lt;li&gt;&lt;span class="fw-icon" data-fw-icon="check" aria-hidden="true"&gt;&lt;/span&gt;5 invoices a month&lt;/li&gt;
+      &lt;li&gt;&lt;span class="fw-icon" data-fw-icon="check" aria-hidden="true"&gt;&lt;/span&gt;Email reminders&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button type="button" class="fw-btn fw-btn-ghost"&gt;Stay on Starter&lt;/button&gt;
+  &lt;/article&gt;
+
+  &lt;article class="fw-card acme-plan is-featured"&gt;
+    &lt;header class="acme-plan-head"&gt;
+      &lt;h4 class="acme-plan-name"&gt;Studio&lt;/h4&gt;
+      &lt;span class="fw-tag fw-tag-secondary"&gt;Popular&lt;/span&gt;
+    &lt;/header&gt;
+    &lt;p class="acme-plan-price"&gt;&lt;span class="acme-plan-amount"&gt;$24&lt;/span&gt; / month&lt;/p&gt;
+    &lt;ul class="acme-plan-features"&gt;
+      &lt;li&gt;&lt;span class="fw-icon" data-fw-icon="check" aria-hidden="true"&gt;&lt;/span&gt;Unlimited invoices&lt;/li&gt;
+      &lt;li&gt;&lt;span class="fw-icon" data-fw-icon="check" aria-hidden="true"&gt;&lt;/span&gt;Automatic card charges&lt;/li&gt;
+      &lt;li&gt;&lt;span class="fw-icon" data-fw-icon="check" aria-hidden="true"&gt;&lt;/span&gt;Client checklists&lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button type="button" class="fw-btn fw-btn-primary"&gt;Start Studio&lt;/button&gt;
+  &lt;/article&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="plan-panel-css" role="tabpanel" aria-labelledby="plan-tab-css" hidden>
+<pre><code>.acme-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--fw-sp-5);
+  width: 100%;
+}
+
+.acme-plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-4);
+}
+
+.acme-plan.is-featured {
+  border-color: var(--fw-primary);
+  box-shadow: var(--fw-shadow-md);
+}
+
+.acme-plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fw-sp-3);
+}
+
+.acme-plan-name {
+  font-family: var(--fw-font-display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.acme-plan-price {
+  font-size: 14px;
+  color: var(--fw-text-soft);
+}
+
+.acme-plan-amount {
+  font-family: var(--fw-font-display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--fw-text);
+}
+
+.acme-plan-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--fw-sp-2);
+  font-size: 14px;
+}
+
+.acme-plan-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+}
+
+.acme-plan-features .fw-icon {
+  color: var(--fw-success);
+}
+
+.acme-plan .fw-btn {
+  margin-top: auto;
+}</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="plan-panel-react" role="tabpanel" aria-labelledby="plan-tab-react" hidden>
+<pre><code>import { useEffect, useRef } from 'react';
+import { icon } from 'fernwell';
+
+export function PlanCard({ name, price, features, featured = false, tag, cta, onChoose }) {
+  const ref = useRef(null);
+  // Render the check glyphs once the markup is in the DOM.
+  useEffect(() =&gt; { icon.init(ref.current); }, [features]);
+
+  return (
+    &lt;article ref={ref} className={`fw-card acme-plan${featured ? ' is-featured' : ''}`}&gt;
+      &lt;header className="acme-plan-head"&gt;
+        &lt;h4 className="acme-plan-name"&gt;{name}&lt;/h4&gt;
+        {tag &amp;&amp; &lt;span className="fw-tag fw-tag-secondary"&gt;{tag}&lt;/span&gt;}
+      &lt;/header&gt;
+      &lt;p className="acme-plan-price"&gt;
+        &lt;span className="acme-plan-amount"&gt;{price}&lt;/span&gt; / month
+      &lt;/p&gt;
+      &lt;ul className="acme-plan-features"&gt;
+        {features.map((f) =&gt; (
+          &lt;li key={f}&gt;&lt;span className="fw-icon" data-fw-icon="check" aria-hidden="true" /&gt;{f}&lt;/li&gt;
+        ))}
+      &lt;/ul&gt;
+      {/* Only one Primary per view — the featured plan gets it. */}
+      &lt;button type="button" className={`fw-btn ${featured ? 'fw-btn-primary' : 'fw-btn-ghost'}`} onClick={onChoose}&gt;
+        {cta}
+      &lt;/button&gt;
+    &lt;/article&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+        <div class="demo-render">
+          <p class="demo-render-label">Render</p>
+          <div class="demo-render-surface is-block">
+<div class="acme-plans">
+  <article class="fw-card acme-plan">
+    <header class="acme-plan-head">
+      <h4 class="acme-plan-name">Starter</h4>
+    </header>
+    <p class="acme-plan-price"><span class="acme-plan-amount">$0</span> / month</p>
+    <ul class="acme-plan-features">
+      <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span>5 invoices a month</li>
+      <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span>Email reminders</li>
+    </ul>
+    <button type="button" class="fw-btn fw-btn-ghost">Stay on Starter</button>
+  </article>
+
+  <article class="fw-card acme-plan is-featured">
+    <header class="acme-plan-head">
+      <h4 class="acme-plan-name">Studio</h4>
+      <span class="fw-tag fw-tag-secondary">Popular</span>
+    </header>
+    <p class="acme-plan-price"><span class="acme-plan-amount">$24</span> / month</p>
+    <ul class="acme-plan-features">
+      <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span>Unlimited invoices</li>
+      <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span>Automatic card charges</li>
+      <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span>Client checklists</li>
+    </ul>
+    <button type="button" class="fw-btn fw-btn-primary">Start Studio</button>
+  </article>
+</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-step">
+        <h3>Add behaviour with the JS API</h3>
+        <p>A copy-to-clipboard field. The markup reuses <code>.fw-icon-btn</code> and a <code>data-fw-tooltip</code>; a small enhancer follows Fernwell's own pattern — scan for a <code>data-acme-*</code> hook, skip bound elements, then call <code>icon.render()</code> and <code>toast.show()</code> from the public API.</p>
+        <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Copy field source">
+          <button type="button" class="demo-tab" id="copy-tab-html" role="tab" aria-selected="true" aria-controls="copy-panel-html">HTML</button>
+          <button type="button" class="demo-tab" id="copy-tab-css" role="tab" aria-selected="false" aria-controls="copy-panel-css" tabindex="-1">CSS</button>
+          <button type="button" class="demo-tab" id="copy-tab-js" role="tab" aria-selected="false" aria-controls="copy-panel-js" tabindex="-1">JS</button>
+          <button type="button" class="demo-tab" id="copy-tab-cdn" role="tab" aria-selected="false" aria-controls="copy-panel-cdn" tabindex="-1">CDN</button>
+          <button type="button" class="demo-tab" id="copy-tab-react" role="tab" aria-selected="false" aria-controls="copy-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="copy-panel-html" role="tabpanel" aria-labelledby="copy-tab-html">
+<pre><code>&lt;div class="acme-copy" data-acme-copy&gt;
+  &lt;input class="acme-copy-value" type="text" readonly
+         value="https://pay.acme.co/i/INV-04821" aria-label="Invoice link"&gt;
+  &lt;button type="button" class="fw-icon-btn" data-acme-copy-button
+          aria-label="Copy link" title="Copy link" data-fw-tooltip&gt;
+    &lt;span class="fw-icon" data-fw-icon="copy" aria-hidden="true"&gt;&lt;/span&gt;
+  &lt;/button&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="copy-panel-css" role="tabpanel" aria-labelledby="copy-tab-css" hidden>
+<pre><code>.acme-copy {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--fw-sp-1) var(--fw-sp-1) var(--fw-sp-1) var(--fw-sp-3);
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  border-radius: var(--fw-r-sm);
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease),
+              box-shadow var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.acme-copy:focus-within {
+  border-color: var(--fw-primary);
+  box-shadow: var(--fw-focus-ring);
+}
+
+.acme-copy.is-copied {
+  border-color: var(--fw-success);
+}
+
+.acme-copy-value {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font-family: var(--fw-font-mono);
+  font-size: 13px;
+  color: var(--fw-text);
+  text-overflow: ellipsis;
+}
+
+.acme-copy-value:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acme-copy {
+    transition: none;
+  }
+}</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="copy-panel-js" role="tabpanel" aria-labelledby="copy-tab-js" hidden>
+<pre><code>// acme-copy.js — a custom enhancer written the same way Fernwell's own are.
+import { init, icon, toast } from 'fernwell';
+
+export function initCopy(root = document) {
+  root.querySelectorAll('[data-acme-copy]').forEach((el) =&gt; {
+    if (el.dataset.acmeBound) return;         // idempotent, like Fernwell's init()
+    el.dataset.acmeBound = '1';
+
+    const input = el.querySelector('input');
+    const button = el.querySelector('[data-acme-copy-button]');
+    const glyph = button.querySelector('.fw-icon');
+
+    button.addEventListener('click', async () =&gt; {
+      try {
+        await navigator.clipboard.writeText(input.value);
+      } catch {
+        input.select();
+        toast.show("Couldn't reach the clipboard. The link is selected — press Ctrl+C.", { variant: 'error' });
+        return;
+      }
+      el.classList.add('is-copied');           // state as an is-* class
+      glyph.innerHTML = icon.render('check');  // swap to a built-in icon
+      toast.show('Link copied');               // voice: echo the action
+      el.dispatchEvent(new CustomEvent('acme:copy', { bubbles: true, detail: { value: input.value } }));
+
+      setTimeout(() =&gt; {
+        el.classList.remove('is-copied');
+        glyph.innerHTML = icon.render('copy');
+      }, 1500);
+    });
+  });
+}
+
+init();       // Fernwell: icons, tooltip, theme toggle…
+initCopy();   // yours — call both again after injecting markup</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="copy-panel-cdn" role="tabpanel" aria-labelledby="copy-tab-cdn" hidden>
+<pre><code>&lt;!-- No bundler? Same code against the global. --&gt;
+&lt;script src="https://unpkg.com/fernwell@<span data-docs-version>latest</span>/dist/fernwell.iife.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+  const { icon, toast } = window.Fernwell;   // auto-initialised on DOMContentLoaded
+
+  document.addEventListener('DOMContentLoaded', () =&gt; {
+    document.querySelectorAll('[data-acme-copy]').forEach((el) =&gt; {
+      /* …same body as the npm version… */
+    });
+  });
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="copy-panel-react" role="tabpanel" aria-labelledby="copy-tab-react" hidden>
+<pre><code>import { useEffect, useRef, useState } from 'react';
+import { init, icon, toast } from 'fernwell';
+
+export function CopyField({ value, label }) {
+  const ref = useRef(null);
+  const [copied, setCopied] = useState(false);
+
+  // Let Fernwell wire the icon + tooltip inside this subtree.
+  useEffect(() =&gt; { init(ref.current); }, []);
+
+  async function copy() {
+    try {
+      await navigator.clipboard.writeText(value);
+      setCopied(true);
+      toast.show('Link copied');
+      setTimeout(() =&gt; setCopied(false), 1500);
+    } catch {
+      toast.show("Couldn't reach the clipboard. Select the link and press Ctrl+C.", { variant: 'error' });
+    }
+  }
+
+  return (
+    &lt;div ref={ref} className={`acme-copy${copied ? ' is-copied' : ''}`}&gt;
+      &lt;input className="acme-copy-value" type="text" readOnly value={value} aria-label={label} /&gt;
+      &lt;button type="button" className="fw-icon-btn" onClick={copy}
+              aria-label="Copy link" title="Copy link" data-fw-tooltip&gt;
+        &lt;span className="fw-icon" dangerouslySetInnerHTML={{ __html: icon.render(copied ? 'check' : 'copy') }} /&gt;
+      &lt;/button&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+        <div class="demo-render" id="custom-demo">
+          <p class="demo-render-label">Render</p>
+          <div class="fw-card demo-render-surface is-stack">
+<div class="acme-copy" data-acme-copy>
+  <input class="acme-copy-value" type="text" readonly
+         value="https://pay.acme.co/i/INV-04821" aria-label="Invoice link">
+  <button type="button" class="fw-icon-btn" data-acme-copy-button
+          aria-label="Copy link" title="Copy link" data-fw-tooltip>
+    <span class="fw-icon" data-fw-icon="copy" aria-hidden="true"></span>
+  </button>
+</div>
+            <div class="fw-row">
+              <button type="button" class="fw-btn fw-btn-primary">Send invoice</button>
+              <button type="button" class="fw-btn fw-btn-secondary">Save as draft</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="api-step">
+        <h3>Theme it</h3>
+        <p>Because the components above only read tokens, retheming them is one declaration. Override seeds statically in CSS, or at runtime with <code>tokens.setTokens()</code> — optionally scoped to one subtree. Try it on the copy-field demo:</p>
+        <div class="fw-row api-demo-actions">
+          <button type="button" class="fw-btn fw-btn-ghost" id="retheme-demo">Retheme the copy-field demo</button>
+          <button type="button" class="fw-btn fw-btn-ghost" id="reset-demo">Reset</button>
+          <span class="fw-hint" id="retheme-readout" aria-live="polite"></span>
+        </div>
+        <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Theming source">
+          <button type="button" class="demo-tab" id="theme-tab-css-static" role="tab" aria-selected="true" aria-controls="theme-panel-css-static">CSS — static</button>
+          <button type="button" class="demo-tab" id="theme-tab-js-runtime" role="tab" aria-selected="false" aria-controls="theme-panel-js-runtime" tabindex="-1">JS — runtime</button>
+        </div>
+        <div class="demo-tabpanel" id="theme-panel-css-static" role="tabpanel" aria-labelledby="theme-tab-css-static">
+<pre><code>/* Whole app: redeclare a seed after Fernwell's CSS.
+   Hovers, tints and the focus ring follow in both themes. */
+:root {
+  --fw-primary: #2f7de1;
+  --fw-secondary: #1e6b5c;
+}
+
+/* Only where you want a different dark value: */
+[data-theme="dark"] {
+  --fw-secondary: #3fa58f;
+}</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="theme-panel-js-runtime" role="tabpanel" aria-labelledby="theme-tab-js-runtime" hidden>
+<pre><code>import { tokens } from 'fernwell';
+
+// Runtime, one subtree — e.g. a tenant's brand or a live preview.
+tokens.setTokens(
+  { primary: '#2f7de1', secondary: '#1e6b5c' },
+  { scope: '#custom-demo' }
+);
+
+tokens.getToken('primary');        // → the live, resolved value
+tokens.resetTokens('#custom-demo'); // clear just that scope</code></pre>
+        </div>
+      </div>
+    </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- JS API -->
+  <section id="javascript-api">
+    <div class="kit-sec-head"><h2>JavaScript API</h2><span class="num">03</span></div>
+    <p class="sec-note">Every module is a named export (<code>import { toast } from 'fernwell'</code>) and a property of <code>window.Fernwell</code> on the CDN build. Types ship with the package.</p>
+    <div class="fw-table-wrap">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="api-table-cap">
+        <table class="fw-table fw-table-compact fw-table-striped api-ref-table">
+          <caption id="api-table-cap" class="fw-sr-only">Fernwell JavaScript API</caption>
+          <thead><tr><th scope="col">Module</th><th scope="col">Call</th><th scope="col">What it does</th></tr></thead>
+          <tbody>
+          <tr><td><code>core</code></td><td><code>init(root?)</code></td><td>Wire every <code>data-fw-*</code> hook under <code>root</code> (default <code>document</code>). Idempotent.</td></tr>
+          <tr><td><code>core</code></td><td><code>version</code></td><td>The installed version string.</td></tr>
+          <tr><td><code>theme</code></td><td><code>get()</code><br><code>set(theme, { persist? })</code><br><code>toggle()</code></td><td>Read or apply <code>'light'</code> / <code>'dark'</code>; <code>set</code> persists to <code>localStorage['fw-theme']</code> unless <code>persist: false</code>.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>setTokens(tokens, { scope?, persist? })</code><br><code>→ undo()</code></td><td>Override seed tokens at runtime; derived tokens follow, at <code>:root</code> and inside a <code>scope</code>. Accepts <code>{ light, dark }</code> to split by theme; calls merge. <code>persist: true</code> keeps the scope in <code>localStorage</code> for every page; the returned <code>undo()</code> reverts just this call.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>resetTokens(scope?)</code><br><code>getToken(name, el?)</code></td><td>Clear runtime overrides (one scope or all, persisted ones included); read a live, resolved value.</td></tr>
+          <tr><td><code>tokens</code></td><td><code>restoreTokens()</code><br><code>init(root?)</code></td><td>Reload persisted overrides; <code>init</code> does that once, then wires the <code>data-fw-theme-tokens</code> / <code>data-fw-theme-scope</code> hooks.</td></tr>
+          <tr><td><code>theme</code></td><td><code>setTokens</code> · <code>resetTokens</code> · <code>getToken</code></td><td>Aliases of the <code>tokens</code> functions above, kept for existing code.</td></tr>
+          <tr><td><code>toast</code></td><td><code>show(message, { variant?, duration? })</code><br><code>hide()</code></td><td>One reused bottom-right notice. Variants <code>success</code> <code>error</code> <code>info</code> <code>pending</code>; <code>duration: 0</code> keeps it up.</td></tr>
+          <tr><td><code>modal</code></td><td><code>open(target, opener?)</code><br><code>close(target)</code><br><code>toggle(target)</code></td><td>Modals and drawers by id or element. Focus returns to <code>opener</code>.</td></tr>
+          <tr><td><code>loading</code></td><td><code>setButtonLoading(btn, text?)</code><br><code>resetButtonLoading(btn)</code><br><code>resetAll(root?)</code></td><td>Spinner + label swap on a button; <code>resetAll</code> after a bfcache restore.</td></tr>
+          <tr><td><code>nav</code></td><td><code>open(toggle)</code><br><code>close(toggle)</code></td><td>Drive a <code>[data-fw-nav-toggle]</code> dropdown or drawer.</td></tr>
+          <tr><td><code>combobox</code></td><td><code>combobox(input, { options, onSelect })</code><br><code>→ { setOptions, destroy }</code></td><td>Typeahead over a list of strings.</td></tr>
+          <tr><td><code>table</code></td><td><code>sort(table, col, dir)</code><br><code>getSelected(table)</code><br><code>selectAll(table, on)</code></td><td>Client-side sort (<code>'ascending'</code> / <code>'descending'</code>) and row selection.</td></tr>
+          <tr><td><code>menu</code></td><td><code>open(group)</code><br><code>close(group)</code><br><code>toggle(group)</code><br><code>reveal(el)</code><br><code>expandAll(menu)</code><br><code>collapseAll(menu)</code></td><td>Control a <code>.fw-menu</code> tree; <code>reveal</code> opens every ancestor group.</td></tr>
+          <tr><td><code>popover</code></td><td><code>popover(trigger, panel, { placement?, offset? })</code><br><code>→ { open, close, toggle, destroy }</code></td><td>Non-modal floating panel that flips and shifts to stay on screen.</td></tr>
+          <tr><td><code>tooltip</code></td><td><code>tooltip(trigger, { placement?, delay? })</code><br><code>→ { show, hide, destroy }</code></td><td>Hover/focus bubble sourced from the trigger's <code>title</code>.</td></tr>
+          <tr><td><code>tabs</code></td><td><code>tabs(tablist, { activation? })</code><br><code>→ { activate, destroy }</code></td><td>Roving-tabindex tablist; <code>'automatic'</code> or <code>'manual'</code> activation.</td></tr>
+          <tr><td><code>icon</code></td><td><code>render(name)</code><br><code>init(root?)</code></td><td>SVG markup for a built-in icon; <code>init</code> fills every <code>[data-fw-icon]</code>.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="sec-note" style="margin-top:var(--fw-sp-5)">Persisted token overrides (<code>persist: true</code>) are applied by <code>init()</code>, which runs after your CSS. To apply them before first paint, inline this in <code>&lt;head&gt;</code> ahead of your stylesheet, next to the theme snippet:</p>
+    <pre><code>&lt;script&gt;try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}&lt;/script&gt;</code></pre>
+  </section>
+
+  <!-- HOOKS -->
+  <section id="declarative-hooks">
+    <div class="kit-sec-head"><h2>Declarative hooks</h2><span class="num">04</span></div>
+    <p class="sec-note">The markup-only side of the API: what <code>init()</code> looks for. Anything you can do with a hook you can also do from JavaScript with the module above.</p>
+    <div class="fw-table-wrap">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="hooks-table-cap">
+        <table class="fw-table fw-table-compact fw-table-striped api-ref-table">
+          <caption id="hooks-table-cap" class="fw-sr-only">Fernwell data attributes</caption>
+          <thead><tr><th scope="col">Attribute</th><th scope="col">Behaviour</th></tr></thead>
+          <tbody>
+          <tr><td><code>[data-fw-theme-toggle]</code></td><td>Flips <code>data-theme</code>, persists it, sets <code>aria-pressed</code>. Label and icon swap per theme via <code>data-fw-theme-label-light</code> / <code>-dark</code> and <code>data-fw-theme-icon-light</code> / <code>-dark</code>.</td></tr>
+          <tr><td><code>script[type=&quot;application/json&quot;][data-fw-theme-tokens]</code></td><td>Overrides tokens from a JSON object (flat, or <code>{ "light": {…}, "dark": {…} }</code>) — for this page only unless <code>data-fw-persist</code> is set, when it applies app-wide. <code>data-fw-scope="selector"</code> themes a subtree instead of the page.</td></tr>
+          <tr><td><code>[data-fw-theme-scope='{…}']</code></td><td>Themes just this element's subtree from a JSON object of tokens. Never persisted; undone on the next <code>init()</code> after the element is removed.</td></tr>
+          <tr><td><code>[data-fw-icon=&quot;name&quot;]</code></td><td>Renders a built-in outline icon, sized in <code>em</code>, coloured by <code>currentColor</code>.</td></tr>
+          <tr><td><code>[data-fw-open-modal=&quot;id&quot;]</code><br><code>[data-fw-close-modal]</code></td><td>Modal with drag-safe backdrop click, Escape, focus return and scroll lock.</td></tr>
+          <tr><td><code>[data-fw-open-drawer=&quot;id&quot;]</code><br><code>[data-fw-close-drawer]</code></td><td>Same for drawers.</td></tr>
+          <tr><td><code>[data-fw-popover-trigger=&quot;id&quot;]</code></td><td>Anchors a <code>.fw-popover</code>; <code>data-fw-popover-placement</code>, <code>data-fw-popover-offset</code>; closes on Escape or outside click.</td></tr>
+          <tr><td><code>[data-fw-tooltip]</code></td><td>Tooltip from the trigger’s <code>title</code>; <code>data-fw-tooltip-placement</code>, <code>-offset</code>, <code>-delay</code>.</td></tr>
+          <tr><td><code>[data-fw-nav-toggle][aria-controls]</code></td><td>Dropdown / off-canvas open and close with outside click and Escape.</td></tr>
+          <tr><td><code>form[data-fw-loading]</code></td><td>Submit button shows a spinner and <code>data-fw-loading-text</code> on submit.</td></tr>
+          <tr><td><code>input[data-fw-combobox][list]</code></td><td>Typeahead over a native <code>&lt;datalist&gt;</code>.</td></tr>
+          <tr><td><code>table[data-fw-table]</code></td><td>Sort on <code>th[data-fw-sort]</code>; selection via <code>[data-fw-select-all]</code> / <code>[data-fw-select-row]</code>.</td></tr>
+          <tr><td><code>.fw-menu[data-fw-menu]</code></td><td>Arrow-key tree navigation, auto-reveals <code>[aria-current]</code>; <code>data-fw-menu-exclusive</code> for accordions.</td></tr>
+          <tr><td><code>[role=&quot;tablist&quot;][data-fw-tabs]</code></td><td>Tabs with roving tabindex; <code>data-fw-tabs-activation="manual"</code> to opt out of select-on-arrow.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section id="events">
+    <div class="kit-sec-head"><h2>Events</h2><span class="num">05</span></div>
+    <p class="sec-note">All bubble, so one listener on a container covers every instance inside it. Your own components should follow the same shape: a namespaced name and a <code>detail</code> object.</p>
+    <div class="fw-table-wrap">
+      <div class="fw-table-scroll" tabindex="0" role="region" aria-labelledby="events-table-cap">
+        <table class="fw-table fw-table-compact fw-table-striped api-ref-table">
+          <caption id="events-table-cap" class="fw-sr-only">Fernwell events</caption>
+          <thead><tr><th scope="col">Event</th><th scope="col">Dispatched from</th><th scope="col">detail</th></tr></thead>
+          <tbody>
+          <tr><td><code>fw:themechange</code></td><td>document</td><td><code>'light' | 'dark'</code></td></tr>
+          <tr><td><code>fw:tokenschange</code></td><td>document</td><td><code>{ scope? }</code> — absent when every scope changed</td></tr>
+          <tr><td><code>fw:open · fw:close</code></td><td>modal, drawer, popover</td><td>—</td></tr>
+          <tr><td><code>fw:sort</code></td><td>table</td><td><code>{ column, direction, th }</code></td></tr>
+          <tr><td><code>fw:select</code></td><td>table</td><td><code>{ rows, all }</code></td></tr>
+          <tr><td><code>fw:toggle</code></td><td>.fw-menu-group</td><td><code>{ group, open }</code></td></tr>
+          <tr><td><code>fw:tabs-change</code></td><td>tablist</td><td><code>{ tab, panel }</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section id="checklist">
+    <div class="kit-sec-head"><h2>Before you ship a component</h2><span class="num">06</span></div>
+    <div class="fw-card">
+      <ul class="api-checklist">
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>It looks right in both themes with no <code>[data-theme="dark"]</code> rule of its own.</span></li>
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>Changing <code>--fw-primary</code> in the Theming editor on the Overview page retints it.</span></li>
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>It's fully usable by keyboard, focus shows <code>--fw-focus-ring</code>, and icon-only buttons have an <code>aria-label</code>.</span></li>
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>Transitions use <code>--fw-motion-fast</code> / <code>-base</code> and drop to none under <code>prefers-reduced-motion</code>.</span></li>
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>Its enhancer can run twice on the same element without double-binding.</span></li>
+        <li><span class="fw-icon" data-fw-icon="check" aria-hidden="true"></span><span>Copy follows the Voice rules: buttons name the action, errors say what to do next.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <p class="kit-note">Fernwell v<span id="fw-version"></span> — the example components on this page live in <code>styles/api.css</code> and use nothing but public <code>--fw-*</code> tokens, <code>fw-</code> classes and the exported API. That's the whole contract.</p>
+</div>
+
+<script src="dist/fernwell.iife.js"></script>
+<script src="scripts/components.js"></script>
+<script>
+  document.getElementById('fw-version').textContent = Fernwell.version;
+  document.getElementById('fw-version-hero').textContent = Fernwell.version;
+  document.querySelectorAll('[data-docs-version]').forEach((el) => { el.textContent = Fernwell.version; });
+
+  // ---- acme-copy: the example enhancer from "Add behaviour with the JS API" ----
+  (() => {
+    const { icon, toast } = Fernwell;
+    document.querySelectorAll('[data-acme-copy]').forEach((el) => {
+      if (el.dataset.acmeBound) return;
+      el.dataset.acmeBound = '1';
+      const input = el.querySelector('input');
+      const button = el.querySelector('[data-acme-copy-button]');
+      const glyph = button.querySelector('.fw-icon');
+      button.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(input.value);
+        } catch {
+          input.select();
+          toast.show("Couldn't reach the clipboard. The link is selected — press Ctrl+C.", { variant: 'error' });
+          return;
+        }
+        el.classList.add('is-copied');
+        glyph.innerHTML = icon.render('check');
+        toast.show('Link copied');
+        el.dispatchEvent(new CustomEvent('acme:copy', { bubbles: true, detail: { value: input.value } }));
+        setTimeout(() => {
+          el.classList.remove('is-copied');
+          glyph.innerHTML = icon.render('copy');
+        }, 1500);
+      });
+    });
+  })();
+
+  // ---- scoped runtime theming demo ----
+  (() => {
+    const scope = '#custom-demo';
+    const readout = document.getElementById('retheme-readout');
+    const target = document.querySelector(scope);
+    const show = () => { readout.textContent = '--fw-primary here: ' + Fernwell.tokens.getToken('primary', target); };
+    document.getElementById('retheme-demo').addEventListener('click', () => {
+      Fernwell.tokens.setTokens({ primary: '#2f7de1', secondary: '#1e6b5c', 'on-primary': '#ffffff' }, { scope });
+      show();
+    });
+    document.getElementById('reset-demo').addEventListener('click', () => {
+      Fernwell.tokens.resetTokens(scope);
+      show();
+    });
+  })();
+
+  // on-page navigation: an fw-menu built from this page's own h2 sections,
+  // nesting any bare (unclassed) h3 as children — the install methods and
+  // the build-your-own steps.
+  (() => {
+    const toc = document.getElementById('kit-toc');
+    if (!toc) return;
+    const slugify = (text) => text.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const slugTaken = new Set();
+    const uniqueSlug = (text) => {
+      let slug = slugify(text), n = 2;
+      while (slugTaken.has(slug) || document.getElementById(slug)) slug = `${slugify(text)}-${n++}`;
+      slugTaken.add(slug);
+      return slug;
+    };
+    const linkTo = (target, text) => `<a class="fw-menu-link" href="#${target.id}">${text}</a>`;
+
+    const list = document.createElement('ul');
+    list.className = 'fw-menu-list';
+    document.querySelectorAll('.kit-wrap > section').forEach((section) => {
+      const h2 = section.querySelector(':scope > .kit-sec-head > h2');
+      if (!h2) return;
+      if (!section.id) section.id = uniqueSlug(h2.textContent);
+      const subheadings = Array.from(section.querySelectorAll('h3:not([class])'));
+      const item = document.createElement('li');
+      item.className = 'fw-menu-item';
+      if (subheadings.length) {
+        const group = document.createElement('details');
+        group.className = 'fw-menu-group';
+        const summary = document.createElement('summary');
+        summary.className = 'fw-menu-summary';
+        summary.textContent = h2.textContent;
+        const subList = document.createElement('ul');
+        subList.className = 'fw-menu-list';
+        subheadings.forEach((h3) => {
+          if (!h3.id) h3.id = uniqueSlug(h3.textContent);
+          const subItem = document.createElement('li');
+          subItem.className = 'fw-menu-item';
+          subItem.innerHTML = linkTo(h3, h3.textContent);
+          subList.appendChild(subItem);
+        });
+        group.append(summary, subList);
+        item.appendChild(group);
+      } else {
+        item.innerHTML = linkTo(section, h2.textContent);
+      }
+      list.appendChild(item);
+    });
+    toc.appendChild(list);
+    Fernwell.menu.init(toc);
+
+    const tocToggle = document.querySelector('[data-fw-nav-toggle][aria-controls="kit-toc"]');
+    toc.addEventListener('click', (e) => {
+      if (tocToggle && e.target.closest('a')) Fernwell.nav.close(tocToggle);
+    });
+  })();
+</script>
+</body>
+</html>

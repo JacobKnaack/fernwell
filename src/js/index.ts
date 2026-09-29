@@ -6,31 +6,40 @@
  *              → window.Fernwell, auto-initialised on DOMContentLoaded
  *                (add data-fw-no-init to the <script> tag to opt out).
  */
-import * as theme from './theme';
-import * as combobox from './combobox';
-import * as modal from './modal';
-import * as nav from './nav';
-import * as loading from './loading';
-import * as toast from './toast';
-import * as table from './table';
-import * as menu from './menu';
-import * as icon from './icon';
-import * as popover from './popover';
-import * as tooltip from './tooltip';
-import * as tabs from './tabs';
+import * as theme from './theme.js';
+import * as tokens from './tokens.js';
+import * as combobox from './combobox.js';
+import * as modal from './modal.js';
+import * as nav from './nav.js';
+import * as loading from './loading.js';
+import * as toast from './toast.js';
+import * as table from './table.js';
+import * as menu from './menu.js';
+import * as icon from './icon.js';
+import * as popover from './popover.js';
+import * as tooltip from './tooltip.js';
+import * as tabs from './tabs.js';
 
-export { theme, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
-export type { Theme, TokenOverrides, TokenThemeOverrides } from './theme';
-export type { ComboboxOptions, ComboboxInstance } from './combobox';
-export type { ToastVariant, ToastOptions } from './toast';
-export type { SortDirection, SortDetail, SelectDetail } from './table';
-export type { ToggleDetail } from './menu';
-export type { IconName } from './icon';
-export type { PopoverOptions, PopoverInstance } from './popover';
-export type { TooltipOptions, TooltipInstance } from './tooltip';
-export type { TabsOptions, TabsInstance, TabsActivation, TabsChangeDetail } from './tabs';
+export { theme, tokens, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
+export type { Theme } from './theme.js';
+export type { TokenName } from './_tokenData.js';
+export type {
+  TokenKey,
+  TokenOverrides,
+  TokenThemeOverrides,
+  SetTokensOptions,
+  TokensChangeDetail,
+} from './tokens.js';
+export type { ComboboxOptions, ComboboxInstance } from './combobox.js';
+export type { ToastVariant, ToastOptions } from './toast.js';
+export type { SortDirection, SortDetail, SelectDetail } from './table.js';
+export type { ToggleDetail } from './menu.js';
+export type { IconName } from './icon.js';
+export type { PopoverOptions, PopoverInstance } from './popover.js';
+export type { TooltipOptions, TooltipInstance } from './tooltip.js';
+export type { TabsOptions, TabsInstance, TabsActivation, TabsChangeDetail } from './tabs.js';
 
-export const version = '__FW_VERSION__';
+export const version: string = '__FW_VERSION__';
 
 /**
  * Wire every `data-fw-*` hook under `root`. Safe to call more than once —
@@ -39,6 +48,7 @@ export const version = '__FW_VERSION__';
  */
 export function init(root: ParentNode = document): void {
   theme.init(root);
+  tokens.init(root);
   combobox.init(root);
   modal.init(root);
   nav.init(root);
@@ -55,6 +65,7 @@ const Fernwell = {
   version,
   init,
   theme,
+  tokens,
   combobox,
   modal,
   nav,

@@ -6,6 +6,7 @@
 <title>Fernwell — Component reference</title>
 <meta name="description" content="Fernwell component reference: markup and React usage for every component, next to what it renders.">
 <script>document.documentElement.dataset.theme=localStorage.getItem('fw-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')</script>
+<script>try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
@@ -19,6 +20,7 @@
   <nav class="fw-menu kit-toc" aria-label="Docs navigation" data-fw-menu id="kit-toc">
     <ul class="fw-menu-list kit-toc-pages">
       <li class="fw-menu-item"><a class="fw-menu-link" href="index.html">Overview</a></li>
+      <li class="fw-menu-item"><a class="fw-menu-link" href="api.html">API Usage</a></li>
       <li class="fw-menu-item"><a class="fw-menu-link" href="components.html" aria-current="page">Components</a></li>
     </ul>
     <p class="fw-eyebrow">On this page</p>

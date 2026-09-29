@@ -140,19 +140,57 @@ Override any **seed** token and every derived token follows automatically, in bo
 
 This works because Fernwell's own token declarations live in `@layer fw-tokens` — an unlayered rule (yours, unless you also use `@layer`) always beats a layered one, regardless of selector specificity or source order. If your app declares its own CSS layers, list them (e.g. `@layer reset, base, components;`) before importing Fernwell's CSS so `fw-tokens` isn't implicitly nested inside one of them.
 
+Override seeds on `:root` (or `[data-theme="dark"]`) and derived tokens follow. On any *other* selector, `var()` still resolves where the derived token is declared (`:root`), so a hand-written `.tenant { --fw-primary: … }` retints `--fw-primary` only — use `tokens.setTokens(…, { scope })` below, which re-declares the derived tokens at the scope for you.
+
 **JS — runtime.** For per-tenant branding, a user-picked accent, or a live preview:
 
 ```js
-import { theme } from 'fernwell';
+import { tokens } from 'fernwell';
 
-theme.setTokens({ primary: '#2266ff' });                                    // both themes
-theme.setTokens({ light: { primary: '#2266ff' }, dark: { primary: '#5c9dff' } }); // per theme
-theme.setTokens({ secondary: '#a33' }, { scope: '.tenant-acme' });           // one subtree
-theme.getToken('primary');                                                  // live resolved value, e.g. '#2266ff'
-theme.resetTokens();                                                        // clear every runtime override
+tokens.setTokens({ primary: '#2266ff' });                                    // both themes
+tokens.setTokens({ light: { primary: '#2266ff' }, dark: { primary: '#5c9dff' } }); // per theme
+tokens.setTokens({ secondary: '#a33' }, { scope: '.tenant-acme' });           // one subtree
+tokens.getToken('primary');                                                  // live resolved value, e.g. '#2266ff'
+tokens.resetTokens();                                                        // clear every runtime override
 ```
 
-Runtime overrides render into one `<style data-fw-tokens>` appended to `<head>` and win over both the `@layer fw-tokens` defaults and any static override, so `setTokens` always has the last word.
+`theme.setTokens` / `resetTokens` / `getToken` are the same functions, kept as aliases so existing code keeps working.
+
+Runtime overrides render into one `<style data-fw-tokens>` appended to `<head>` and win over both the `@layer fw-tokens` defaults and any static override, so `setTokens` always has the last word. Derived tokens (hovers, tints, the focus ring, CTA glows) follow the seed they're built from — including inside a `scope`, where Fernwell re-declares them at that selector so they don't stay stuck on the root value. Values that could break out of a declaration (`{`, `}`, `;`, `/*`) and invalid selectors are rejected with a console warning.
+
+**App-wide — persist it.** Pass `persist: true` and the scope is saved to `localStorage`, then applied on every page and reload by `init()`:
+
+```js
+tokens.setTokens({ primary: '#2266ff' }, { persist: true });
+```
+
+Without `persist`, an override lasts for the current page load — that's the "this page only" case in a multi-page app. Page-level overrides render after persisted ones, so a page can still tweak an app-wide value. `resetTokens()` also clears persisted overrides. To apply them before first paint (no flash of the default palette), inline this in `<head>` ahead of your stylesheet, next to the theme snippet above:
+
+```html
+<script>try{var c=localStorage.getItem('fw-tokens-css');if(c){var s=document.createElement('style');s.setAttribute('data-fw-tokens','');s.textContent=c;document.head.appendChild(s)}}catch(e){}</script>
+```
+
+**This page or section only — declaratively.** `init()` also reads two hooks, so you can theme without writing JS:
+
+```html
+<!-- this page (add data-fw-persist to make it app-wide; data-fw-scope="…" to theme a subtree) -->
+<script type="application/json" data-fw-theme-tokens>{ "primary": "#2266ff" }</script>
+
+<!-- just this element's subtree; never persisted -->
+<section data-fw-theme-scope='{ "secondary": "#a33" }'>…</section>
+```
+
+The `<script>` form takes the same shapes as `setTokens` — a flat map or `{ "light": {…}, "dark": {…} }`.
+
+**Undoing a page's theme (SPAs).** `setTokens` returns a function that reverts just that call — call it when a route unmounts:
+
+```js
+const undo = tokens.setTokens({ primary: '#a33' }, { scope: '#checkout' });
+// …later
+undo();
+```
+
+A light-only scoped override (`{ light: { … } }` with no `dark`) also applies in the dark theme — give a `dark` value if it should differ. Removing a `data-fw-theme-*` element doesn't clear its overrides; use `undo()` or `resetTokens(scope)`. Listen for `fw:tokenschange` on `document` (`detail.scope`) to react to any change.
 
 **Browser support.** `color-mix()` and `@layer` need Chrome 111+, Safari 16.2+, Firefox 113+. There's no polyfill shipped — on an older browser the seed tokens still apply, but derived tokens fall back to whatever the browser does with an unsupported `color-mix()` value (typically the property's initial value), so hovers/tints/focus rings may go missing rather than mis-colour.
 
@@ -212,7 +250,7 @@ import { theme, combobox, modal, nav, loading, toast, table, menu, popover, tool
 theme.get();
 theme.set('dark');
 theme.toggle();
-theme.setTokens({ primary: '#2266ff' }); theme.resetTokens(); theme.getToken('primary'); // see Theming
+tokens.setTokens({ primary: '#2266ff' }); tokens.resetTokens(); tokens.getToken('primary'); // see Theming
 
 const cb = combobox(inputEl,
   {
@@ -239,7 +277,7 @@ const tip = tooltip(triggerEl, { placement: 'top', delay: 400 });
 tip.show(); tip.hide(); tip.destroy();
 ```
 
-Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:open` / `fw:close` bubbling from the modal, drawer, or popover, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
+Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:tokenschange` on `document` (detail: `{ scope? }`), `fw:open` / `fw:close` bubbling from the modal, drawer, or popover, `fw:sort` (detail: `{ column, direction, th }`) and `fw:select` (detail: `{ rows, all }`) bubbling from the table, `fw:toggle` (detail: `{ group, open }`) bubbling from a `.fw-menu-group`.
 
 ## Principles
 

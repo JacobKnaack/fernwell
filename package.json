@@ -1,6 +1,6 @@
 {
   "name": "fernwell",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Fernwell — the HunnyDo design system. Design tokens, CSS components, and small vanilla JS enhancers that work in any web app, with or without a build step.",
   "type": "module",
   "license": "MIT",
@@ -33,23 +33,45 @@
   "jsdelivr": "./dist/fernwell.iife.js",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/fernwell.esm.js",
-      "require": "./dist/fernwell.cjs"
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/fernwell.esm.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/fernwell.cjs"
+      }
     },
-    "./css": "./dist/fernwell.css",
-    "./css/min": "./dist/fernwell.min.css",
-    "./tokens.css": "./dist/fernwell.tokens.css",
+    "./css": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.css"
+    },
+    "./css/min": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.min.css"
+    },
+    "./tokens.css": {
+      "types": "./dist/css.d.ts",
+      "default": "./dist/fernwell.tokens.css"
+    },
     "./tokens.json": "./dist/tokens.json",
     "./package.json": "./package.json"
+  },
+  "typesVersions": {
+    "*": {
+      "css": ["./dist/css.d.ts"],
+      "css/min": ["./dist/css.d.ts"],
+      "tokens.css": ["./dist/css.d.ts"]
+    }
   },
   "scripts": {
     "dev": "node scripts/dev.mjs",
     "tokens": "node scripts/gen-tokens.mjs",
     "lint": "node scripts/lint-tokens.mjs",
-    "test": "vitest run",
+    "test": "vitest run && npm run test:types",
     "test:watch": "vitest",
-    "build": "npm run tokens && npm run lint && node scripts/build.mjs && tsc -p tsconfig.build.json",
+    "test:types": "npm run build && vitest run --config __tests__/config/vitest.types.config.ts",
+    "build": "npm run tokens && npm run lint && node scripts/build.mjs && tsc -p tsconfig.build.json && node scripts/cjs-types.mjs",
     "docs": "serve docs/",
     "prepublishOnly": "npm run build"
   },

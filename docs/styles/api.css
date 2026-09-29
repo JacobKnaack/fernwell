@@ -1,0 +1,198 @@
+/* ---- docs-only chrome for api.html: not part of the package ---- */
+
+.api-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-8);
+}
+
+.api-step > h3 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--fw-sp-2);
+}
+
+.api-step > p,
+.api-prose p {
+  font-size: 14px;
+  color: var(--fw-text-soft);
+  max-width: 64ch;
+  margin-bottom: var(--fw-sp-4);
+}
+
+.api-step p code,
+.api-prose p code,
+.sec-note code,
+.kv code,
+.fw-table code {
+  font-family: var(--fw-font-mono);
+  font-size: 12.5px;
+  background: var(--fw-bg-dim);
+  padding: 0 var(--fw-sp-1);
+  border-radius: var(--fw-r-sm);
+}
+
+.fw-table code {
+  white-space: nowrap;
+}
+
+/* Reference tables are for reading, not scanning a column of amounts:
+   keep them at a readable width and let .fw-table-scroll scroll them
+   sideways on phones instead of switching to the fixed mobile layout. */
+@media (max-width: 560px) {
+  .api-ref-table {
+    table-layout: auto;
+    min-width: 720px;
+  }
+}
+
+.api-hero-actions {
+  margin-top: var(--fw-sp-5);
+}
+
+.api-demo-actions {
+  margin: 0 0 var(--fw-sp-5);
+}
+
+.api-rules {
+  margin-bottom: var(--fw-sp-8);
+}
+
+.api-checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--fw-sp-3);
+  font-size: 14px;
+}
+
+.api-checklist li {
+  display: flex;
+  gap: var(--fw-sp-3);
+  align-items: baseline;
+}
+
+.api-checklist .fw-icon {
+  color: var(--fw-success);
+  flex-shrink: 0;
+  transform: translateY(calc(var(--fw-sp-1) / 2));
+}
+
+/* ==== Example components ==================================================
+   Everything below is the CSS a consumer would write in their own app: it
+   is shown verbatim in the code samples on this page. Note that it uses
+   only --fw-* tokens and its own `acme-` prefix. */
+
+/* ---- acme-plan: a pricing card composed from .fw-card + tokens ---- */
+.acme-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--fw-sp-5);
+  width: 100%;
+}
+
+.acme-plan {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fw-sp-4);
+}
+
+.acme-plan.is-featured {
+  border-color: var(--fw-primary);
+  box-shadow: var(--fw-shadow-md);
+}
+
+.acme-plan-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--fw-sp-3);
+}
+
+.acme-plan-name {
+  font-family: var(--fw-font-display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.acme-plan-price {
+  font-size: 14px;
+  color: var(--fw-text-soft);
+}
+
+.acme-plan-amount {
+  font-family: var(--fw-font-display);
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--fw-text);
+}
+
+.acme-plan-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--fw-sp-2);
+  font-size: 14px;
+}
+
+.acme-plan-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+}
+
+.acme-plan-features .fw-icon {
+  color: var(--fw-success);
+}
+
+.acme-plan .fw-btn {
+  margin-top: auto;
+}
+
+/* ---- acme-copy: a read-only value with a copy button ---- */
+.acme-copy {
+  display: flex;
+  align-items: center;
+  gap: var(--fw-sp-2);
+  width: 100%;
+  max-width: 420px;
+  padding: var(--fw-sp-1) var(--fw-sp-1) var(--fw-sp-1) var(--fw-sp-3);
+  background: var(--fw-surface);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  border-radius: var(--fw-r-sm);
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease),
+              box-shadow var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.acme-copy:focus-within {
+  border-color: var(--fw-primary);
+  box-shadow: var(--fw-focus-ring);
+}
+
+.acme-copy.is-copied {
+  border-color: var(--fw-success);
+}
+
+.acme-copy-value {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  font-family: var(--fw-font-mono);
+  font-size: 13px;
+  color: var(--fw-text);
+  text-overflow: ellipsis;
+}
+
+.acme-copy-value:focus {
+  outline: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .acme-copy {
+    transition: none;
+  }
+}
