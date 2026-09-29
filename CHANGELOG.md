@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- Docs: new **API Usage** page (`docs/api.html`, styles in `docs/styles/api.css`), linked from the docs-wide page nav on the Overview and Components pages. It covers installing via CDN, npm, CSS-only, fonts and page setup; initialising with `init(root?)` (including after injecting markup, manual start with `data-fw-no-init`, and React); building custom components on `--fw-*` tokens with live pricing-card, copy-to-clipboard and scoped-retheme (`theme.setTokens()`) examples; and reference tables for the JavaScript API, `data-fw-*` hooks and `fw:*` events. Version numbers in its code samples are filled in from the published `Fernwell.version` at load time rather than hardcoded.
+
 ### Fixed
 
 - **`import 'fernwell/css'` no longer fails type-checking** with "Cannot find module or type declarations for side-effect import". The `./css`, `./css/min`, and `./tokens.css` entries in the `exports` map now carry a `types` condition pointing at a new `dist/css.d.ts` stub, and a matching `typesVersions` map covers projects still on `moduleResolution: "node10"` (which ignores `exports`). The runtime target of each entry is unchanged.
