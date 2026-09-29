@@ -649,7 +649,7 @@ toast.show('Invoice sent');</code></pre>
     </div>
   </section>
 
-  <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet, or at runtime with <code>Fernwell.theme.setTokens()</code> — see <a href="#theming">Theming</a>. Never fork the CSS.</p>
+  <p class="kit-note">Fernwell v<span id="fw-version"></span> — every value on this page is a <code>--fw-*</code> custom property from <code>fernwell/tokens.css</code>. Override them in your own stylesheet, or at runtime with <code>Fernwell.tokens.setTokens()</code> — see <a href="#theming">Theming</a>. Never fork the CSS.</p>
 </div>
 
 <!-- modal -->
@@ -740,7 +740,7 @@ toast.show('Invoice sent');</code></pre>
       input.type = 'color';
       input.id = id;
       input.dataset.role = role;
-      input.value = toHex(Fernwell.theme.getToken(role));
+      input.value = toHex(Fernwell.tokens.getToken(role));
       const label = document.createElement('label');
       label.htmlFor = id;
       label.textContent = role.charAt(0).toUpperCase() + role.slice(1);
@@ -757,16 +757,16 @@ toast.show('Invoice sent');</code></pre>
     inputs.forEach((input) => {
       input.addEventListener('input', () => {
         input.dataset.touched = '1';
-        Fernwell.theme.setTokens({ [input.dataset.role]: input.value });
+        Fernwell.tokens.setTokens({ [input.dataset.role]: input.value });
         updateCssPreview();
       });
     });
 
     document.getElementById('theme-editor-reset').addEventListener('click', () => {
-      Fernwell.theme.resetTokens();
+      Fernwell.tokens.resetTokens();
       inputs.forEach((input) => {
         delete input.dataset.touched;
-        input.value = toHex(Fernwell.theme.getToken(input.dataset.role));
+        input.value = toHex(Fernwell.tokens.getToken(input.dataset.role));
       });
       updateCssPreview();
     });
@@ -776,7 +776,7 @@ toast.show('Invoice sent');</code></pre>
     // touched one already applies to both themes.
     document.addEventListener('fw:themechange', () => {
       inputs.forEach((input) => {
-        if (!input.dataset.touched) input.value = toHex(Fernwell.theme.getToken(input.dataset.role));
+        if (!input.dataset.touched) input.value = toHex(Fernwell.tokens.getToken(input.dataset.role));
       });
     });
   })();

@@ -503,7 +503,7 @@ export function CopyField({ value, label }) {
 
       <div class="api-step">
         <h3>Theme it</h3>
-        <p>Because the components above only read tokens, retheming them is one declaration. Override seeds statically in CSS, or at runtime with <code>theme.setTokens()</code> — optionally scoped to one subtree. Try it on the copy-field demo:</p>
+        <p>Because the components above only read tokens, retheming them is one declaration. Override seeds statically in CSS, or at runtime with <code>tokens.setTokens()</code> — optionally scoped to one subtree. Try it on the copy-field demo:</p>
         <div class="fw-row api-demo-actions">
           <button type="button" class="fw-btn fw-btn-ghost" id="retheme-demo">Retheme the copy-field demo</button>
           <button type="button" class="fw-btn fw-btn-ghost" id="reset-demo">Reset</button>
@@ -529,16 +529,16 @@ export function CopyField({ value, label }) {
 }</code></pre>
         </div>
         <div class="demo-tabpanel" id="theme-panel-js-runtime" role="tabpanel" aria-labelledby="theme-tab-js-runtime" hidden>
-<pre><code>import { theme } from 'fernwell';
+<pre><code>import { tokens } from 'fernwell';
 
 // Runtime, one subtree — e.g. a tenant's brand or a live preview.
-theme.setTokens(
+tokens.setTokens(
   { primary: '#2f7de1', secondary: '#1e6b5c' },
   { scope: '#custom-demo' }
 );
 
-theme.getToken('primary');        // → the live, resolved value
-theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
+tokens.getToken('primary');        // → the live, resolved value
+tokens.resetTokens('#custom-demo'); // clear just that scope</code></pre>
         </div>
       </div>
     </div>
@@ -595,7 +595,7 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <tbody>
           <tr><td><code>[data-fw-theme-toggle]</code></td><td>Flips <code>data-theme</code>, persists it, sets <code>aria-pressed</code>. Label and icon swap per theme via <code>data-fw-theme-label-light</code> / <code>-dark</code> and <code>data-fw-theme-icon-light</code> / <code>-dark</code>.</td></tr>
           <tr><td><code>script[type=&quot;application/json&quot;][data-fw-theme-tokens]</code></td><td>Overrides tokens from a JSON object (flat, or <code>{ "light": {…}, "dark": {…} }</code>) — for this page only unless <code>data-fw-persist</code> is set, when it applies app-wide. <code>data-fw-scope="selector"</code> themes a subtree instead of the page.</td></tr>
-          <tr><td><code>[data-fw-theme-scope='{…}']</code></td><td>Themes just this element's subtree from a JSON object of tokens. Never persisted.</td></tr>
+          <tr><td><code>[data-fw-theme-scope='{…}']</code></td><td>Themes just this element's subtree from a JSON object of tokens. Never persisted; undone on the next <code>init()</code> after the element is removed.</td></tr>
           <tr><td><code>[data-fw-icon=&quot;name&quot;]</code></td><td>Renders a built-in outline icon, sized in <code>em</code>, coloured by <code>currentColor</code>.</td></tr>
           <tr><td><code>[data-fw-open-modal=&quot;id&quot;]</code><br><code>[data-fw-close-modal]</code></td><td>Modal with drag-safe backdrop click, Escape, focus return and scroll lock.</td></tr>
           <tr><td><code>[data-fw-open-drawer=&quot;id&quot;]</code><br><code>[data-fw-close-drawer]</code></td><td>Same for drawers.</td></tr>
@@ -695,13 +695,13 @@ theme.resetTokens('#custom-demo'); // clear just that scope</code></pre>
     const scope = '#custom-demo';
     const readout = document.getElementById('retheme-readout');
     const target = document.querySelector(scope);
-    const show = () => { readout.textContent = '--fw-primary here: ' + Fernwell.theme.getToken('primary', target); };
+    const show = () => { readout.textContent = '--fw-primary here: ' + Fernwell.tokens.getToken('primary', target); };
     document.getElementById('retheme-demo').addEventListener('click', () => {
-      Fernwell.theme.setTokens({ primary: '#2f7de1', secondary: '#1e6b5c', 'on-primary': '#ffffff' }, { scope });
+      Fernwell.tokens.setTokens({ primary: '#2f7de1', secondary: '#1e6b5c', 'on-primary': '#ffffff' }, { scope });
       show();
     });
     document.getElementById('reset-demo').addEventListener('click', () => {
-      Fernwell.theme.resetTokens(scope);
+      Fernwell.tokens.resetTokens(scope);
       show();
     });
   })();

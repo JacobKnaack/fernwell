@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as tokens from './tokens';
 import * as theme from './theme';
+import * as table from './table';
 
 const css = () => document.head.querySelector('style[data-fw-tokens]')?.textContent ?? '';
 const stored = () => localStorage.getItem('fw-tokens');
@@ -81,6 +82,31 @@ describe('tokens — overrides', () => {
     expect(warn).toHaveBeenCalledTimes(3);
   });
 
+  it('rejects values with an unclosed parenthesis or quote, but keeps balanced ones', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    tokens.setTokens({
+      primary: 'url(x',
+      secondary: '"open',
+      info: 'rgb(1 2 3))',
+      success: 'color-mix(in srgb, var(--fw-primary), white 10%)',
+      warning: 'url("a)b.png")',
+      danger: "url('it\\'s.png')",
+    });
+    expect(warn).toHaveBeenCalledTimes(3);
+    expect(css()).not.toContain('--fw-primary:');
+    expect(css()).not.toContain('--fw-secondary:');
+    expect(css()).not.toContain('--fw-info:');
+    expect(css()).toContain('--fw-success:color-mix(');
+    expect(css()).toContain('--fw-warning:url("a)b.png");');
+    expect(css()).toContain('--fw-danger:');
+  });
+
+  it('never persists an unbalanced value', () => {
+    vi.spyOn(console, 'warn').mockImplementation(() => {});
+    tokens.setTokens({ primary: 'url(x' }, { persist: true });
+    expect(storedCss() ?? '').not.toContain('url(x');
+  });
+
   it('rejects an invalid scope selector without throwing', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     const undo = tokens.setTokens({ primary: '#333' }, { scope: 'a{}b' });
@@ -95,6 +121,24 @@ describe('tokens — overrides', () => {
     tokens.setTokens({ primary: '#333' }, { scope: '.x' });
     tokens.resetTokens();
     expect(seen).toEqual(['.x', undefined]);
+  });
+
+  describe('scope selector lists', () => {
+    it('prefixes each item of a comma list for the dark rule, so none leaks into light', () => {
+      tokens.setTokens({ light: { primary: '#111' }, dark: { primary: '#222' } }, { scope: '.a, .b' });
+      const [, dark] = css().split('\n');
+      expect(dark.split('{')[0]).toBe('[data-theme="dark"] .a, .a[data-theme="dark"], [data-theme="dark"] .b, .b[data-theme="dark"]');
+      // Every comma-separated item of the dark selector is either scoped under a dark root or marked dark itself.
+      dark.split('{')[0].split(', ').forEach((sel) => expect(sel).toContain('[data-theme="dark"]'));
+    });
+
+    it('does not split on commas inside :is(), attribute values or strings', () => {
+      tokens.setTokens({ light: { primary: '#111' }, dark: { primary: '#222' } }, { scope: ':is(.a, .b), [data-x="1,2"]' });
+      const selector = css().split('\n')[1].split('{')[0];
+      expect(selector).toBe(
+        '[data-theme="dark"] :is(.a, .b), :is(.a, .b)[data-theme="dark"], [data-theme="dark"] [data-x="1,2"], [data-x="1,2"][data-theme="dark"]',
+      );
+    });
   });
 });
 
@@ -186,6 +230,15 @@ describe('tokens — persistence', () => {
       expect(css()).toContain('#2266ff');
     });
 
+    it('the first setTokens() dispatches one fw:tokenschange, not one for loading storage and one for the call', async () => {
+      persisted();
+      const t = await fresh();
+      const seen: unknown[] = [];
+      document.addEventListener('fw:tokenschange', (e) => seen.push((e as CustomEvent).detail));
+      t.setTokens({ secondary: '#333' });
+      expect(seen).toHaveLength(1);
+    });
+
     it('a setTokens() call before init() does not drop persisted overrides', async () => {
       persisted();
       (await fresh()).setTokens({ secondary: '#333' });
@@ -202,6 +255,20 @@ describe('tokens — persistence', () => {
       t.init();
       expect(css()).toBe('');
     });
+  });
+
+  it('moves a pre-paint <style data-fw-tokens> after the consumer stylesheet so it still wins', () => {
+    document.head.insertAdjacentHTML(
+      'afterbegin',
+      '<style data-fw-tokens>:root{--fw-primary:#111;}</style><link rel="stylesheet" href="app.css"><style id="app">:root{--fw-primary:#eee}</style>',
+    );
+    tokens.setTokens({ primary: '#222' });
+    const kids = [...document.head.children];
+    const own = document.head.querySelectorAll('style[data-fw-tokens]');
+    expect(own).toHaveLength(1);
+    expect(kids.indexOf(own[0])).toBe(kids.length - 1);
+    document.getElementById('app')?.remove();
+    document.head.querySelector('link[href="app.css"]')?.remove();
   });
 
   it('ignores malformed, wrong-version and hostile stored data', () => {
@@ -290,6 +357,74 @@ describe('tokens — declarative hooks', () => {
     tokens.init();
     expect(css()).toContain('--fw-info:#09f;');
     expect(css()).toContain('--fw-primary:#111;');
+  });
+
+  it('leaves fwBound alone, so a themed element is still initialised by its own component', () => {
+    document.body.innerHTML = `<table data-fw-table data-fw-theme-scope='{"primary":"#f00"}' id="t"><thead><tr>
+      <th data-fw-sort aria-sort="none"><button type="button" class="fw-table-sort">Name</button></th>
+      </tr></thead><tbody><tr><td>b</td></tr><tr><td>a</td></tr></tbody></table>`;
+    const t = document.getElementById('t') as HTMLElement;
+    tokens.init();
+    expect(t.dataset.fwBound).toBeUndefined();
+    expect(t.dataset.fwTokensBound).toBe('1');
+    table.init();
+    expect(t.dataset.fwBound).toBe('1');
+    t.querySelector<HTMLElement>('.fw-table-sort')!.click();
+    expect(t.querySelector('th')!.getAttribute('aria-sort')).toBe('ascending');
+  });
+
+  describe('cleanup when the element leaves the page', () => {
+    it('data-fw-theme-scope: the rule is dropped on the next init(), and comes back if the same node is re-inserted', () => {
+      document.body.innerHTML = `<section data-fw-theme-scope='{"secondary":"#a33"}' id="a"></section>`;
+      tokens.init();
+      const a = document.getElementById('a')!;
+      expect(css()).toContain('--fw-secondary:#a33;');
+
+      a.remove();
+      expect(css()).toContain('--fw-secondary:#a33;'); // nothing runs until init()
+      tokens.init();
+      expect(css()).toBe('');
+
+      document.body.appendChild(a);
+      tokens.init();
+      expect(css()).toContain('--fw-secondary:#a33;');
+      expect(css().split('\n')).toHaveLength(2); // one light + one dark rule, not doubled
+    });
+
+    it('does not accumulate rules when themed markup is re-rendered', () => {
+      for (let i = 0; i < 5; i++) {
+        document.body.innerHTML = `<div data-fw-theme-scope='{"info":"#09f"}'></div>`;
+        tokens.init();
+      }
+      expect(css().split('\n')).toHaveLength(2); // one light + one dark rule for the current element only
+    });
+
+    it('<script data-fw-theme-tokens> is undone when removed, unless it is data-fw-persist', () => {
+      document.body.innerHTML = `<script type="application/json" data-fw-theme-tokens id="p">{"primary":"#111"}</script>
+        <script type="application/json" data-fw-theme-tokens data-fw-persist id="q">{"secondary":"#222"}</script>`;
+      tokens.init();
+      expect(css()).toContain('--fw-primary:#111;');
+      document.body.innerHTML = '';
+      tokens.init();
+      expect(css()).not.toContain('--fw-primary');
+      expect(css()).toContain('--fw-secondary:#222;');
+    });
+
+    it('resetTokens() is not undone by a later init() — the hook stays spent', () => {
+      document.body.innerHTML = `<div data-fw-theme-scope='{"info":"#09f"}'></div>`;
+      tokens.init();
+      tokens.resetTokens();
+      tokens.init();
+      expect(css()).toBe('');
+    });
+
+    it('an element in a detached root is not tracked, so a later init() does not undo it', () => {
+      const frag = document.createElement('div');
+      frag.innerHTML = `<div data-fw-theme-scope='{"info":"#09f"}'></div>`;
+      tokens.init(frag);
+      tokens.init();
+      expect(css()).toContain('--fw-info:#09f;');
+    });
   });
 
   it('warns and skips a hook whose JSON is invalid', () => {

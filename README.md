@@ -250,7 +250,7 @@ import { theme, combobox, modal, nav, loading, toast, table, menu, popover, tool
 theme.get();
 theme.set('dark');
 theme.toggle();
-theme.setTokens({ primary: '#2266ff' }); theme.resetTokens(); theme.getToken('primary'); // see Theming
+tokens.setTokens({ primary: '#2266ff' }); tokens.resetTokens(); tokens.getToken('primary'); // see Theming
 
 const cb = combobox(inputEl,
   {

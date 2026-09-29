@@ -39,7 +39,7 @@ export type { PopoverOptions, PopoverInstance } from './popover.js';
 export type { TooltipOptions, TooltipInstance } from './tooltip.js';
 export type { TabsOptions, TabsInstance, TabsActivation, TabsChangeDetail } from './tabs.js';
 
-export const version = '__FW_VERSION__';
+export const version: string = '__FW_VERSION__';
 
 /**
  * Wire every `data-fw-*` hook under `root`. Safe to call more than once —

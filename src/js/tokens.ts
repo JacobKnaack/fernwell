@@ -30,8 +30,9 @@
  * The `<script>` form takes the same shapes as `setTokens()` (flat map or
  * `{ light, dark }`); `data-fw-scope` and `data-fw-persist` are optional. The
  * element form themes that element's subtree only, and is never persisted.
- * Neither cleans up after itself if its element is removed — use the function
- * `setTokens()` returns, or `resetTokens(scope)`.
+ * Both are undone on the next `init()` after their element is removed from
+ * the page; call the function `setTokens()` returns, or `resetTokens(scope)`,
+ * to undo one sooner.
  *
  * Events (on `document`): `fw:tokenschange` { scope } — `scope` is absent
  * when every scope changed (a reset or a restore).
@@ -83,6 +84,16 @@ const live: Layer = new Map();
 let hydrated = false;
 let scopeSeq = 0;
 
+// Declarative hooks that applied non-persisted tokens, so they can be undone
+// when their element leaves the page. `swept` remembers elements that were
+// undone that way, so putting the same node back re-applies its hook.
+interface Hook {
+  scope: string;
+  undo: () => void;
+}
+const hooks = new Map<Element, Hook>();
+const swept = new WeakSet<Element>();
+
 function store(): Storage | null {
   try {
     return window.localStorage;
@@ -114,6 +125,26 @@ function validScope(scope: string): boolean {
   }
 }
 
+/**
+ * Are every `(` and quote in this value closed? An unclosed one is not a
+ * syntax error CSS recovers from at `;` — it swallows the rules that follow.
+ */
+function balanced(value: string): boolean {
+  let depth = 0;
+  let quote = '';
+  for (let i = 0; i < value.length; i++) {
+    const c = value[i];
+    if (c === '\\') i++;
+    else if (quote) {
+      if (c === quote) quote = '';
+      else if (c === '\n') return false;
+    } else if (c === '"' || c === "'") quote = c;
+    else if (c === '(') depth++;
+    else if (c === ')' && --depth < 0) return false;
+  }
+  return depth === 0 && !quote;
+}
+
 /** Keep only `name → string` pairs that can't break out of a declaration; names are normalised. */
 function sanitize(tokens: unknown): Flat {
   const out: Flat = {};
@@ -121,7 +152,7 @@ function sanitize(tokens: unknown): Flat {
   for (const [name, value] of Object.entries(tokens)) {
     if (!/^(--)?[\w-]+$/.test(name)) {
       warn(`ignoring token with invalid name "${name}"`);
-    } else if (typeof value !== 'string' || /[{};]|\/\*/.test(value)) {
+    } else if (typeof value !== 'string' || /[{};]|\/\*/.test(value) || !balanced(value)) {
       warn(`ignoring invalid value for token "${name}"`);
     } else {
       out[normalizeTokenName(name)] = value.trim();
@@ -134,6 +165,37 @@ function isThemeSplit(tokens: TokenOverrides | TokenThemeOverrides): tokens is T
   // A token's own value is always a CSS string — so any object-valued entry
   // means this is the { light, dark } split form, not a flat token map.
   return Object.values(tokens).some((v) => v !== null && typeof v === 'object');
+}
+
+/** Split a selector list on its top-level commas — not those inside `:is(a, b)`, `[x="a,b"]` or a string. */
+function splitSelectors(list: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let quote = '';
+  let start = 0;
+  for (let i = 0; i < list.length; i++) {
+    const c = list[i];
+    if (c === '\\') i++;
+    else if (quote) {
+      if (c === quote) quote = '';
+    } else if (c === '"' || c === "'") quote = c;
+    else if (c === '(' || c === '[') depth++;
+    else if (c === ')' || c === ']') depth--;
+    else if (c === ',' && depth === 0) {
+      parts.push(list.slice(start, i).trim());
+      start = i + 1;
+    }
+  }
+  parts.push(list.slice(start).trim());
+  return parts.filter(Boolean);
+}
+
+/** The dark-theme selector for `scope`: the scope inside a dark root, or itself marked dark — per list item. */
+function darkSelector(scope: string): string {
+  if (scope === ROOT) return '[data-theme="dark"]';
+  return splitSelectors(scope)
+    .map((part) => `[data-theme="dark"] ${part}, ${part}[data-theme="dark"]`)
+    .join(', ');
 }
 
 function declBlock(tokens: Flat): string {
@@ -176,8 +238,7 @@ function rulesFor(layer: Layer): string[] {
     const d = root ? dark : { ...derivedAt(dark, 'dark'), ...dark };
     if (Object.keys(l).length) rules.push(`${scope}{${declBlock(l)}}`);
     if (Object.keys(d).length) {
-      const darkSelector = root ? '[data-theme="dark"]' : `[data-theme="dark"] ${scope}, ${scope}[data-theme="dark"]`;
-      rules.push(`${darkSelector}{${declBlock(d)}}`);
+      rules.push(`${darkSelector(scope)}{${declBlock(d)}}`);
     }
   });
   return rules;
@@ -185,7 +246,13 @@ function rulesFor(layer: Layer): string[] {
 
 function styleEl(create: boolean): HTMLStyleElement | null {
   const existing = document.head.querySelector<HTMLStyleElement>(`style[${STYLE_ATTR}]`);
-  if (existing || !create) return existing;
+  if (existing) {
+    // A pre-paint snippet inserts this element *ahead of* the consumer's
+    // stylesheet; move it to the end so it wins, as documented.
+    if (create && existing !== document.head.lastElementChild) document.head.appendChild(existing);
+    return existing;
+  }
+  if (!create) return null;
   const el = document.createElement('style');
   el.setAttribute(STYLE_ATTR, '');
   document.head.appendChild(el);
@@ -256,7 +323,7 @@ export function setTokens(tokens: TokenOverrides | TokenThemeOverrides, opts: Se
     warn(`ignoring tokens for invalid scope "${scope}"`);
     return () => {};
   }
-  if (!hydrated) restoreTokens();
+  if (!hydrated) load();
 
   let light: Flat;
   let dark: Flat;
@@ -295,7 +362,10 @@ export function setTokens(tokens: TokenOverrides | TokenThemeOverrides, opts: Se
  * omitted. Persisted overrides are removed from localStorage too.
  */
 export function resetTokens(scope?: string): void {
-  if (!hydrated) restoreTokens();
+  if (!hydrated) load();
+  hooks.forEach((hook, el) => {
+    if (!scope || hook.scope === scope) hooks.delete(el);
+  });
   const hadSaved = scope ? saved.delete(scope) : saved.size > 0;
   if (scope) live.delete(scope);
   else {
@@ -312,6 +382,12 @@ export function resetTokens(scope?: string): void {
  * only if something else rewrote storage.
  */
 export function restoreTokens(): void {
+  load();
+  render();
+}
+
+/** Read persisted overrides into `saved` without rendering — callers render once they've made their own changes. */
+function load(): void {
   hydrated = true;
   saved.clear();
   let parsed: unknown = null;
@@ -330,11 +406,10 @@ export function restoreTokens(): void {
       if (Object.keys(light).length || Object.keys(dark).length) saved.set(scope, { light, dark });
     }
   }
-  render();
 }
 
 /** The live, resolved value of a token (e.g. `getToken('primary')` → `'#ffc145'`), including runtime overrides. */
-export function getToken(name: string, el: Element = document.documentElement): string {
+export function getToken(name: TokenKey, el: Element = document.documentElement): string {
   return getComputedStyle(el).getPropertyValue(normalizeTokenName(name)).trim();
 }
 
@@ -349,28 +424,63 @@ function parseJSON(source: string | null | undefined, what: string): TokenOverri
   return null;
 }
 
+/** Undo the hooks whose element has left the page — so route-scoped markup doesn't pile up rules. */
+function sweep(): void {
+  hooks.forEach((hook, el) => {
+    if (el.isConnected) return;
+    hooks.delete(el);
+    swept.add(el);
+    hook.undo();
+  });
+}
+
+function isBound(el: HTMLElement): boolean {
+  return !!el.dataset.fwTokensBound && !swept.has(el);
+}
+
+function bind(el: HTMLElement, scope: string, undo: () => void): void {
+  el.dataset.fwTokensBound = '1';
+  swept.delete(el);
+  // A detached root (`init(fragment)`) has nothing to leave yet — don't track it.
+  if (el.isConnected) hooks.set(el, { scope, undo });
+}
+
 /**
  * Restore persisted overrides (once), then apply every declarative hook
  * under `root` — `<script type="application/json" data-fw-theme-tokens>` and
  * `data-fw-theme-scope="{…}"`. Safe to call again after injecting markup.
+ *
+ * Bound elements are marked `data-fw-tokens-bound`, not the shared `fwBound`
+ * the other enhancers use — a themed element is often also a table, modal or
+ * menu root, and must still be picked up by that component's own `init()`.
+ *
+ * A hook that isn't persisted is undone on the next `init()` after its element
+ * has been removed from the page, so route-scoped markup doesn't accumulate
+ * rules. (`data-fw-persist` hooks are app-wide and stay until `resetTokens()`.)
  */
 export function init(root: ParentNode = document): void {
   if (!hydrated) restoreTokens();
+  sweep();
 
   root.querySelectorAll<HTMLElement>('script[type="application/json"][data-fw-theme-tokens]').forEach((el) => {
-    if (el.dataset.fwBound) return;
-    el.dataset.fwBound = '1';
+    if (isBound(el)) return;
     const tokens = parseJSON(el.textContent, 'data-fw-theme-tokens');
-    if (tokens) setTokens(tokens, { scope: el.dataset.fwScope, persist: el.hasAttribute('data-fw-persist') });
+    el.dataset.fwTokensBound = '1';
+    if (!tokens) return;
+    const persist = el.hasAttribute('data-fw-persist');
+    const scope = el.dataset.fwScope ?? ROOT;
+    const undo = setTokens(tokens, { scope, persist });
+    if (!persist) bind(el, scope, undo);
   });
 
   root.querySelectorAll<HTMLElement>('[data-fw-theme-scope]').forEach((el) => {
-    if (el.dataset.fwBound) return;
-    el.dataset.fwBound = '1';
+    if (isBound(el)) return;
     const tokens = parseJSON(el.getAttribute('data-fw-theme-scope'), 'data-fw-theme-scope');
+    el.dataset.fwTokensBound = '1';
     if (!tokens) return;
-    const id = `fw-s${++scopeSeq}`;
+    const id = el.getAttribute('data-fw-scope-id') ?? `fw-s${++scopeSeq}`;
     el.setAttribute('data-fw-scope-id', id);
-    setTokens(tokens, { scope: `[data-fw-scope-id="${id}"]` });
+    const scope = `[data-fw-scope-id="${id}"]`;
+    bind(el, scope, setTokens(tokens, { scope }));
   });
 }
