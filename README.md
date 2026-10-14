@@ -207,6 +207,8 @@ All class names are prefixed `fw-`; state classes are `is-*`. Each stylesheet in
 | Field | `.fw-field` (`.fw-field-full`), `.fw-label`, `.fw-input`, `.fw-hint`, `.fw-error-msg`, `.fw-required`; `.is-error`, `.is-disabled` |
 | Selection | `.fw-checkbox` / `.fw-radio` (`<input>` + `.fw-box`; checkbox styles `:indeterminate`), `.fw-toggle` (`<input>` + `.fw-track > .fw-thumb`), `.fw-option-group` (`-inline`) |
 | Combobox | `.fw-combobox` wrapper, `input[data-fw-combobox][list]` + `<datalist>` |
+| Number input | `.fw-number` (`-stepper`, `-slider`) wrapper, `.fw-number-btn`, `.fw-number-input`, `.fw-number-value`; built by `input[data-fw-number]` |
+| Icon | `.fw-icon` + size `-xs` `-sm` `-md` `-lg` `-xl` and weight `.fw-icon-stroke-thin` `-regular` `-bold` |
 | Alert | `.fw-alert` + `-success` `-error` `-pending` `-info` `-with-action`; `.fw-alert-dot` `-title` `-body` |
 | Progress | `.fw-progress` (`-sm`, `.is-indeterminate`, `.is-success`) > `.fw-progress-fill`; `.fw-progress-label` |
 | Spinner | `.fw-spinner` + `-sm` `-md` `-lg` (colour from `currentColor`) |
@@ -231,6 +233,8 @@ Everything is progressive enhancement over plain HTML. `init(root?)` is idempote
 
 | Hook | What it does |
 | --- | --- |
+| `input[data-fw-number]` (+ `-mode`, `-min`, `-max`, `-step`, `-unit`) | number input: `stepper` (− / + buttons, hold to repeat, ↑ ↓ / PageUp / PageDown) or `slider` (range + live readout); emits `input`, `change`, `fw:number-change` |
+| `[data-fw-icon]` (+ `-size`, `-stroke`) | named SVG icon; optional size scale `xs`–`xl` and stroke weight |
 | `[data-fw-theme-toggle]` | flips `data-theme`, persists to `localStorage['fw-theme']`, sets `aria-pressed` |
 | `input[data-fw-combobox]` | typeahead over the `<datalist>` in `list=` (↑ ↓ Enter Esc, `aria-activedescendant`) |
 | `[data-fw-open-modal="id"]` / `[data-fw-close-modal]` | modal with backdrop-click (drag-safe), Escape, focus return, scroll lock |
@@ -291,7 +295,7 @@ Events: `fw:themechange` on `document` (detail: `'light' | 'dark'`), `fw:tokensc
 
 **Voice.** Buttons name the action ("Send invoice", not "Submit"). Errors say what happened and what to do next, without apologising. Empty states are invitations. Confirmations echo the verb on the button.
 
-**Icons.** Outline only, 16–20px box, 1.3–1.4px stroke, round caps and joins, `currentColor`. No fills — except a checkmark on a completed item.
+**Icons.** Outline only, 12–32px box from the `--fw-icon-size-*` scale (larger below 640px) with the paired `--fw-icon-stroke-*` (1.2–1.75 units, heavier when small), ~1.3–1.4px rendered stroke, round caps and joins, `currentColor`. No fills — except a checkmark on a completed item.
 
 ## Development
 

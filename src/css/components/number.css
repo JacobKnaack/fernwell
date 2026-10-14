@@ -1,0 +1,180 @@
+/* ---- number input: stepper and slider modes ----
+   Both wrap a native <input>, so value, label, form and validation behaviour
+   stay native. Add .fw-input to the stepper's input (or put it in a .fw-field)
+   for the field look; the enhancer adds the wrapper, buttons and readout.
+
+     <input class="fw-input" type="number" data-fw-number data-fw-number-min="0"
+            data-fw-number-max="10" data-fw-number-step="1" value="3" aria-label="Quantity">
+
+     <input data-fw-number data-fw-number-mode="slider" data-fw-number-min="0"
+            data-fw-number-max="100" data-fw-number-step="5" data-fw-number-unit="%"
+            value="40" aria-label="Volume">
+
+   Stepper buttons use aria-disabled at the bounds (focus stays put), so the
+   muted state is keyed off [aria-disabled="true"] rather than :disabled. */
+.fw-number {
+  display: flex;
+  align-items: stretch;
+  gap: var(--fw-sp-2);
+  width: 100%;
+  max-width: 320px;
+  font-family: var(--fw-font-body);
+}
+
+/* ---- stepper ---- */
+.fw-number-stepper .fw-number-input {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+.fw-number-stepper .fw-number-input::-webkit-inner-spin-button,
+.fw-number-stepper .fw-number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.fw-number-btn {
+  --fw-icon-size: var(--fw-icon-size-sm);
+  --fw-icon-stroke: var(--fw-icon-stroke-sm);
+  flex: 0 0 auto;
+  width: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--fw-r-sm);
+  border: var(--fw-border-w) solid var(--fw-bg-dim);
+  background: var(--fw-surface);
+  color: var(--fw-text-soft);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+  transition: border-color var(--fw-motion-fast) var(--fw-motion-ease), color var(--fw-motion-fast) var(--fw-motion-ease),
+    background var(--fw-motion-base) var(--fw-motion-ease);
+}
+
+.fw-number-btn:hover {
+  border-color: var(--fw-secondary);
+  color: var(--fw-secondary);
+}
+
+.fw-number-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-number-btn[aria-disabled="true"] {
+  background: var(--fw-bg-dim);
+  border-color: var(--fw-bg-dim);
+  color: var(--fw-text-soft);
+  cursor: not-allowed;
+}
+
+/* ---- slider ---- */
+.fw-number-slider {
+  align-items: center;
+  gap: var(--fw-sp-3);
+}
+
+.fw-number .fw-number-input[type="range"],
+.fw-field .fw-number .fw-number-input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.fw-number-input[type="range"]::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: var(--fw-r-full);
+  background: linear-gradient(
+    to right,
+    var(--fw-primary) var(--fw-number-fill, 0%),
+    var(--fw-bg-dim) var(--fw-number-fill, 0%)
+  );
+}
+.fw-number-input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: var(--fw-r-full);
+  background: var(--fw-bg-dim);
+}
+.fw-number-input[type="range"]::-moz-range-progress {
+  height: 6px;
+  border-radius: var(--fw-r-full);
+  background: var(--fw-primary);
+}
+
+.fw-number-input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  margin-top: -8px; /* centre on the 6px track: (6 - 22) / 2 */
+  border-radius: var(--fw-r-full);
+  border: var(--fw-border-w) solid var(--fw-primary);
+  background: var(--fw-surface);
+  box-shadow: var(--fw-shadow-sm);
+  transition: box-shadow var(--fw-motion-fast) var(--fw-motion-ease);
+}
+.fw-number-input[type="range"]::-moz-range-thumb {
+  box-sizing: border-box;
+  width: 22px;
+  height: 22px;
+  border-radius: var(--fw-r-full);
+  border: var(--fw-border-w) solid var(--fw-primary);
+  background: var(--fw-surface);
+  box-shadow: var(--fw-shadow-sm);
+  transition: box-shadow var(--fw-motion-fast) var(--fw-motion-ease);
+}
+
+.fw-number-input[type="range"]:focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--fw-focus-ring);
+}
+.fw-number-input[type="range"]:focus-visible::-moz-range-thumb {
+  box-shadow: var(--fw-focus-ring);
+}
+
+.fw-number-input[type="range"]:disabled {
+  cursor: not-allowed;
+}
+.fw-number-input[type="range"]:disabled::-webkit-slider-runnable-track {
+  background: var(--fw-bg-dim);
+}
+.fw-number-input[type="range"]:disabled::-moz-range-progress {
+  background: var(--fw-bg-dim);
+}
+.fw-number-input[type="range"]:disabled::-webkit-slider-thumb {
+  border-color: var(--fw-bg-dim);
+}
+.fw-number-input[type="range"]:disabled::-moz-range-thumb {
+  border-color: var(--fw-bg-dim);
+}
+
+.fw-number-value {
+  flex: 0 0 auto;
+  min-width: 4ch;
+  text-align: right;
+  font-family: var(--fw-font-mono);
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  color: var(--fw-text-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fw-number-btn,
+  .fw-number-input[type="range"]::-webkit-slider-thumb,
+  .fw-number-input[type="range"]::-moz-range-thumb {
+    transition: none;
+  }
+}

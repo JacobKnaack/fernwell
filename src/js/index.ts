@@ -19,8 +19,9 @@ import * as icon from './icon.js';
 import * as popover from './popover.js';
 import * as tooltip from './tooltip.js';
 import * as tabs from './tabs.js';
+import * as numberInput from './number.js';
 
-export { theme, tokens, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs };
+export { theme, tokens, combobox, modal, nav, loading, toast, table, menu, icon, popover, tooltip, tabs, numberInput };
 export type { Theme } from './theme.js';
 export type { TokenName } from './_tokenData.js';
 export type {
@@ -34,10 +35,11 @@ export type { ComboboxOptions, ComboboxInstance } from './combobox.js';
 export type { ToastVariant, ToastOptions } from './toast.js';
 export type { SortDirection, SortDetail, SelectDetail } from './table.js';
 export type { ToggleDetail } from './menu.js';
-export type { IconName } from './icon.js';
+export type { IconName, IconSize, IconStroke } from './icon.js';
 export type { PopoverOptions, PopoverInstance } from './popover.js';
 export type { TooltipOptions, TooltipInstance } from './tooltip.js';
 export type { TabsOptions, TabsInstance, TabsActivation, TabsChangeDetail } from './tabs.js';
+export type { NumberMode, NumberOptions, NumberInstance, NumberChangeDetail } from './number.js';
 
 export const version: string = '__FW_VERSION__';
 
@@ -59,6 +61,7 @@ export function init(root: ParentNode = document): void {
   popover.init(root);
   tooltip.init(root);
   tabs.init(root);
+  numberInput.init(root);
 }
 
 const Fernwell = {
@@ -77,5 +80,6 @@ const Fernwell = {
   popover,
   tooltip,
   tabs,
+  numberInput,
 };
 export default Fernwell;

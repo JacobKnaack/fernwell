@@ -20,6 +20,7 @@ const NAMES = {
   space: (k) => `sp-${k}`,
   radius: (k) => `r-${k}`,
   shadow: (k) => `shadow-${k}`,
+  icon: (k) => `icon-${k}`,
   border: (k) => `border-${k}`,
   motion: (k) => `motion-${k}`,
 };
@@ -49,9 +50,19 @@ const light = [
   group('SPACING (8pt scale)', tokens.space, NAMES.space),
   group('SHAPE — bigger surface, softer corner', tokens.radius, NAMES.radius),
   themedGroup('ELEVATION', tokens.shadow, 'light', NAMES.shadow),
+  group('ICON — size scale + paired stroke (see .fw-icon-xs…xl)', tokens.icon, NAMES.icon),
   group('BORDER', tokens.border, NAMES.border),
   group('MOTION', tokens.motion, NAMES.motion),
 ].join('\n\n');
+
+// Responsive overrides: an entry with a `wide` value is re-declared from
+// WIDE_MIN up. The base `value` is the small-screen value. These rules live in
+// the token layer, so a plain consumer override still wins at every width.
+const WIDE_MIN = '640px';
+const wide = Object.entries(tokens.icon)
+  .filter(([, v]) => v.wide)
+  .map(([k, v]) => `      --${p}-${NAMES.icon(k)}: ${v.wide};`)
+  .join('\n');
 
 // Dark theme: every color/shadow token is re-declared. A seed with no `dark`
 // value repeats its light value (harmless — keeps the block self-contained);
@@ -91,6 +102,14 @@ ${light}
 
   [data-theme="dark"] {
 ${dark}
+  }
+
+  @media (min-width: ${WIDE_MIN}) {
+    :root,
+    [data-theme="light"],
+    [data-theme="dark"] {
+${wide}
+    }
   }
 }
 `;

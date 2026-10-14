@@ -8,9 +8,20 @@
  * element instead (e.g. `aria-label` on a button), same as `.fw-icon-btn`.
  * Color and size are not set here — `.fw-icon` inherits `color` and sizes
  * itself in `em`, so an icon matches whatever text surrounds it.
+ *
+ * Opt in to the size scale and stroke weight with data attributes (or the
+ * matching `.fw-icon-xs…xl` / `.fw-icon-stroke-*` classes):
+ *
+ *   <span data-fw-icon="trash" data-fw-icon-size="lg" aria-hidden="true"></span>
+ *   <span data-fw-icon="trash" data-fw-icon-size="sm" data-fw-icon-stroke="bold"></span>
+ *   <span data-fw-icon="trash" data-fw-icon-stroke="1.8"></span>
+ *
+ * `data-fw-icon-size`: xs | sm | md | lg | xl. `data-fw-icon-stroke`: thin |
+ * regular | bold, or a number in 24-grid units.
  */
 const icons: Record<string, string> = {
   add: '<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  minus: '<line x1="5" y1="12" x2="19" y2="12"/>',
   close: '<line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/>',
   check: '<polyline points="5,13 10,18 19,7"/>',
   edit: '<path d="M16.8 3.5a2.1 2.1 0 0 1 3 3L8.5 17.8 4 19l1.2-4.5Z"/><line x1="14.5" y1="5.8" x2="17.7" y2="9"/>',
@@ -75,10 +86,41 @@ const icons: Record<string, string> = {
 
 export type IconName = keyof typeof icons;
 
+/** Named step on the icon size scale (`--fw-icon-size-*` + paired `--fw-icon-stroke-*`). */
+export type IconSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+/** Named stroke weight, or an explicit width in 24-grid units. */
+export type IconStroke = 'thin' | 'regular' | 'bold' | number;
+
+const SIZES: readonly IconSize[] = ['xs', 'sm', 'md', 'lg', 'xl'];
+const WEIGHTS = ['thin', 'regular', 'bold'] as const;
+
 export function render(name: string): string {
   const inner = icons[name];
   if (!inner) return '';
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${inner}</svg>`;
+}
+
+function applySize(el: HTMLElement, size: string | undefined): void {
+  if (!size) return;
+  if (!(SIZES as readonly string[]).includes(size)) {
+    console.warn(`fernwell: unknown icon size "${size}" (expected ${SIZES.join(', ')})`);
+    return;
+  }
+  el.classList.add(`fw-icon-${size}`);
+}
+
+function applyStroke(el: HTMLElement, stroke: string | undefined): void {
+  if (!stroke) return;
+  if ((WEIGHTS as readonly string[]).includes(stroke)) {
+    el.classList.add(`fw-icon-stroke-${stroke}`);
+    return;
+  }
+  const width = Number(stroke);
+  if (!Number.isFinite(width) || width <= 0) {
+    console.warn(`fernwell: unknown icon stroke "${stroke}" (expected ${WEIGHTS.join(', ')} or a positive number)`);
+    return;
+  }
+  el.style.setProperty('--fw-icon-stroke', String(width));
 }
 
 export function init(root: ParentNode = document): void {
@@ -93,5 +135,7 @@ export function init(root: ParentNode = document): void {
     }
     el.innerHTML = markup;
     el.classList.add('fw-icon');
+    applySize(el, el.dataset.fwIconSize);
+    applyStroke(el, el.dataset.fwIconStroke);
   });
 }

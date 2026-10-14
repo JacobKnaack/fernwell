@@ -117,6 +117,8 @@
 }
 
 .fw-icon-btn svg {
-  width: 15px;
-  height: 15px;
+  /* 15px unless --fw-icon-size is set on the button or an ancestor, e.g.
+     --fw-icon-size: var(--fw-icon-size-sm) to follow the responsive scale. */
+  width: var(--fw-icon-size, 15px);
+  height: var(--fw-icon-size, 15px);
 }
