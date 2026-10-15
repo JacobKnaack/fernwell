@@ -27,6 +27,46 @@ describe('icon', () => {
     expect(el.querySelector('svg')).toBe(firstSvg);
   });
 
+  it('leaves size and stroke untouched when no attributes are given', () => {
+    document.body.innerHTML = '<span data-fw-icon="check"></span>';
+    icon.init();
+
+    const el = document.querySelector('[data-fw-icon="check"]') as HTMLElement;
+    expect(el.className).toBe('fw-icon');
+    expect(el.style.getPropertyValue('--fw-icon-stroke')).toBe('');
+  });
+
+  it('data-fw-icon-size adds the matching size class', () => {
+    document.body.innerHTML = '<span data-fw-icon="check" data-fw-icon-size="lg"></span>';
+    icon.init();
+
+    const el = document.querySelector('[data-fw-icon="check"]') as HTMLElement;
+    expect(el.classList.contains('fw-icon-lg')).toBe(true);
+  });
+
+  it('data-fw-icon-stroke accepts a named weight or a number', () => {
+    document.body.innerHTML =
+      '<span id="a" data-fw-icon="check" data-fw-icon-stroke="bold"></span>' +
+      '<span id="b" data-fw-icon="check" data-fw-icon-stroke="1.8"></span>';
+    icon.init();
+
+    expect(document.getElementById('a')!.classList.contains('fw-icon-stroke-bold')).toBe(true);
+    expect(document.getElementById('b')!.style.getPropertyValue('--fw-icon-stroke')).toBe('1.8');
+  });
+
+  it('warns and ignores an unknown size or stroke', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    document.body.innerHTML = '<span data-fw-icon="check" data-fw-icon-size="huge" data-fw-icon-stroke="-2"></span>';
+
+    icon.init();
+
+    const el = document.querySelector('[data-fw-icon="check"]') as HTMLElement;
+    expect(el.className).toBe('fw-icon');
+    expect(el.style.getPropertyValue('--fw-icon-stroke')).toBe('');
+    expect(warn).toHaveBeenCalledTimes(2);
+    warn.mockRestore();
+  });
+
   it('warns and leaves the element empty for an unknown icon name', () => {
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
     document.body.innerHTML = '<span data-fw-icon="not-a-real-icon"></span>';

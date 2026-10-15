@@ -1,14 +1,25 @@
 /* ---- icon: a named SVG dropped into a `data-fw-icon` element ----
      <span class="fw-icon" data-fw-icon="trash" aria-hidden="true"></span>
+     <span class="fw-icon fw-icon-lg" data-fw-icon="trash" aria-hidden="true"></span>
 
      Sized in em and colored via inherited `color`, so an icon always
      matches the size and color of the text around it — no icon-specific
      color or dark-mode overrides needed.
+
+     Opt in to the size scale with .fw-icon-xs|sm|md|lg|xl (or
+     data-fw-icon-size). Each step sets a fixed box from --fw-icon-size-*
+     (which steps up on small screens) and a paired stroke from
+     --fw-icon-stroke-*, so line weight stays balanced as the icon grows.
+
+     Per-icon knobs (set on the element or any ancestor):
+       --fw-icon-size    overrides the box
+       --fw-icon-stroke  overrides the stroke width, in 24-grid units
+     Or pick a weight: .fw-icon-stroke-thin|regular|bold.
 */
 .fw-icon {
   display: inline-flex;
-  width: 1em;
-  height: 1em;
+  width: var(--fw-icon-size, 1em);
+  height: var(--fw-icon-size, 1em);
   color: inherit;
   vertical-align: -0.125em;
 }
@@ -16,4 +27,37 @@
   width: 100%;
   height: 100%;
   display: block;
+  stroke-width: var(--fw-icon-stroke, 1.4);
+}
+
+.fw-icon-xs {
+  --fw-icon-size: var(--fw-icon-size-xs);
+  --fw-icon-stroke: var(--fw-icon-stroke-xs);
+}
+.fw-icon-sm {
+  --fw-icon-size: var(--fw-icon-size-sm);
+  --fw-icon-stroke: var(--fw-icon-stroke-sm);
+}
+.fw-icon-md {
+  --fw-icon-size: var(--fw-icon-size-md);
+  --fw-icon-stroke: var(--fw-icon-stroke-md);
+}
+.fw-icon-lg {
+  --fw-icon-size: var(--fw-icon-size-lg);
+  --fw-icon-stroke: var(--fw-icon-stroke-lg);
+}
+.fw-icon-xl {
+  --fw-icon-size: var(--fw-icon-size-xl);
+  --fw-icon-stroke: var(--fw-icon-stroke-xl);
+}
+
+/* Weight modifiers win over a size's paired stroke (declared after it). */
+.fw-icon.fw-icon-stroke-thin {
+  --fw-icon-stroke: 1;
+}
+.fw-icon.fw-icon-stroke-regular {
+  --fw-icon-stroke: 1.4;
+}
+.fw-icon.fw-icon-stroke-bold {
+  --fw-icon-stroke: 2;
 }

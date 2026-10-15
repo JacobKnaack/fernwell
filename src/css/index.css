@@ -13,6 +13,7 @@
 @import './components/eyebrow.css';
 @import './components/field.css';
 @import './components/selection.css';
+@import './components/number.css';
 @import './components/combobox.css';
 @import './components/alert.css';
 @import './components/progress.css';

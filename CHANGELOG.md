@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-10-15
+
+### Added
+
+- **Number input** (`src/js/number.ts`, `src/css/components/number.css`, exported as `numberInput` / `Fernwell.numberInput`): `input[data-fw-number]` in two modes via `data-fw-number-mode`. `stepper` (default) wraps a native `type="number"` input in `.fw-number` with `−` / `+` buttons either side that step by `data-fw-number-step`, clamp to `-min` / `-max`, avoid float drift, repeat while held, and support ↑ ↓ and PageUp / PageDown on the input; the buttons use `aria-disabled` at the limits so focus is kept. `slider` turns the input into `type="range"` with a live `<output>` readout (`data-fw-number-unit`), `aria-valuetext`, and a filled track driven by `--fw-number-fill`. Both emit native bubbling `input` + `change` and `fw:number-change` (`{ value, mode }`). Programmatic API: `numberInput(input, opts)` → `{ getValue, setValue, stepUp, stepDown, destroy }`. Types `NumberMode`, `NumberOptions`, `NumberInstance`, `NumberChangeDetail` exported.
+- **Icon size & stroke scale**: new `icon` token group — `--fw-icon-size-{xs,sm,md,lg,xl}` (14/18/22/28/36px below 640px, 12/16/20/24/32px from 640px up, emitted as a `min-width` block by `scripts/gen-tokens.mjs` from a `wide` value in `tokens.json`) and paired `--fw-icon-stroke-{xs..xl}` (1.75 → 1.2 grid units, so small icons don't thin out and large ones don't look heavy). Opt in with `data-fw-icon-size` or `.fw-icon-xs…xl`; override weight with `data-fw-icon-stroke` (`thin` `regular` `bold` or a number) or `.fw-icon-stroke-*`. Per-icon knobs `--fw-icon-size` / `--fw-icon-stroke` work on the element or any ancestor. Types `IconSize`, `IconStroke` exported.
+- `minus` icon.
+
+### Changed
+
+- `.fw-icon svg` stroke width is now CSS-driven (`--fw-icon-stroke`, default 1.4 — unchanged) and `.fw-icon` width/height read `--fw-icon-size` (default `1em` — unchanged). `.fw-icon-btn svg` reads `--fw-icon-size` too (default 15px — unchanged).
+
 ## [0.5.0] — 2026-09-29
 
 ### Added

@@ -84,6 +84,18 @@
   --fw-shadow-primary: 0 6px 16px color-mix(in srgb, var(--fw-primary) 35%, transparent); /* derived: CTA glow */
   --fw-shadow-success: 0 6px 16px color-mix(in srgb, var(--fw-success) 28%, transparent); /* derived */
 
+  /* ===== ICON — size scale + paired stroke (see .fw-icon-xs…xl) ===== */
+  --fw-icon-size-xs: 14px; /* icon box; `value` below 640px, `wide` from 640px up (touch targets read larger) */
+  --fw-icon-size-sm: 18px; /* default inside .fw-icon-btn and inline with body text */
+  --fw-icon-size-md: 22px;
+  --fw-icon-size-lg: 28px;
+  --fw-icon-size-xl: 36px;
+  --fw-icon-stroke-xs: 1.75; /* stroke in 24-grid units, unitless — small icons get a heavier unit stroke so lines don't vanish */
+  --fw-icon-stroke-sm: 1.5;
+  --fw-icon-stroke-md: 1.4;
+  --fw-icon-stroke-lg: 1.3; /* large icons get a lighter unit stroke so they don't look heavy */
+  --fw-icon-stroke-xl: 1.2;
+
   /* ===== BORDER ===== */
   --fw-border-w: 1.5px; /* the system's one border weight */
 
@@ -132,5 +144,17 @@
   --fw-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
   --fw-shadow-primary: 0 6px 16px color-mix(in srgb, var(--fw-primary) 22%, transparent); /* derived: CTA glow */
   --fw-shadow-success: 0 6px 16px color-mix(in srgb, var(--fw-success) 22%, transparent); /* derived */
+  }
+
+  @media (min-width: 640px) {
+    :root,
+    [data-theme="light"],
+    [data-theme="dark"] {
+      --fw-icon-size-xs: 12px;
+      --fw-icon-size-sm: 16px;
+      --fw-icon-size-md: 20px;
+      --fw-icon-size-lg: 24px;
+      --fw-icon-size-xl: 32px;
+    }
   }
 }

@@ -492,7 +492,7 @@ Fernwell.loading.resetButtonLoading(btn);
   <!-- ICON -->
   <section id="icon" class="demo-component">
     <div class="kit-sec-head"><h2>Icon</h2><span class="num">10</span></div>
-    <p class="sec-note">Renders a named SVG into a <code>data-fw-icon</code> element. Decorative by default (<code>aria-hidden</code>) — give the accessible name to a wrapping control instead, e.g. <code>aria-label</code> on an icon button. Sized in <code>em</code> and colored via inherited <code>color</code>, so it always matches the text or button around it. See the full set on <a href="index.html#icons">the overview page</a>.</p>
+    <p class="sec-note">Renders a named SVG into a <code>data-fw-icon</code> element. Decorative by default (<code>aria-hidden</code>) — give the accessible name to a wrapping control instead, e.g. <code>aria-label</code> on an icon button. Sized in <code>em</code> and colored via inherited <code>color</code>, so it always matches the text or button around it. Opt in to a size scale with <code>data-fw-icon-size</code> (<code>xs</code> <code>sm</code> <code>md</code> <code>lg</code> <code>xl</code>): each step pairs a box (<code>--fw-icon-size-*</code>, larger below 640px) with a stroke (<code>--fw-icon-stroke-*</code>) so line weight stays balanced as the icon grows. Override one icon's weight with <code>data-fw-icon-stroke</code> (<code>thin</code> <code>regular</code> <code>bold</code>, or a number). See the full set on <a href="index.html#icons">the overview page</a>.</p>
 
     <div class="demo-code">
       <div class="demo-tabs" data-demo-tabs>
@@ -505,7 +505,12 @@ Fernwell.loading.resetButtonLoading(btn);
 
 &lt;button class="fw-icon-btn" type="button" aria-label="Delete"&gt;
   &lt;span data-fw-icon="trash" aria-hidden="true"&gt;&lt;/span&gt;
-&lt;/button&gt;</code></pre>
+&lt;/button&gt;
+
+&lt;!-- size scale + stroke weight --&gt;
+&lt;span data-fw-icon="star" data-fw-icon-size="lg" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;span data-fw-icon="star" data-fw-icon-size="sm" data-fw-icon-stroke="bold" aria-hidden="true"&gt;&lt;/span&gt;
+&lt;span class="fw-icon fw-icon-xl" data-fw-icon="star" aria-hidden="true"&gt;&lt;/span&gt;</code></pre>
         </div>
         <div class="demo-tabpanel" id="icon-panel-react" role="tabpanel" aria-labelledby="icon-tab-react" hidden>
 <pre><code>function Icon({ name }) {
@@ -532,6 +537,21 @@ function DeleteButton({ onClick }) {
         <button class="fw-icon-btn" type="button" aria-label="Edit"><span data-fw-icon="edit" aria-hidden="true"></span></button>
         <button class="fw-icon-btn" type="button" aria-label="Delete"><span data-fw-icon="trash" aria-hidden="true"></span></button>
         <button class="fw-icon-btn" type="button" aria-label="More actions"><span data-fw-icon="more" aria-hidden="true"></span></button>
+      </div>
+      <p class="demo-render-label">Size scale</p>
+      <div class="fw-card demo-render-surface fw-row">
+        <span data-fw-icon="star" data-fw-icon-size="xs" aria-hidden="true"></span>
+        <span data-fw-icon="star" data-fw-icon-size="sm" aria-hidden="true"></span>
+        <span data-fw-icon="star" data-fw-icon-size="md" aria-hidden="true"></span>
+        <span data-fw-icon="star" data-fw-icon-size="lg" aria-hidden="true"></span>
+        <span data-fw-icon="star" data-fw-icon-size="xl" aria-hidden="true"></span>
+      </div>
+      <p class="demo-render-label">Stroke weight</p>
+      <div class="fw-card demo-render-surface fw-row">
+        <span data-fw-icon="heart" data-fw-icon-size="lg" data-fw-icon-stroke="thin" aria-hidden="true"></span>
+        <span data-fw-icon="heart" data-fw-icon-size="lg" data-fw-icon-stroke="regular" aria-hidden="true"></span>
+        <span data-fw-icon="heart" data-fw-icon-size="lg" data-fw-icon-stroke="bold" aria-hidden="true"></span>
+        <span data-fw-icon="heart" data-fw-icon-size="lg" data-fw-icon-stroke="2.4" aria-hidden="true"></span>
       </div>
     </div>
   </section>
@@ -1618,6 +1638,71 @@ function PlacementExamples() {
       <div class="fw-card demo-render-surface">
         <div class="fw-aspect-ratio" data-fw-ratio="16:9" style="max-width:320px">
           <img src="https://picsum.photos/640/360" alt="Example landscape photo">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NUMBER INPUT -->
+  <section id="number-input" class="demo-component">
+    <div class="kit-sec-head"><h2>Number input</h2><span class="num">28</span></div>
+    <p class="sec-note">A native <code>&lt;input&gt;</code> enhanced with <code>data-fw-number</code>, in two modes set by <code>data-fw-number-mode</code>. <strong>Stepper</strong> (default) puts − / + buttons either side and steps by <code>data-fw-number-step</code>: click, hold to repeat, or use ↑ ↓ (and PageUp / PageDown for ten steps). <strong>Slider</strong> is a range input with a live readout and an optional <code>data-fw-number-unit</code>. Both take <code>-min</code> / <code>-max</code> / <code>-step</code>, keep the value on the native input, and emit <code>input</code> + <code>change</code> and <code>fw:number-change</code> (<code>{ value, mode }</code>). The buttons use <code>aria-disabled</code> at the limits so keyboard focus is not lost.</p>
+
+    <div class="demo-code">
+      <div class="demo-tabs" data-demo-tabs>
+        <div class="demo-tablist" role="tablist" aria-label="Number input usage">
+          <button type="button" class="demo-tab" id="number-tab-html" role="tab" aria-selected="true" aria-controls="number-panel-html">HTML / JS</button>
+          <button type="button" class="demo-tab" id="number-tab-react" role="tab" aria-selected="false" aria-controls="number-panel-react" tabindex="-1">React</button>
+        </div>
+        <div class="demo-tabpanel" id="number-panel-html" role="tabpanel" aria-labelledby="number-tab-html">
+<pre><code>&lt;!-- stepper --&gt;
+&lt;input class="fw-input" type="number" data-fw-number
+       data-fw-number-min="0" data-fw-number-max="10" data-fw-number-step="1"
+       value="3" aria-label="Quantity"&gt;
+
+&lt;!-- slider --&gt;
+&lt;input data-fw-number data-fw-number-mode="slider"
+       data-fw-number-min="0" data-fw-number-max="100" data-fw-number-step="5"
+       data-fw-number-unit="%" value="40" aria-label="Volume"&gt;
+
+&lt;script&gt;
+  document.addEventListener('fw:number-change', (e) =&gt; console.log(e.detail)); // { value, mode }
+&lt;/script&gt;</code></pre>
+        </div>
+        <div class="demo-tabpanel" id="number-panel-react" role="tabpanel" aria-labelledby="number-tab-react" hidden>
+<pre><code>function Quantity({ value, onChange }) {
+  const ref = useRef(null);
+  useEffect(() =&gt; {
+    const inst = window.Fernwell.numberInput.numberInput(ref.current, { min: 0, max: 10 });
+    return () =&gt; inst.destroy();
+  }, []);
+  return (
+    &lt;input ref={ref} className="fw-input" type="number" aria-label="Quantity"
+           value={value} onChange={(e) =&gt; onChange(e.target.valueAsNumber)} /&gt;
+  );
+}</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-render">
+      <p class="demo-render-label">Render</p>
+      <div class="fw-card demo-render-surface">
+        <div class="fw-field">
+          <label class="fw-label" for="demo-qty">Quantity</label>
+          <input class="fw-input" id="demo-qty" type="number" data-fw-number data-fw-number-min="0" data-fw-number-max="10" data-fw-number-step="1" value="3">
+        </div>
+        <div class="fw-field">
+          <label class="fw-label" for="demo-price">Price step 0.25</label>
+          <input class="fw-input" id="demo-price" type="number" data-fw-number data-fw-number-min="0" data-fw-number-max="5" data-fw-number-step="0.25" value="1.5">
+        </div>
+        <div class="fw-field">
+          <label class="fw-label" for="demo-volume">Volume</label>
+          <input id="demo-volume" data-fw-number data-fw-number-mode="slider" data-fw-number-min="0" data-fw-number-max="100" data-fw-number-step="5" data-fw-number-unit="%" value="40">
+        </div>
+        <div class="fw-field">
+          <label class="fw-label" for="demo-off">Disabled</label>
+          <input id="demo-off" data-fw-number data-fw-number-mode="slider" data-fw-number-min="0" data-fw-number-max="100" value="60" disabled>
         </div>
       </div>
     </div>

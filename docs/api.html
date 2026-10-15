@@ -569,6 +569,7 @@ tokens.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <tr><td><code>loading</code></td><td><code>setButtonLoading(btn, text?)</code><br><code>resetButtonLoading(btn)</code><br><code>resetAll(root?)</code></td><td>Spinner + label swap on a button; <code>resetAll</code> after a bfcache restore.</td></tr>
           <tr><td><code>nav</code></td><td><code>open(toggle)</code><br><code>close(toggle)</code></td><td>Drive a <code>[data-fw-nav-toggle]</code> dropdown or drawer.</td></tr>
           <tr><td><code>combobox</code></td><td><code>combobox(input, { options, onSelect })</code><br><code>→ { setOptions, destroy }</code></td><td>Typeahead over a list of strings.</td></tr>
+          <tr><td><code>numberInput</code></td><td><code>numberInput(input, { mode?, min?, max?, step?, unit? })</code><br><code>→ { getValue, setValue, stepUp, stepDown, destroy }</code></td><td>Stepper (− / + buttons) or slider over a native input; values are clamped and rounded to the step.</td></tr>
           <tr><td><code>table</code></td><td><code>sort(table, col, dir)</code><br><code>getSelected(table)</code><br><code>selectAll(table, on)</code></td><td>Client-side sort (<code>'ascending'</code> / <code>'descending'</code>) and row selection.</td></tr>
           <tr><td><code>menu</code></td><td><code>open(group)</code><br><code>close(group)</code><br><code>toggle(group)</code><br><code>reveal(el)</code><br><code>expandAll(menu)</code><br><code>collapseAll(menu)</code></td><td>Control a <code>.fw-menu</code> tree; <code>reveal</code> opens every ancestor group.</td></tr>
           <tr><td><code>popover</code></td><td><code>popover(trigger, panel, { placement?, offset? })</code><br><code>→ { open, close, toggle, destroy }</code></td><td>Non-modal floating panel that flips and shifts to stay on screen.</td></tr>
@@ -604,6 +605,8 @@ tokens.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <tr><td><code>[data-fw-nav-toggle][aria-controls]</code></td><td>Dropdown / off-canvas open and close with outside click and Escape.</td></tr>
           <tr><td><code>form[data-fw-loading]</code></td><td>Submit button shows a spinner and <code>data-fw-loading-text</code> on submit.</td></tr>
           <tr><td><code>input[data-fw-combobox][list]</code></td><td>Typeahead over a native <code>&lt;datalist&gt;</code>.</td></tr>
+          <tr><td><code>input[data-fw-number]</code></td><td>Stepper or slider; <code>data-fw-number-mode="stepper|slider"</code>, <code>-min</code>, <code>-max</code>, <code>-step</code>, <code>-unit</code>.</td></tr>
+          <tr><td><code>[data-fw-icon]</code></td><td>Named SVG icon; <code>data-fw-icon-size="xs|sm|md|lg|xl"</code>, <code>data-fw-icon-stroke="thin|regular|bold|&lt;number&gt;"</code>.</td></tr>
           <tr><td><code>table[data-fw-table]</code></td><td>Sort on <code>th[data-fw-sort]</code>; selection via <code>[data-fw-select-all]</code> / <code>[data-fw-select-row]</code>.</td></tr>
           <tr><td><code>.fw-menu[data-fw-menu]</code></td><td>Arrow-key tree navigation, auto-reveals <code>[aria-current]</code>; <code>data-fw-menu-exclusive</code> for accordions.</td></tr>
           <tr><td><code>[role=&quot;tablist&quot;][data-fw-tabs]</code></td><td>Tabs with roving tabindex; <code>data-fw-tabs-activation="manual"</code> to opt out of select-on-arrow.</td></tr>
@@ -630,6 +633,7 @@ tokens.resetTokens('#custom-demo'); // clear just that scope</code></pre>
           <tr><td><code>fw:select</code></td><td>table</td><td><code>{ rows, all }</code></td></tr>
           <tr><td><code>fw:toggle</code></td><td>.fw-menu-group</td><td><code>{ group, open }</code></td></tr>
           <tr><td><code>fw:tabs-change</code></td><td>tablist</td><td><code>{ tab, panel }</code></td></tr>
+          <tr><td><code>fw:number-change</code></td><td>number wrapper</td><td><code>{ value, mode }</code></td></tr>
           </tbody>
         </table>
       </div>
