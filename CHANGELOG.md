@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.6.0] — 2026-10-15
+
 ### Added
 
 - **Number input** (`src/js/number.ts`, `src/css/components/number.css`, exported as `numberInput` / `Fernwell.numberInput`): `input[data-fw-number]` in two modes via `data-fw-number-mode`. `stepper` (default) wraps a native `type="number"` input in `.fw-number` with `−` / `+` buttons either side that step by `data-fw-number-step`, clamp to `-min` / `-max`, avoid float drift, repeat while held, and support ↑ ↓ and PageUp / PageDown on the input; the buttons use `aria-disabled` at the limits so focus is kept. `slider` turns the input into `type="range"` with a live `<output>` readout (`data-fw-number-unit`), `aria-valuetext`, and a filled track driven by `--fw-number-fill`. Both emit native bubbling `input` + `change` and `fw:number-change` (`{ value, mode }`). Programmatic API: `numberInput(input, opts)` → `{ getValue, setValue, stepUp, stepDown, destroy }`. Types `NumberMode`, `NumberOptions`, `NumberInstance`, `NumberChangeDetail` exported.
