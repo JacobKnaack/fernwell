@@ -4,6 +4,8 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [0.6.1] — 2026-10-20
+
 ### Fixed
 
 - **`.fw-table` is readable on narrow viewports again.** Below 560px it no longer switches to `table-layout: fixed`. That layout split the card equally between columns whatever their content, so header labels were clipped with an ellipsis and unwrappable cell content (`<code>` names, `white-space: nowrap`) spilled into the neighbouring column. Columns now keep their content width and the `.fw-table-scroll` region scrolls sideways, as it does on wider screens. The `.fw-table-num` and `th` ellipsis rules and the `overflow-wrap: anywhere` rule on body cells are gone with it; `--fw-table-select-w` / `--fw-table-actions-w` still set the select and actions column widths.
