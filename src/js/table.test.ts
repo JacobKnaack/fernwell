@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { fireEvent } from '@testing-library/dom';
 import * as table from './table';
@@ -107,5 +109,26 @@ describe('table', () => {
 
     const rows = Array.from(t.querySelectorAll('tbody tr'));
     expect(rows.every((r) => r.classList.contains('is-selected'))).toBe(true);
+  });
+});
+
+// jsdom does no layout, so these only guard the stylesheet against the two
+// regressions that made tables unreadable on phones: a fixed layout that
+// split columns equally and clipped headers, and an unpositioned scroll
+// region that let hidden descendants widen the page.
+describe('table.css — narrow viewports', () => {
+  const css = readFileSync(join(process.cwd(), 'src/css/components/table.css'), 'utf8');
+  const narrow = css.slice(css.indexOf('@media (max-width: 560px)'));
+
+  it('keeps content-sized columns instead of a fixed layout', () => {
+    expect(narrow).not.toMatch(/table-layout\s*:\s*fixed/);
+  });
+
+  it('never clips header or cell text with an ellipsis', () => {
+    expect(narrow).not.toMatch(/text-overflow\s*:\s*ellipsis/);
+  });
+
+  it('makes the scroll region the containing block for hidden descendants', () => {
+    expect(css).toMatch(/\.fw-table-scroll\s*\{[^}]*position\s*:\s*relative/);
   });
 });
